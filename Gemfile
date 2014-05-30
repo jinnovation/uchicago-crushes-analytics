@@ -1,13 +1,11 @@
 source 'https://rubygems.org'
+ruby '2.1.0'
 
 gem 'rails', '4.0.3'
 gem 'i18n', '0.6.9'
 
 gem "koala", "~> 1.10.0rc"
 gem "rspec-rails"
-
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 
 gem 'haml-rails'
 gem 'sass-rails', '~> 4.0.0'
@@ -50,4 +48,14 @@ end
 group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
+end
+
+group :development do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'  
+end
+
+group :production do
+  gem 'pg', '0.15.1'
+  gem 'rails_12factor', '0.0.2'
 end
