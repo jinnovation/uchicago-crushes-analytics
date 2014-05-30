@@ -22,13 +22,15 @@ namespace :db do
                                    "limit" => NUM_SEARCH.to_s)
     puts "NUMBER OF POSTS FETCHED = #{posts.size}"
 
-    posts_withcmts = posts.find_all { |post| not post[TAG_COMMENTS].nil? } 
+    posts_withcmts = posts.find_all { |post| not post[TAG_COMMENTS].nil? }
     puts "NUMBER OF POSTS WITH COMMENTS = #{posts_withcmts.size}"
 
     all_user_tag_ids = []
     counts           = Hash.new(0)
 
     posts_withcmts.each do |post|
+      msg = post["message"]
+
       cmts_with_user_tags = post[TAG_COMMENTS][TAG_DATA].find_all do |cmt|
         not cmt[TAG_MSG_TAGS].nil?
       end
@@ -38,13 +40,16 @@ namespace :db do
       end
 
       cmts_with_user_tags.each do |cmt|
-        # TODO: filter out repeat tags in same post
-
         user_tags = cmt[TAG_MSG_TAGS].find_all { |tag|
           tag[TAG_TYPE]==TAG_USER }
 
-        # TODO: check if first_name mentioned in comment body
-        user_tags.each { |tag| all_user_tag_ids.push tag[TAG_ID] } 
+        # TODO:
+        # if msg.contains(tag[first_name]) or !user_tags.contains(tag)
+        #   add to user_tags
+        # else
+        #   continue
+
+        user_tags.each { |tag| all_user_tag_ids.push tag[TAG_ID] }
       end
     end
 
@@ -52,8 +57,7 @@ namespace :db do
     puts "NUMBER OF TAGGED USERS = #{users.size}"
 
     users.each { |user| counts[user[TAG_NAME_FULL]] += 1 }
-    
+
     counts.each { |name,count| puts "#{name.to_s}: #{count.to_s}" }
   end
 end
-
