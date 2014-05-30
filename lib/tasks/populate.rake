@@ -19,6 +19,8 @@ namespace :db do
 
     @graph = Koala::Facebook::API.new(OAUTH_ACCESS_TOKEN)
     counts = Hash.new(0)
+    APP_ID = ENV["FB_APP_ID"]
+    APP_SECRET = ENV["FB_APP_SECRET"]
 
     posts = @graph.get_connections(PAGE_NAME, "posts",
                                    "limit" => NUM_SEARCH.to_s)
