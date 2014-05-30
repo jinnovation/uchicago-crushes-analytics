@@ -9,3 +9,5 @@ APP_AUTHOR = "Jonathan Jin"
 
 PAGE_NAME = "UChicagoCrushes"
 NUM_SEARCH = 500
+
+Koala.config.api_version = 'v2.0'
