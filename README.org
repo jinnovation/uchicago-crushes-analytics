@@ -1,0 +1,3 @@
+* UChicago Crushes Analytics (working title)
+
+  Providing a convenient intuitive way to analyze posts.
