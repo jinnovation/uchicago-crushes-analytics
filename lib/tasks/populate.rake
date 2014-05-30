@@ -17,10 +17,13 @@ namespace :db do
     # TODO: cache results, only perform API search every x hours
     require 'koala'
 
-    @graph = Koala::Facebook::API.new(OAUTH_ACCESS_TOKEN)
     counts = Hash.new(0)
     APP_ID = ENV["FB_APP_ID"]
     APP_SECRET = ENV["FB_APP_SECRET"]
+
+    @oauth = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET)
+    @token = @oauth.get_app_access_token
+    @graph = Koala::Facebook::API.new(@token, APP_SECRET)
 
     posts = @graph.get_connections(PAGE_NAME, "posts",
                                    "limit" => NUM_SEARCH.to_s)
