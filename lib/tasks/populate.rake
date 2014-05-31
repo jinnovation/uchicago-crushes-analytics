@@ -17,20 +17,9 @@ namespace :db do
     end
   end
   
-  desc "Pull data from Facebook and use to populate database"
-  task update: :environment do
-    TAG_COMMENTS  = "comments"
-    TAG_DATA      = "data"
-    TAG_MSG_TAGS  = "message_tags"
-    TAG_TYPE      = "type"
-    TAG_USER      = "user"
-    TAG_ID        = "id"
-    TAG_NAME_FULL = "name"
-
-    @oauth = Koala::Facebook::OAuth.new(ENV["FB_APP_ID"], ENV["FB_APP_SECRET"])
-    @token = @oauth.get_app_access_token
-    @graph = Koala::Facebook::API.new(@token, ENV["FB_APP_SECRET"])
-
+  desc "Erase database, pull data from Facebook and use to populate database"
+  task populate_fb: [:reset, :environment] do
+    
     posts = @graph.get_connections(PAGE_NAME, "posts",
                                    "limit" => NUM_SEARCH.to_s)
     puts "NUMBER OF POSTS FETCHED = #{posts.size}"
@@ -71,6 +60,10 @@ namespace :db do
 
     users.each { |user| counts[user[TAG_NAME_FULL]] += 1 }
 
-    counts.each { |name,count| puts "#{name.to_s}: #{count.to_s}" }
+    counts.each do |name,count|
+      puts "#{name.to_s}: #{count.to_s}"
+
+      user = User.create(name: name.to_s)      
+    end
   end
 end

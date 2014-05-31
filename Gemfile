@@ -52,6 +52,7 @@ group :development do
   gem 'sqlite3'
   gem 'faker'
   gem 'populator'
+  gem 'foreman'
 end
 
 group :production do
