@@ -30,6 +30,8 @@ namespace :db do
     all_user_tag_ids = []
     counts           = Hash.new(0)
 
+    usr_msgs = Hash.new { |h,k| h[k] = [] }
+
     posts_withcmts.each do |post|
       msg = post["message"]
 
@@ -43,27 +45,39 @@ namespace :db do
 
       cmts_with_user_tags.each do |cmt|
 
-        # TODO:
-        # if msg.contains(tag[first_name]) or !user_tags.contains(tag)
-        #   add to user_tags
-        # else
-        #   continue
-
         cmt[TAG_MSG_TAGS].each do |tag|
-          all_user_tag_ids.push tag[TAG_ID]
+          # TODO:
+          # if tag is a double tag:
+          #   break; move on to next comment
+          # else if msg does not contain tag[first_name]:
+          #   ignore; move to next tag
+          # else:
+          usr_msgs[tag[TAG_ID]].push msg
         end
       end
     end
 
-    users = (@graph.get_objects all_user_tag_ids).values
+    users = (@graph.get_objects usr_msgs.keys)
     puts "NUMBER OF TAGGED USERS = #{users.size}"
+    
+    usr_msgs.each do |id, msgs|
 
-    users.each { |user| counts[user[TAG_NAME_FULL]] += 1 }
+      if users[id].nil?
+        # FIXME: wtf is causing these??
+        
+        puts "ERROR"        
+      else
+        # TODO:
+        # If user exists already, simply add to that
+        user = User.create(name: users[id][TAG_NAME_FULL])
 
-    counts.each do |name,count|
-      puts "#{name.to_s}: #{count.to_s}"
+        puts users[id][TAG_NAME_FULL]
 
-      user = User.create(name: name.to_s)      
+        msgs.each do |msg|
+          Crush.create(content: msg, user_id: user.id)
+        end
+      end
+
     end
   end
 end
