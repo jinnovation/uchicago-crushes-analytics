@@ -18,7 +18,7 @@ namespace :db do
   end
   
   desc "Erase database, pull data from Facebook and use to populate database"
-  task populate_fb: [:reset, :environment] do
+  task populate_fb: [:environment] do
     
     posts = @graph.get_connections(PAGE_NAME, "posts",
                                    "limit" => NUM_SEARCH.to_s)
