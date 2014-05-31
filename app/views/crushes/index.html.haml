@@ -1,0 +1,16 @@
+%h1 Listing crushes
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @crushes.each do |crush|
+    %tr
+      %td= crush.content
+      %td= crush.user.name
+
+%br
+
+= link_to 'New Crush', new_crush_path

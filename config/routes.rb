@@ -1,4 +1,6 @@
 Crushes::Application.routes.draw do
+  resources :crushes
+
   get "static_pages/about"
   get "static_pages/home"
 

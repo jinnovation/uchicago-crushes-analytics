@@ -1,0 +1,10 @@
+= form_for @crush do |f|
+  - if @crush.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@crush.errors.count, "error")} prohibited this crush from being saved:"
+      %ul
+        - @crush.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'
