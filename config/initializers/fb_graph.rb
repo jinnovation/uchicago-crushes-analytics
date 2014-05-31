@@ -7,6 +7,7 @@ TAG_TYPE      = "type"
 TAG_USER      = "user"
 TAG_ID        = "id"
 TAG_NAME_FULL = "name"
+TAG_PROFILE_LINK = "link"
 
 @oauth = Koala::Facebook::OAuth.new(ENV["FB_APP_ID"], ENV["FB_APP_SECRET"])
 @token = @oauth.get_app_access_token

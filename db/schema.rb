@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140531064308) do
+ActiveRecord::Schema.define(version: 20140531070227) do
 
   create_table "crushes", force: true do |t|
     t.string   "content"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140531064308) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "pic_url"
+    t.string   "profile_url"
   end
 
 end

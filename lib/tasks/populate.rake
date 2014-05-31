@@ -69,9 +69,11 @@ namespace :db do
       else
         # TODO:
         # If user exists already, simply add to that
-        user = User.create(name: users[id][TAG_NAME_FULL])
-
+        
         puts users[id][TAG_NAME_FULL]
+        user = User.create(name: users[id][TAG_NAME_FULL],
+                           pic_url: @graph.get_picture(id),
+                           profile_url: users[id][TAG_PROFILE_LINK])
 
         msgs.each do |msg|
           Crush.create(content: msg, user_id: user.id)
