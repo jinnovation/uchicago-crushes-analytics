@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529174047) do
+ActiveRecord::Schema.define(version: 20140531032127) do
 
   create_table "crushes", force: true do |t|
     t.string   "content"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20140529174047) do
 
   create_table "users", force: true do |t|
     t.string   "name"
-    t.integer  "num_crushes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
