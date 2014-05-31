@@ -42,8 +42,6 @@ namespace :db do
       end
 
       cmts_with_user_tags.each do |cmt|
-        user_tags = cmt[TAG_MSG_TAGS].find_all { |tag|
-          tag[TAG_TYPE]==TAG_USER }
 
         # TODO:
         # if msg.contains(tag[first_name]) or !user_tags.contains(tag)
@@ -51,7 +49,9 @@ namespace :db do
         # else
         #   continue
 
-        user_tags.each { |tag| all_user_tag_ids.push tag[TAG_ID] }
+        cmt[TAG_MSG_TAGS].each do |tag|
+          all_user_tag_ids.push tag[TAG_ID]
+        end
       end
     end
 
