@@ -3,17 +3,30 @@
 #   - save last pull time
 
 namespace :db do
-  desc "Erase and fill database"
-
-  TAG_COMMENTS  = "comments"
-  TAG_DATA      = "data"
-  TAG_MSG_TAGS  = "message_tags"
-  TAG_TYPE      = "type"
-  TAG_USER      = "user"
-  TAG_ID        = "id"
-  TAG_NAME_FULL = "name"
-
+  desc "Erase database and fill with sample data"
   task populate: :environment do
+    Rake::Task["db:reset"].invoke
+
+    User.populate 10 do |user|
+      user.name = Faker::Name.name
+
+      Crush.populate 5..10 do |crush|
+        crush.content = Faker::Lorem.sentences(10..13)
+        crush.user_id = user.id
+      end
+    end
+  end
+  
+  desc "Pull data from Facebook and use to populate database"
+  task update: :environment do
+    TAG_COMMENTS  = "comments"
+    TAG_DATA      = "data"
+    TAG_MSG_TAGS  = "message_tags"
+    TAG_TYPE      = "type"
+    TAG_USER      = "user"
+    TAG_ID        = "id"
+    TAG_NAME_FULL = "name"
+
     @oauth = Koala::Facebook::OAuth.new(ENV["FB_APP_ID"], ENV["FB_APP_SECRET"])
     @token = @oauth.get_app_access_token
     @graph = Koala::Facebook::API.new(@token, ENV["FB_APP_SECRET"])
