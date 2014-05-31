@@ -1,8 +1,15 @@
 %p#notice= notice
 
-%p= "#{@user.name}: #{@user.crushes.length.to_s} crushes"
-- @user.crushes.each do |crush|
-  %p= crush.content
+.row
+  .col-lg-4
+    %p= "#{@user.name}"
+    %p= "#{pluralize(@user.crushes.length, "crush")}"
+    = link_to image_tag(@user.pic_url), @user.profile_url, target: "_blank"
+    
+  .col-lg-8
+    %table.table.table-striped
+      - @user.crushes.each do |crush|
+        %tr
+          %td= crush.content
 
-= link_to 'Edit', edit_user_path(@user)
 = link_to 'Back', users_path

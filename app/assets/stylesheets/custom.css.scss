@@ -5,13 +5,9 @@ $gray-medium-light: #eaeaea;
 $font-stack-header: Oswald, Helvetica, sans-serif;
 
 a {
-    &:visited {
-        color: $gray;
-    }
+    &:visited { color: $gray; }
 
-    &:hover {
-        color: $gray-light;
-    }
+    &:hover { color: $gray-light; }
 }
 
 html {
@@ -20,7 +16,6 @@ html {
 
 body {
     padding-top: 60px;
-    padding-bottom: 40px;
 }
 
 section {
@@ -72,6 +67,7 @@ p {
 /* header */
 
 #logo {
+    font: 100% $font-stack-header;
     float: left;
     margin-right: 10px;
     font-size: 1.7em;

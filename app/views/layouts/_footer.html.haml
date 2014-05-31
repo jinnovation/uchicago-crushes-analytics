@@ -1,5 +1,6 @@
-%footer.footer.navbar-fixed-bottom.navbar-inverse
+%footer.footer
   .container
     .text-center.text-muted
       %p!= "This application is not affiliated with the \"official\" #{link_to CRUSHES_NAME_DISPLAY, CRUSHES_URL, target: "_blank"} page"
-      %p!= "Created by: #{link_to APP_AUTHOR, APP_AUTHOR_PAGE_GITHUB, target: "_blank"}"
+      %p!= "Created by: #{link_to APP_AUTHOR, GITHUB_URL_AUTHOR, target: "_blank"}"
+      %p= link_to "View this project on GitHub", GITHUB_URL_PROJECT, target: "_blank"
