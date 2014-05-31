@@ -4,7 +4,11 @@ class User < ActiveRecord::Base
 
   validates :name, {
     presence: true,
-    uniqueness: { case_sensitive: false },
+    allow_blank: false,
+  }
+
+  validates :pic_url, {
+    presence: true,
     allow_blank: false,
   }
 end
