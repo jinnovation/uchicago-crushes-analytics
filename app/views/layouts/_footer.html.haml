@@ -1,3 +1,5 @@
 %footer.footer
-  %small
-    = APP_AUTHOR
+  .container
+    .text-center.text-muted
+      %p!= "This application is not affiliated with the \"official\" #{link_to CRUSHES_NAME_DISPLAY, CRUSHES_URL, target: "_blank"} page"
+      %p!= "Created by: #{link_to APP_AUTHOR, APP_AUTHOR_PAGE_GITHUB, target: "_blank"}"
