@@ -52,6 +52,8 @@ namespace :db do
           # else if msg does not contain tag[first_name]:
           #   ignore; move to next tag
           # else:
+
+          # TODO: add post_url to each crush
           usr_msgs[tag[TAG_ID]].push msg
         end
       end
@@ -76,7 +78,8 @@ namespace :db do
                            profile_url: users[id][TAG_PROFILE_LINK])
 
         msgs.each do |msg|
-          Crush.create(content: msg, user_id: user.id)
+          Crush.create(content: msg,
+                       user_id: user.id)
         end
       end
 
