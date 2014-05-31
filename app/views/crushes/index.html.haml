@@ -8,9 +8,7 @@
 
   - @crushes.each do |crush|
     %tr
-      %td= crush.content
-      %td= crush.user.name
-
+      %td= link_to crush.content, "#"
+      %td= link_to crush.user.name, crush.user.profile_url, target: "_blank"
+      %td= link_to image_tag(crush.user.pic_url), crush.user.profile_url, target: "_blank"
 %br
-
-= link_to 'New Crush', new_crush_path
