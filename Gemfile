@@ -5,7 +5,7 @@ gem 'rails', '4.0.3'
 gem 'i18n', '0.6.9'
 
 gem "koala", "~> 1.10.0rc"
-gem "rspec-rails"
+
 
 gem 'haml-rails'
 gem 'sass-rails', '~> 4.0.0'
@@ -42,19 +42,18 @@ gem 'jbuilder', '~> 1.2'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-group :test do
-  gem 'capybara'
-  gem 'factory_girl_rails'
-end
-
 gem 'pg', '0.15.1'
 
-group :development do
+group :development, :test do
   # Use sqlite3 as the database for Active Record
 
   gem 'faker'
   gem 'populator'
   gem 'foreman'
+
+  gem "rspec-rails"
+  gem 'capybara'
+  gem 'factory_girl_rails'
 end
 
 group :production do
