@@ -9,8 +9,8 @@
 
   - (@users.sort_by {|user| user.crushes.size}).reverse.each do |user|
     %tr
-      %td= link_to image_tag(user.pic_url), user.profile_url, target: "_blank"
-      %td= link_to user.name, user.profile_url, target: "_blank"
+      %td= link_to image_tag(user.pic_url), user
+      %td= link_to user.name, user
       %td= user.crushes.length
 
 %br
