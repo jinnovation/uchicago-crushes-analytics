@@ -5,11 +5,13 @@
     %th Name
     %th Number of crushes
 
+
   - @users.each do |user|
     %tr
-      %td= user.name
+      %td= link_to user.name, user
       %td= user.crushes.length
-      %td= link_to 'Show', user
+
+      -# TODO: remove these
       %td= link_to 'Edit', edit_user_path(user)
       %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
