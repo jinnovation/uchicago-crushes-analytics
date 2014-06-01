@@ -3,9 +3,10 @@
     %h1 REAL SHIT GOAN GO HERE
     .row
       .col-lg-6
-        %h3 SEARCH BAR N SHIT
+        .input-group.input-group-lg
+          <input type="text" class="form-control" placeholder="Search for someone"/>
       .col-lg-6
-        %h3 SUBMIT A CRUSH N SHIT
+        = link_to "Submit a crush", CRUSHES_SUBMIT_URL, { target: "_blank", class: "btn btn-primary btn-lg" }
 
 .center
   Last updated: when-the-hell-ever

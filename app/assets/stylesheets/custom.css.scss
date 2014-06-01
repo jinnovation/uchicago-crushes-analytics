@@ -11,6 +11,14 @@ $uchi-blue-dark: #0F425C;
 
 $font-stack-header: Oswald, Helvetica, sans-serif;
 
+.jumbotron {
+    .input-group {
+        width: 100%;
+    }
+    .btn {
+        width: 100%;
+    }
+}
 
 
 a {
