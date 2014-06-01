@@ -16,7 +16,7 @@ namespace :db do
       end
     end
   end
-  
+
   desc "Erase database, pull data from Facebook and use to populate database"
   task populate_fb: [:environment] do
 
@@ -34,13 +34,6 @@ namespace :db do
       comments_with_user_tags.each do |cmt|
         cmt[TAG_MSG_TAGS].each do |tag|
           next if not tag[TAG_TYPE]==TAG_USER
-          
-          # TODO:
-          # if tag is a double tag:
-          #   break; move on to next comment
-          # else if msg does not contain tag[first_name]:
-          #   ignore; move to next tag
-          # else:
 
           # TODO: add post_url to each crush
           usr_msgs[tag[TAG_ID]].push msg
@@ -48,38 +41,31 @@ namespace :db do
       end
     end
 
-    users = (@graph.get_objects usr_msgs.keys)
-    puts "NUMBER OF TAGGED USERS = #{users.size}"
-    
+    user_info = (@graph.get_objects usr_msgs.keys)
+    puts "NUMBER OF TAGGED USERS = #{user_info.size}"
+
     usr_msgs.each do |id, msgs|
+      user_full_name = user_info[id][TAG_NAME_FULL]
 
-      if users[id].nil?
-        # FIXME: wtf is causing these??
-        
-        puts "ERROR"        
-      else
-        # TODO:
-        # If user exists already, simply add to that
-        
-        user_full_name = users[id][TAG_NAME_FULL]
-
-        if User.exists?(user_full_name)
-          user = User.find_by_name user_full_name
-        else
-          user = User.create(name: users[id][TAG_NAME_FULL],
-                             pic_url: @graph.get_picture(id),
-                             profile_url: users[id][TAG_PROFILE_LINK])
-        end
-        
-        msgs.each { |msg| Crush.create(content: msg, user_id: user.id) }
+      if (user = User.find_by_name user_full_name).nil?
+        user = User.create(name: user_info[id][TAG_NAME_FULL],
+                           pic_url: @graph.get_picture(id),
+                           profile_url: user_info[id][TAG_PROFILE_LINK])
       end
 
+      msgs.each do |msg|
+        # TODO:
+        # provide "probability" for each crush-user pair
+        # (based on: num mentions, first and last name in msg, etc.)
+        if not Crush.exists?(content: msg)
+          Crush.create content: msg, user_id: user.id
+        end
+      end
     end
   end
 
   def get_posts_with_comments()
-    posts = @graph.get_connections(PAGE_NAME, "posts",
-                                   "limit" => NUM_SEARCH.to_s)
+    posts = @graph.get_connections PAGE_NAME, "posts", "limit" => NUM_SEARCH.to_s
     puts "NUMBER OF POSTS FETCHED = #{posts.size}"
 
     posts_with_comments = posts.find_all { |post| not post[TAG_COMMENTS].nil? }
