@@ -1,3 +1,29 @@
-%h1 Recent Crushes
+.row
+  .col-lg-4
+    %h1 Top Users
+    %table.table.table-striped
+      %tr
+        %th
+        %th Name
+        %th Number of crushes
 
 
+      - (@users.sort_by {|user| user.crushes.size}).reverse.each do |user|
+        %tr
+          %td= link_to image_tag(user.pic_url), user
+          %td= link_to user.name, user
+          %td= user.crushes.length
+
+  .col-lg-8
+    %h1 Latest Crushes        
+    %table
+      %tr
+        %th
+        %th
+        %th
+
+      - @crushes.each do |crush|
+        %tr
+          %td= link_to crush.content, "#"
+          %td= link_to crush.user.name, crush.user.profile_url, target: "_blank"
+          %td= link_to image_tag(crush.user.pic_url), crush.user.profile_url, target: "_blank"      
