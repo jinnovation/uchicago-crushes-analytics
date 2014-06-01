@@ -48,18 +48,25 @@ namespace :db do
       user_full_name = user_info[id][TAG_NAME_FULL]
 
       if (user = User.find_by_name user_full_name).nil?
+        puts "Creating User #{user_info[id][TAG_NAME_FULL]}"
         user = User.create(name: user_info[id][TAG_NAME_FULL],
                            pic_url: @graph.get_picture(id),
                            profile_url: user_info[id][TAG_PROFILE_LINK])
+      else
+        puts "Found User #{user.name}"
       end
 
       msgs.each do |msg|
         # TODO:
         # provide "probability" for each crush-user pair
         # (based on: num mentions, first and last name in msg, etc.)
-        if not Crush.exists?(content: msg)
-          Crush.create content: msg, user_id: user.id
-        end
+
+        # TODO: make each crush associable with multiple users
+        # if not Crush.exists?(content: msg)
+        #   Crush.create content: msg, user_id: user.id
+        # end
+
+        Crush.create content: msg, user_id: user.id
       end
     end
   end
