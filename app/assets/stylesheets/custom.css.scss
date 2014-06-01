@@ -11,6 +11,8 @@ $uchi-blue-dark: #0F425C;
 
 $font-stack-header: Oswald, Helvetica, sans-serif;
 
+
+
 a {
     color: $uchi-gray-light;
     &:visited { color: $uchi-gray-dark; }
@@ -23,7 +25,9 @@ html {
 }
 
 body {
-    padding-top: 60px;
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: $uchi-gray-light;
 }
 
@@ -79,9 +83,9 @@ p {
     font: 100% $font-stack-header;
     float: left;
     margin-right: 10px;
-    font-size: 3.0em;
+    font-size: 2.4em;
     color: $uchi-gray-light;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: -1px;
     padding-top: 9px;
     font-weight: bold;
@@ -95,7 +99,13 @@ p {
 
 .navbar {
     background-color: $uchi-blue;
+
+    a {
+        color: $uchi-gray-light;
+    }
 }
+
+
 
 /* footer */
 
