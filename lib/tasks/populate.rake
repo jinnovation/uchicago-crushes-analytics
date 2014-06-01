@@ -19,20 +19,14 @@ namespace :db do
   
   desc "Erase database, pull data from Facebook and use to populate database"
   task populate_fb: [:environment] do
-    
-    posts = @graph.get_connections(PAGE_NAME, "posts",
-                                   "limit" => NUM_SEARCH.to_s)
-    puts "NUMBER OF POSTS FETCHED = #{posts.size}"
 
-    posts_withcmts = posts.find_all { |post| not post[TAG_COMMENTS].nil? }
-    puts "NUMBER OF POSTS WITH COMMENTS = #{posts_withcmts.size}"
-
-    all_user_tag_ids = []
+    posts = get_posts_with_comments()
+   
     counts           = Hash.new(0)
 
     usr_msgs = Hash.new { |h,k| h[k] = [] }
 
-    posts_withcmts.each do |post|
+    posts.each do |post|
       msg = post["message"]
 
       cmts_with_user_tags = post[TAG_COMMENTS][TAG_DATA].find_all do |cmt|
@@ -84,5 +78,16 @@ namespace :db do
       end
 
     end
+  end
+
+  def get_posts_with_comments()
+    posts = @graph.get_connections(PAGE_NAME, "posts",
+                                   "limit" => NUM_SEARCH.to_s)
+    puts "NUMBER OF POSTS FETCHED = #{posts.size}"
+
+    posts_withcmts = posts.find_all { |post| not post[TAG_COMMENTS].nil? }
+    puts "NUMBER OF POSTS WITH COMMENTS = #{posts_withcmts.size}"
+
+    posts_withcmts
   end
 end
