@@ -21,25 +21,20 @@ namespace :db do
   task populate_fb: [:environment] do
 
     posts = get_posts_with_comments()
-   
-    counts           = Hash.new(0)
 
     usr_msgs = Hash.new { |h,k| h[k] = [] }
 
     posts.each do |post|
       msg = post["message"]
 
-      cmts_with_user_tags = post[TAG_COMMENTS][TAG_DATA].find_all do |cmt|
+      comments_with_user_tags = post[TAG_COMMENTS][TAG_DATA].find_all do |cmt|
         not cmt[TAG_MSG_TAGS].nil?
       end
 
-      cmts_with_user_tags = cmts_with_user_tags.each do |cmt|
-        cmt[TAG_MSG_TAGS].find_all { |tag| tag[TAG_TYPE]==TAG_USER }
-      end
-
-      cmts_with_user_tags.each do |cmt|
-
+      comments_with_user_tags.each do |cmt|
         cmt[TAG_MSG_TAGS].each do |tag|
+          next if not tag[TAG_TYPE]==TAG_USER
+          
           # TODO:
           # if tag is a double tag:
           #   break; move on to next comment
@@ -85,9 +80,9 @@ namespace :db do
                                    "limit" => NUM_SEARCH.to_s)
     puts "NUMBER OF POSTS FETCHED = #{posts.size}"
 
-    posts_withcmts = posts.find_all { |post| not post[TAG_COMMENTS].nil? }
-    puts "NUMBER OF POSTS WITH COMMENTS = #{posts_withcmts.size}"
+    posts_with_comments = posts.find_all { |post| not post[TAG_COMMENTS].nil? }
+    puts "NUMBER OF POSTS WITH COMMENTS = #{posts_with_comments.size}"
 
-    posts_withcmts
+    posts_with_comments
   end
 end
