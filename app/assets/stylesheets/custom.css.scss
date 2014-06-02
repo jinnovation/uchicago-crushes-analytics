@@ -20,6 +20,11 @@ $font-stack-header: Oswald, Helvetica, sans-serif;
     }
 }
 
+.scrollable {
+    overflow: auto;
+    height: 80%;
+}
+
 
 a {
     color: $uchi-gray-light;
