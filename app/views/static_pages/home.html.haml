@@ -11,24 +11,17 @@
 .center
   Last updated: when-the-hell-ever
 .row
-  .col-lg-4
+  .col-lg-5
     %h1 Top Users
     %table.table.table-striped
-      %tr
-        %th
-        %th
-        %th Name
-        %th Number of crushes
-
-
       - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
         %tr
           %td= (i+1).to_s
-          %td= link_to image_tag(user.pic_url), user
+          %td= link_to image_tag(user.pic_url_medium, class: "media-object thumbnail"), user, class: "pull-left"
           %td= link_to user.name, user
-          %td= user.posts.length
+          %td= user.posts.length.to_s + " crushes"
 
-  .col-lg-8
+  .col-lg-7
     %h1 Latest Crushes
     %table.table.table-striped
 
@@ -36,4 +29,4 @@
         %tr
           %td= link_to post.content, "#"
           %td= link_to post.user.name, post.user.profile_url, target: "_blank"
-          %td= link_to image_tag(post.user.pic_url), post.user.profile_url, target: "_blank"
+          %td= link_to image_tag(post.user.pic_url_medium, class: "media-object thumbnail"), post.user.profile_url, target: "_blank", class: "pull-right"

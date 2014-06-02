@@ -7,8 +7,18 @@ class User < ActiveRecord::Base
     allow_blank: false,
   }
 
-  validates :pic_url, {
+  validates :pic_url_small, {
     presence: true,
     allow_blank: false,
   }
+
+  validates :pic_url_medium, {
+    presence: true,
+    allow_blank: false,
+  }
+
+  validates :pic_url_large, {
+    presence: true,
+    allow_blank: false,
+  }  
 end

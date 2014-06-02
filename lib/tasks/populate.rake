@@ -10,9 +10,9 @@ namespace :db do
     User.populate 10 do |user|
       user.name = Faker::Name.name
 
-      Crush.populate 5..10 do |crush|
-        crush.content = Faker::Lorem.sentences(10..13)
-        crush.user_id = user.id
+      Post.populate 5..10 do |post|
+        post.content = Faker::Lorem.sentences(10..13)
+        post.user_id = user.id
       end
     end
   end
@@ -35,7 +35,7 @@ namespace :db do
         cmt[TAG_MSG_TAGS].each do |tag|
           next if not tag[TAG_TYPE]==TAG_USER
 
-          # TODO: add post_url to each crush
+          # TODO: add post_url to each post
           usr_msgs[tag[TAG_ID]].push msg
         end
       end
@@ -49,24 +49,30 @@ namespace :db do
 
       if (user = User.find_by_name user_full_name).nil?
         puts "Creating User #{user_info[id][TAG_NAME_FULL]}"
-        user = User.create(name: user_info[id][TAG_NAME_FULL],
-                           pic_url: @graph.get_picture(id),
-                           profile_url: user_info[id][TAG_PROFILE_LINK])
+
+        user = User.create!(name: user_info[id][TAG_NAME_FULL],
+                            pic_url_small: @graph.get_picture(id, width: "50",
+                                                              height: "50"),
+                            pic_url_medium: @graph.get_picture(id, width: "100",
+                                                               height: "100"),
+                            pic_url_large: @graph.get_picture(id, width: "200",
+                                                              height: "200"),
+                            profile_url: user_info[id][TAG_PROFILE_LINK])
       else
         puts "Found User #{user.name}"
       end
 
       msgs.each do |msg|
         # TODO:
-        # provide "probability" for each crush-user pair
+        # provide "probability" for each post-user pair
         # (based on: num mentions, first and last name in msg, etc.)
 
-        # TODO: make each crush associable with multiple users
-        # if not Crush.exists?(content: msg)
-        #   Crush.create content: msg, user_id: user.id
+        # TODO: make each post associable with multiple users
+        # if not Post.exists?(content: msg)
+        #   Post.create content: msg, user_id: user.id
         # end
 
-        Crush.create content: msg, user_id: user.id
+        Post.create content: msg, user_id: user.id
       end
     end
   end
