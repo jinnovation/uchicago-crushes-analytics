@@ -1,3 +1,11 @@
 * UChicago Crushes Analytics (working title)
 
-  Providing a convenient intuitive way to analyze posts.
+  Providing a convenient and intuitive way to analyze trends and patterns on
+  [[https://www.facebook.com/UChicagoCrushes][UChicago Crushes]].
+
+  Check it out at [[http://uchicago-crushes-analytics.herokuapp.com/]].
+
+** Credit Where It's Due
+
+   Much thanks to the (anonymous) creators and editors of [[https://www.facebook.com/UChicagoCrushes][the UChicago Crushes
+   Facebook page]], with whom this application is not affiliated
