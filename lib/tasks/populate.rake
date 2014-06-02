@@ -20,25 +20,30 @@ namespace :db do
   desc "Erase database, pull data from Facebook and use to populate database"
   task populate_fb: [:environment] do
 
-    posts = get_posts_with_comments()
+    posts_all = @graph.get_connections PAGE_NAME, "posts", "limit" => NUM_SEARCH.to_s
 
     usr_msgs = Hash.new { |h,k| h[k] = [] }
 
-    posts.each do |post|
-      msg = post["message"]
+    posts_all.each do |post|
+      if post[TAG_COMMENTS].nil?
+        msg  = post["message"]
+        time = DateTime.iso8601 post["created_time"]
+        
+        Post.create!(content: msg, fb_created_time: time)
+      else
+        comments_with_user_tags = post[TAG_COMMENTS][TAG_DATA].find_all do |cmt|
+          not cmt[TAG_MSG_TAGS].nil?
+        end
 
-      comments_with_user_tags = post[TAG_COMMENTS][TAG_DATA].find_all do |cmt|
-        not cmt[TAG_MSG_TAGS].nil?
-      end
+        comments_with_user_tags.each do |cmt|
+          cmt[TAG_MSG_TAGS].each do |tag|
+            next if not tag[TAG_TYPE]==TAG_USER
 
-      comments_with_user_tags.each do |cmt|
-        cmt[TAG_MSG_TAGS].each do |tag|
-          next if not tag[TAG_TYPE]==TAG_USER
-
-          # TODO: add post_url to each post
-          usr_msgs[tag[TAG_ID]].push msg
+            usr_msgs[tag[TAG_ID]].push post["message"]
+          end
         end
       end
+      
     end
 
     user_info = (@graph.get_objects usr_msgs.keys)
@@ -71,19 +76,19 @@ namespace :db do
         # if not Post.exists?(content: msg)
         #   Post.create content: msg, user_id: user.id
         # end
-
-        Post.create content: msg, user_id: user.id
+        
+        # TODO: find way to access post["created_time"] here
+        Post.create! content: msg, user_id: user.id
       end
     end
   end
 
-  def get_posts_with_comments()
-    posts = @graph.get_connections PAGE_NAME, "posts", "limit" => NUM_SEARCH.to_s
+  def get_posts_with_comments(posts)
     puts "NUMBER OF POSTS FETCHED = #{posts.size}"
 
     posts_with_comments = posts.find_all { |post| not post[TAG_COMMENTS].nil? }
     puts "NUMBER OF POSTS WITH COMMENTS = #{posts_with_comments.size}"
 
-    posts_with_comments
+    return posts_with_comments
   end
 end
