@@ -1,5 +1,5 @@
 .row
-  .col-lg-5
+  .col-lg-4
     %h1 Top Users
     .scrollable
       %table.table.table-striped
@@ -14,7 +14,7 @@
                     %h4= link_to user.name, user
                   = user.posts.length.to_s + " crushes"
 
-  .col-lg-7
+  .col-lg-8
     %h1 Latest Crushes
     .scrollable
       %table.table.table-striped
@@ -23,10 +23,10 @@
           %tr
             %td
               .media
-                = link_to image_tag(post.user.pic_url_medium, class: "media-object thumbnail"), post.user.profile_url, target: "_blank", class: "pull-right"
+                = link_to image_tag(if post.user.nil? then "holder.js/200x200" else post.user.pic_url_medium end, class: "media-object thumbnail"), if post.user.nil? then "#" else post.user.profile_url end , target: "_blank", class: "pull-right"
                 .media-body
                   .media-heading
-                    %h4= link_to post.user.name, post.user.profile_url, target: "_blank"
+                    %h4= if post.user.nil? then "BLANK" else link_to post.user.name, post.user.profile_url, target: "_blank" end
                   = link_to post.content, "#"
 
 .center
