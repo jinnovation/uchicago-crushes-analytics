@@ -2,9 +2,10 @@
 
 .row
   .col-lg-4
-    %p= "#{@user.name}"
-    %p= "#{pluralize(@user.crushes.length, "crush")}"
-    = link_to image_tag(@user.pic_url), @user.profile_url, target: "_blank"
+    %h1= "#{@user.name}"
+    %h2= "#{pluralize(@user.crushes.length, "crush")}"
+    .center
+      = link_to image_tag(@user.pic_url), @user.profile_url, target: "_blank"
     
   .col-lg-8
     %table.table.table-striped
