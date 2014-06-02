@@ -21,19 +21,19 @@
         %th Number of crushes
 
 
-      - (@users.sort_by {|user| user.crushes.size}).reverse.each_with_index do |user, i|
+      - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
         %tr
           %td= (i+1).to_s
           %td= link_to image_tag(user.pic_url), user
           %td= link_to user.name, user
-          %td= user.crushes.length
+          %td= user.posts.length
 
   .col-lg-8
     %h1 Latest Crushes
     %table.table.table-striped
 
-      - @crushes.each do |crush|
+      - @posts.each do |post|
         %tr
-          %td= link_to crush.content, "#"
-          %td= link_to crush.user.name, crush.user.profile_url, target: "_blank"
-          %td= link_to image_tag(crush.user.pic_url), crush.user.profile_url, target: "_blank"
+          %td= link_to post.content, "#"
+          %td= link_to post.user.name, post.user.profile_url, target: "_blank"
+          %td= link_to image_tag(post.user.pic_url), post.user.profile_url, target: "_blank"

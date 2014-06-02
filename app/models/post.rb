@@ -1,4 +1,4 @@
-class Crush < ActiveRecord::Base
+class Post < ActiveRecord::Base
   belongs_to :user
   # TODO: double-check attr_accessors
 

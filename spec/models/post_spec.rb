@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Crush do
+describe Post do
   it { should respond_to :content }
   it { should respond_to :user_id }
   it { should respond_to :post_url }
 
-  it "should not have duplicate crushes" do
+  it "should not have duplicate posts" do
     pending
   end
 

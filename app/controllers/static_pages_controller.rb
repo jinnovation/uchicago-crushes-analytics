@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
     @users = User.all
-    @crushes = Crush.all
+    @posts = Post.all
   end
 
   def about

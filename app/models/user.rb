@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   # TODO: double-check attr_accessors
-  has_many :crushes
+  has_many :posts
 
   validates :name, {
     presence: true,

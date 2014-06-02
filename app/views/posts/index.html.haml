@@ -1,0 +1,14 @@
+%h1 Recent Posts
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @posts.each do |post|
+    %tr
+      %td= link_to post.content, "#"
+      %td= link_to post.user.name, post.user.profile_url, target: "_blank"
+      %td= link_to image_tag(post.user.pic_url), post.user.profile_url, target: "_blank"
+%br

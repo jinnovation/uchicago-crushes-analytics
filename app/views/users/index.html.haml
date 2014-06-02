@@ -7,10 +7,10 @@
     %th Number of crushes
 
 
-  - (@users.sort_by {|user| user.crushes.size}).reverse.each do |user|
+  - (@users.sort_by {|user| user.posts.size}).reverse.each do |user|
     %tr
       %td= link_to image_tag(user.pic_url), user
       %td= link_to user.name, user
-      %td= user.crushes.length
+      %td= user.posts.length
 
 %br
