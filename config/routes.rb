@@ -1,10 +1,9 @@
 Crushes::Application.routes.draw do
   resources :posts
+  resources :users
 
   get "static_pages/about"
   get "static_pages/home"
-
-  resources :users
 
   root "static_pages#home"
 
