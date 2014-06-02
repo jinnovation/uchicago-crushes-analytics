@@ -70,7 +70,6 @@ h1 {
     font: 100% $font-stack-header;
     font-size: 3em;
     letter-spacing: -2px;
-    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -78,7 +77,7 @@ h2 {
     font: 100% Roboto;
     font-size: 1.2em;
     letter-spacing: -1px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     text-align: center;
     font-weight: normal;
     color: $gray-light;
@@ -123,11 +122,14 @@ p {
 /* footer */
 
 footer {
-    margin-top: 45px;
+    margin-top: 10px;
     padding-top: 5px;
     border-top: 1px solid #eaeaea;
     color: $gray-light;
 
+    .container {
+        margin-top: 10px;
+    }
     a {
 	color: #555;
 
