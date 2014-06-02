@@ -54,14 +54,34 @@ namespace :db do
               
               tagged_user = user_fb_create! tagged_user_data
               puts "User #{tagged_user_id}: CREATED"
+
+              crush_new = Crush.create!({ user_id: tagged_user.id,
+                                          post_id: post_curr.id,
+                                          num_tags: 1 })
+              puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
             else
               puts "User #{tagged_user_id}: FOUND; name #{tagged_user.name}"
+
+
+              crush_curr = Crush.where(user_id: tagged_user.id).where(post_id: post_curr.id)
+              if crush_curr.nil?
+                # no current association between post and user
+                puts "No Crush between user #{tagged_user.id} and post #{post_curr.id}"
+                crush_curr = Crush.create!({ user_id: tagged_user.id,
+                                             post_id: post_curr.id,
+                                             num_tags: 1 })
+              else
+                puts "Found Crush between user #{tagged_user.id} and post #{post_curr.id}"
+
+                if crush_curr.first.nil?
+                  puts "ERROR"
+                else
+                  crush_curr.first.num_tags += 1                  
+                end
+              end
             end
 
-            # TODO: associate post, tagged_user
-            crush_new = Crush.create!({ user_id: tagged_user.id,
-              post_id: post_curr.id })
-            puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
+
             
           end
         end
