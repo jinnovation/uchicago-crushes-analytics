@@ -8,9 +8,4 @@ class Post < ActiveRecord::Base
     presence: true,
     allow_blank: false,
   }
-
-  validates :user_id, {
-    presence: true,
-    allow_blank: false,
-  }
 end
