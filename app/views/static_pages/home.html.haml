@@ -22,6 +22,7 @@
         - @posts.each do |post|
           %tr
             %td
+              -# TODO: MOVE THIS SHIT INTO A HELPER
               .media
                 = link_to image_tag(if post.user.nil? then "holder.js/200x200" else post.user.pic_url_medium end, class: "media-object thumbnail"), if post.user.nil? then "#" else post.user.profile_url end , target: "_blank", class: "pull-right"
                 .media-body
