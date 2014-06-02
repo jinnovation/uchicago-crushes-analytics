@@ -18,69 +18,72 @@ namespace :db do
   end
 
   desc "Erase database, pull data from Facebook and use to populate database"
-  task populate_fb: [:environment] do
+  task populate_fb: :environment do
+    fb_posts_all = @graph.get_connections PAGE_NAME, "posts",
+                                       "limit" => NUM_SEARCH.to_s
 
-    posts_all = @graph.get_connections PAGE_NAME, "posts", "limit" => NUM_SEARCH.to_s
+    fb_posts_all.each do |fb_post|
+      msg = fb_post["message"]
+      time = DateTime.iso8601 fb_post["created_time"]
+      
+      # TODO: might need check if post already exists in db
+      post_curr = Post.create!(content: msg, fb_created_time: time)
 
-    usr_msgs = Hash.new { |h,k| h[k] = [] }
+      if not fb_post[TAG_COMMENTS].nil? # fb post has comments
+        fb_post_cmts = fb_post[TAG_COMMENTS][TAG_DATA]
 
-    posts_all.each do |post|
-      if post[TAG_COMMENTS].nil?
-        msg  = post["message"]
-        time = DateTime.iso8601 post["created_time"]
-        
-        Post.create!(content: msg, fb_created_time: time)
-      else
-        comments_with_user_tags = post[TAG_COMMENTS][TAG_DATA].find_all do |cmt|
+        fb_post_cmts_with_tags = fb_post_cmts.find_all do |cmt|
           not cmt[TAG_MSG_TAGS].nil?
         end
 
-        comments_with_user_tags.each do |cmt|
+        fb_post_cmts_with_user_tags = fb_post_cmts_with_tags.find_all do |cmt|
           cmt[TAG_MSG_TAGS].each do |tag|
-            next if not tag[TAG_TYPE]==TAG_USER
-
-            usr_msgs[tag[TAG_ID]].push post["message"]
+            tag[TAG_TYPE]==TAG_USER
           end
         end
-      end
-      
-    end
 
-    user_info = (@graph.get_objects usr_msgs.keys)
-    puts "NUMBER OF TAGGED USERS = #{user_info.size}"
+        fb_post_cmts_with_user_tags.each do |cmt|
+          cmt[TAG_MSG_TAGS].each do |tag|
+            tagged_user_id = tag[TAG_ID]
 
-    usr_msgs.each do |id, msgs|
-      user_full_name = user_info[id][TAG_NAME_FULL]
 
-      if (user = User.find_by_name user_full_name).nil?
-        puts "Creating User #{user_info[id][TAG_NAME_FULL]}"
+            if (tagged_user = User.find_by_fb_id(tagged_user_id)).nil?
+              # user not yet exist in db
+              puts "User #{tagged_user_id}: NOT FOUND"
+              tagged_user_data = @graph.get_object tagged_user_id
+              
+              tagged_user = user_fb_create! tagged_user_data
+              puts "User #{tagged_user_id}: CREATED"
+            else
+              puts "User #{tagged_user_id}: FOUND; name #{tagged_user.name}"
+            end
 
-        user = User.create!(name: user_info[id][TAG_NAME_FULL],
-                            pic_url_small: @graph.get_picture(id, width: "50",
-                                                              height: "50"),
-                            pic_url_medium: @graph.get_picture(id, width: "100",
-                                                               height: "100"),
-                            pic_url_large: @graph.get_picture(id, width: "200",
-                                                              height: "200"),
-                            profile_url: user_info[id][TAG_PROFILE_LINK])
+            # TODO: associate post, tagged_user
+            crush_new = Crush.create!({ user_id: tagged_user.id,
+              post_id: post_curr.id })
+            puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
+            
+          end
+        end
       else
-        puts "Found User #{user.name}"
-      end
-
-      msgs.each do |msg|
-        # TODO:
-        # provide "probability" for each post-user pair
-        # (based on: num mentions, first and last name in msg, etc.)
-
-        # TODO: make each post associable with multiple users
-        # if not Post.exists?(content: msg)
-        #   Post.create content: msg, user_id: user.id
-        # end
-        
-        # TODO: find way to access post["created_time"] here
-        Post.create! content: msg, user_id: user.id
-      end
+        puts "Post: targetless"
+      end      
     end
+  end
+
+  def user_fb_create!(fb_data)
+    User.create!(name: fb_data[TAG_NAME_FULL],
+                 fb_id: fb_data["id"],
+                 pic_url_small: @graph.get_picture(fb_data["id"],
+                                                   width: "50",
+                                                   height: "50"),
+                 pic_url_medium: @graph.get_picture(fb_data["id"],
+                                                    width: "100",
+                                                    height:"100"),
+                 pic_url_large: @graph.get_picture(fb_data["id"],
+                                                   width: "200",
+                                                   height: "200"),
+                 profile_url: fb_data[TAG_PROFILE_LINK])
   end
 
   def get_posts_with_comments(posts)

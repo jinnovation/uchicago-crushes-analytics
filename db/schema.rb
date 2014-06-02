@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140602162700) do
+ActiveRecord::Schema.define(version: 20140602193142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140602162700) do
     t.text     "pic_url_small"
     t.text     "pic_url_medium"
     t.text     "pic_url_large"
+    t.text     "fb_id"
   end
 
 end

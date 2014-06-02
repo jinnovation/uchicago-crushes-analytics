@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
-  belongs_to :user
+  has_many :crushes
+  has_many :users, through: :crushes
+
   # TODO: double-check attr_accessors
 
   # TODO: add facebook timestamp
