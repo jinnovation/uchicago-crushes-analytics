@@ -1,5 +1,5 @@
 .row
-  .col-lg-4
+  .col-lg-3
     %h1 Top Users
     .scrollable
       %table.table.table-striped
@@ -14,20 +14,20 @@
                     %h4= link_to user.name, user
                   = user.posts.length.to_s + " crushes"
 
-  .col-lg-8
+  .col-lg-9
+    .jumbotron
+      %h1 STUFF
     %h1 Latest Crushes
     .scrollable
       %table.table.table-striped
 
-        - @posts.each do |post|
+        - @posts.sort_by {|post| post.fb_created_time}.reverse.each do |post|
           %tr
             %td
-              -# TODO: MOVE THIS SHIT INTO A HELPER
               .media
-                = link_to image_tag(if post.user.nil? then "holder.js/200x200" else post.user.pic_url_medium end, class: "media-object thumbnail"), if post.user.nil? then "#" else post.user.profile_url end , target: "_blank", class: "pull-right"
                 .media-body
                   .media-heading
-                    %h4= if post.user.nil? then "BLANK" else link_to post.user.name, post.user.profile_url, target: "_blank" end
+                    %h4= post.fb_created_time.strftime("%B %d, %Y %l:%M %p")
                   = link_to post.content, "#"
 
 .center
