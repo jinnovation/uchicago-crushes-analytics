@@ -1,0 +1,13 @@
+%h2 Top Users
+.scrollable
+  %table.table.table-striped
+    - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
+      %tr
+        %td= (i+1).to_s
+        %td
+          .media
+            = link_to image_tag(user.pic_url_medium, class: "media-object thumbnail"), user, class: "pull-left"
+            .media-body
+              .media-heading
+                %h4= link_to user.name, user
+              = user.posts.length.to_s + " crushes"

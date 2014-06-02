@@ -1,34 +1,10 @@
 .row
   .col-lg-3
-    %h1 Top Users
-    .scrollable
-      %table.table.table-striped
-        - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
-          %tr
-            %td= (i+1).to_s
-            %td
-              .media
-                = link_to image_tag(user.pic_url_medium, class: "media-object thumbnail"), user, class: "pull-left"
-                .media-body
-                  .media-heading
-                    %h4= link_to user.name, user
-                  = user.posts.length.to_s + " crushes"
+    = render "layouts/user_tabulate"
 
   .col-lg-9
-    .jumbotron
-      %h1 STUFF
-    %h1 Latest Crushes
-    .scrollable
-      %table.table.table-striped
-
-        - @posts.sort_by {|post| post.fb_created_time}.reverse.each do |post|
-          %tr
-            %td
-              .media
-                .media-body
-                  .media-heading
-                    %h4= post.fb_created_time.strftime("%B %d, %Y %l:%M %p")
-                  = link_to post.content, "#"
+    = render "layouts/dashboard"
+    = render "layouts/post_tabulate"
 
 .center
   Last updated: when-the-hell-ever
