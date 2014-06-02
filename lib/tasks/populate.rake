@@ -27,7 +27,8 @@ namespace :db do
       time = DateTime.iso8601 fb_post["created_time"]
       
       # TODO: might need check if post already exists in db
-      post_curr = Post.create!(content: msg, fb_created_time: time)
+      post_curr = Post.create!(content: msg, fb_created_time: time,
+                               post_url: FB_URL_BASE + fb_post["id"])
 
       if not fb_post[TAG_COMMENTS].nil? # fb post has comments
         fb_post_cmts = fb_post[TAG_COMMENTS][TAG_DATA]
