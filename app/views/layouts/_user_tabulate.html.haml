@@ -9,4 +9,4 @@
           .media-body
             .media-heading
               %h4= link_to user.full_name, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
-            = user.posts.length.to_s + " crushes"
+            = pluralize user.posts.length, "crush"
