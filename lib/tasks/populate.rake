@@ -1,6 +1,7 @@
 # TODO
 # - only pull results that are new from last pull time
 #   - save last pull time
+# - periodically refresh/replace user profile pic URLs
 
 namespace :db do
   desc "Erase database, pull data from Facebook and use to populate database"
