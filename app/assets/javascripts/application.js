@@ -16,7 +16,10 @@
 //= require_tree .
 //= require holder
 //= require bootstrap/modal
+//= require bootstrap/carousel
+//= require bootstrap/transition
 
 $('#homepage-info-modal').on('hidden.bs.modal', function () {
     $(this).removeData('bs.modal');
 });
+
