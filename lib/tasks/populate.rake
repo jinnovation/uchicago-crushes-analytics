@@ -8,9 +8,16 @@ namespace :db do
   task populate_fb: :environment do
     fb_posts_all = @graph.get_connections PAGE_NAME, "posts",
                                        "limit" => NUM_SEARCH.to_s
+    puts "NUMBER OF POSTS FETCHED = #{fb_posts_all.size}"
 
-    fb_posts_all.each do |fb_post|
+    fb_posts_with_msgs = fb_posts_all.find_all do |post|
+      not post["message"].nil?
+    end
+    puts "NUMBER OF POSTS WITH MESSAGES = #{fb_posts_with_msgs.size}"
+
+    fb_posts_with_msgs.each do |fb_post|
       # TODO: need way to update previously-untagged posts with tags
+      
       post_curr = post_fb_create! fb_post
 
       if not fb_post[TAG_COMMENTS].nil? # fb post has comments
@@ -41,9 +48,8 @@ namespace :db do
             else
               puts "User #{tagged_user_id}: FOUND; name #{tagged_user.full_name}"
 
-
-              crush_curr = Crush.where(user_id: tagged_user.id).where(post_id: post_curr.id)
-              if crush_curr.nil?
+              crush_curr = Crush.where(user_id: tagged_user.id, post_id: post_curr.id)
+              if crush_curr.empty?
                 # no current association between post and user
                 puts "No Crush between user #{tagged_user.id} and post #{post_curr.id}"
                 crush_curr = Crush.create!({ user_id: tagged_user.id,
