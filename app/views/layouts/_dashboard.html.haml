@@ -3,6 +3,7 @@
     %li.active{"data-target"=>"#dashboard", "data-slide-to"=>"0"}
     %li{"data-target"=>"#dashboard", "data-slide-to"=>"1"}
     %li{"data-target"=>"#dashboard", "data-slide-to"=>"2"}
+    %li{"data-target"=>"#dashboard", "data-slide-to"=>"3"}
         
   .carousel-inner
     .item.active
@@ -15,6 +16,12 @@
                 <input type="text" class="form-control" placeholder="Search for someone"/>
             .col-lg-6
               = link_to "Submit a crush", CRUSHES_SUBMIT_URL, { target: "_blank", class: "btn btn-primary" }
+    .item
+      = holder_tag "900x250", "Metrics"
+    .item
+      = holder_tag "900x250", "Latest Crush Breakdown"
+    .item
+      = holder_tag "900x250", "Your Info"
 
   %a.left.carousel-control{"href"=>"#dashboard", "data-slide"=>"prev"}
     %span.glyphicon.glyphicon-chevron-left
