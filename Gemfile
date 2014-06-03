@@ -9,6 +9,9 @@ gem "koala", "~> 1.10.0rc"
 gem 'haml-rails'
 gem 'sass-rails', '~> 4.0.0'
 
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+
 gem 'bootstrap-sass'
 
 # Use Uglifier as compressor for JavaScript assets
