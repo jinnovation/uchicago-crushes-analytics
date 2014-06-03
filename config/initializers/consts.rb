@@ -1,4 +1,4 @@
-APP_NAME = "UChiCrushers"
+APP_NAME = "UChiCrushes"
 APP_AUTHOR = "Jonathan Jin"
 
 PAGE_NAME = "UChicagoCrushes"
