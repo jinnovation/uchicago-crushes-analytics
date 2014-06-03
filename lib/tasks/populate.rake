@@ -98,6 +98,6 @@ namespace :db do
   def post_fb_create!(fb_data)
     Post.create!({ content: fb_data["message"],
                    fb_created_time: DateTime.iso8601(fb_data["created_time"]),
-                   post_url: FB_URL_BASE + fb_data["id"] })
+                   fb_id: fb_data["id"] })
   end
 end

@@ -10,4 +10,8 @@ class Post < ActiveRecord::Base
     presence: true,
     allow_blank: false,
   }
+
+  def fb_url
+    FB_URL_BASE + self.fb_id
+  end
 end
