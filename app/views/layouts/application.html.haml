@@ -6,6 +6,8 @@
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
     
+  = render "layouts/homepage_info"
+  
   = render 'layouts/header' unless @disable_header
   = yield
   = render 'layouts/footer' unless @disable_footer
