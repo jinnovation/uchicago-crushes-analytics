@@ -4,6 +4,7 @@
 # - periodically refresh/replace user profile pic URLs
 
 namespace :db do
+
   desc "Erase database, pull data from Facebook and use to populate database"
   task populate_fb: :environment do
     fb_posts_all = @graph.get_connections PAGE_NAME, "posts",
