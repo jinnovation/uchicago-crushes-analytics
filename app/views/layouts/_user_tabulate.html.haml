@@ -2,13 +2,11 @@
 .scrollable
   %table.table.table-striped
     - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
-      %tr
+      %tr{:'data-toggle'=>"modal", :'data-target'=>"#user-info-modal"}
         %td= (i+1).to_s
-        %td
-          .media
-            = link_to image_tag(user.pic_url_medium, class: "media-object img-rounded img-thumbnail img-responsive"), user, class: "pull-left"
-            .media-body
-              .media-heading
-                -# TODO: use a modal
-                %h4= link_to user.full_name, user
-              = user.posts.length.to_s + " crushes"
+        %td.media
+          = image_tag(user.pic_url_medium, class: "media-object img-rounded img-thumbnail img-responsive pull-left")
+          .media-body
+            .media-heading
+              %h4=user.full_name
+            = user.posts.length.to_s + " crushes"
