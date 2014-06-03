@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @disable_header = true
+    @disable_footer = true
   end
 
   # GET /users/new
