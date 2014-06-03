@@ -1,8 +1,10 @@
 - post_user = post.user_highest_score
-- post_pic = if not post_user.nil? then image_tag(post_user.pic_url_medium, class: "media-object thumbnail img-responsive pull-right") else holder_tag("100x100", "Unknown", class: "media-object thumbnail img-responsive pull-right") end
+- post_pic = if not post_user.nil? then image_tag(post_user.pic_url_medium) else holder_tag("100x100", "Unknown") end
 %td.media
-  = link_to post_pic, "#", class: "pull-right"
-  %p{class:"pull-right"}= if post_user.nil? then "" else post_user.quotient(post).to_s end
+  .thumbnail.pull-right.media-object.img-responsive
+    = post_pic
+    .caption.center
+      = if post_user.nil? then "" else post_user.quotient(post).to_s end
   .media-body
     .media-heading
       -# TODO: modal contain facebook post
