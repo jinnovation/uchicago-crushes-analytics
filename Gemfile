@@ -50,6 +50,7 @@ group :development, :test do
   gem 'faker'
   gem 'populator'
   gem 'foreman'
+  gem 'holder_rails'
 
   gem "rspec-rails"
   gem 'capybara'
