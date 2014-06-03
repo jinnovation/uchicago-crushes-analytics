@@ -2,9 +2,9 @@
   %head
     %title= APP_NAME
     = stylesheet_link_tag "application",
-    { media: "all", "data-turbolinks-track" => true }
-    = javascript_include_tag "application", "data-turbolinks-track" => true
-    = csrf_meta_tags
+    { media: "all", "data-turbolinks-track" => true } unless @disable_css
+    = javascript_include_tag "application", "data-turbolinks-track" => true unless @disable_js
+    = csrf_meta_tags unless @disable_csrf
     
   = render "layouts/homepage_info"
   

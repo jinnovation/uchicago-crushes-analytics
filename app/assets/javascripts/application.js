@@ -15,8 +15,8 @@
 //= require turbolinks
 //= require_tree .
 //= require holder
-//= require bootstrap
+//= require bootstrap/modal
 
 $('#homepage-info-modal').on('hidden.bs.modal', function () {
-    $(this).removeData('bs.modal')
-})
+    $(this).removeData('bs.modal');
+});

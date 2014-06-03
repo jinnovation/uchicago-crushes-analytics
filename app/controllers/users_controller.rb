@@ -12,6 +12,8 @@ class UsersController < ApplicationController
   def show
     @disable_header = true
     @disable_footer = true
+    @disable_css    = true
+    @disable_csrf   = true
   end
 
   # GET /users/new

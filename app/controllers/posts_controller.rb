@@ -12,6 +12,8 @@ class PostsController < ApplicationController
   def show
     @disable_header = true
     @disable_footer = true
+    @disable_css    = true
+    @disble_csrf    = true
   end
 
   # POST /posts
