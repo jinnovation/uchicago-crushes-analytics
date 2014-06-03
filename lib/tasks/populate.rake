@@ -10,9 +10,7 @@ namespace :db do
                                        "limit" => NUM_SEARCH.to_s
     puts "NUMBER OF POSTS FETCHED = #{fb_posts_all.size}"
 
-    fb_posts_with_msgs = fb_posts_all.find_all do |post|
-      not post["message"].nil?
-    end
+    fb_posts_with_msgs = fb_posts_all.find_all { |post| not post[TAG_MSG].nil? }
     puts "NUMBER OF POSTS WITH MESSAGES = #{fb_posts_with_msgs.size}"
 
     fb_posts_with_msgs.each do |fb_post|
@@ -57,17 +55,9 @@ namespace :db do
                                              num_tags: 1 })
               else
                 puts "Found Crush between user #{tagged_user.id} and post #{post_curr.id}"
-
-                if crush_curr.first.nil?
-                  puts "ERROR"
-                else
-                  crush_curr.first.num_tags += 1                  
-                end
+                crush_curr.first.num_tags += 1                  
               end
-            end
-
-
-            
+            end            
           end
         end
       else
@@ -77,13 +67,13 @@ namespace :db do
   end
 
   def user_fb_create!(fb_data)
-    User.create!(first_name: fb_data["first_name"],
-                 last_name: fb_data["last_name"],
-                 fb_id: fb_data["id"],
-                 pic_url_small: @graph.get_picture(fb_data["id"],
+    User.create!(first_name: fb_data[TAG_FIRST_NAME],
+                 last_name: fb_data[TAG_LAST_NAME],
+                 fb_id: fb_data[TAG_ID],
+                 pic_url_small: @graph.get_picture(fb_data[TAG_ID],
                                                    width: "50",
                                                    height: "50"),
-                 pic_url_medium: @graph.get_picture(fb_data["id"],
+                 pic_url_medium: @graph.get_picture(fb_data[TAG_ID],
                                                     width: "100",
                                                     height:"100"),
                  pic_url_large: @graph.get_picture(fb_data["id"],
@@ -102,8 +92,8 @@ namespace :db do
   end
 
   def post_fb_create!(fb_data)
-    Post.create!({ content: fb_data["message"],
-                   fb_created_time: DateTime.iso8601(fb_data["created_time"]),
-                   fb_id: fb_data["id"] })
+    Post.create!({ content: fb_data[TAG_MSG],
+                   fb_created_time: DateTime.iso8601(fb_data[TAG_TIME]),
+                   fb_id: fb_data[TAG_ID] })
   end
 end
