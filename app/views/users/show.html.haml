@@ -1,14 +1,15 @@
-%p#notice= notice
-
-.row
-  .col-lg-4
-    %h1= "#{@user.full_name}"
-    %h2= "#{pluralize(@user.posts.length, "crushes")}"
-    .center
-      = link_to image_tag(@user.pic_url_large), @user.profile_url, target: "_blank"
-    
-  .col-lg-8
-    %table.table.table-striped
-      - @user.posts.each do |post|
-        %tr
-          %td= post.content
+.modal-header
+  %button.close{"aria-hidden" => "true", :'data-dismiss' => "modal", type: "button"} ×
+  %h4#user-info-modal-label.modal-title
+    = @user.full_name
+#user-info-modal-body.modal-body
+  .row
+    .col-lg-4
+      = link_to image_tag(@user.pic_url_large, class: "img-rounded img-thumbnail img-responsive"), @user.profile_url, target: "_blank"
+    .col-lg-8
+      %table.table.table-striped
+        - @user.posts.each do |post|
+          %tr
+            %td= post.content
+.modal-footer
+  %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close

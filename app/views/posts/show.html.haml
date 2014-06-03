@@ -1,6 +1,7 @@
-%p#notice= notice
-
-
-= link_to 'Edit', edit_post_path(@post)
-\|
-= link_to 'Back', posts_path
+.modal-header
+  %button.close{"aria-hidden" => "true", :'data-dismiss' => "modal", type: "button"} ×
+  %h4#post-info-modal-label.modal-title POST HEADER HERE
+.modal-body
+  POST INFO HERE
+.modal-footer
+  %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
