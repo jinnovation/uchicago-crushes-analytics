@@ -49,12 +49,13 @@ group :development, :test do
   gem 'faker'
   gem 'populator'
   gem 'foreman'
-  gem 'holder_rails'
 
   gem "rspec-rails"
   gem 'capybara'
   gem 'factory_girl_rails'
 end
+
+gem 'holder_rails'
 
 group :production do
   gem 'rails_12factor', '0.0.2'
