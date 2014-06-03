@@ -3,20 +3,6 @@
 #   - save last pull time
 
 namespace :db do
-  desc "Erase database and fill with sample data"
-  task populate: :environment do
-    Rake::Task["db:reset"].invoke
-
-    User.populate 10 do |user|
-      user.name = Faker::Name.name
-
-      Post.populate 5..10 do |post|
-        post.content = Faker::Lorem.sentences(10..13)
-        post.user_id = user.id
-      end
-    end
-  end
-
   desc "Erase database, pull data from Facebook and use to populate database"
   task populate_fb: [:environment] do
 
