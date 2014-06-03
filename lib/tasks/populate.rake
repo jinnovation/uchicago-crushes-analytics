@@ -56,7 +56,7 @@ namespace :db do
                                           num_tags: 1 })
               puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
             else
-              puts "User #{tagged_user_id}: FOUND; name #{tagged_user.name}"
+              puts "User #{tagged_user_id}: FOUND; name #{tagged_user.full_name}"
 
 
               crush_curr = Crush.where(user_id: tagged_user.id).where(post_id: post_curr.id)
@@ -88,7 +88,8 @@ namespace :db do
   end
 
   def user_fb_create!(fb_data)
-    User.create!(name: fb_data[TAG_NAME_FULL],
+    User.create!(first_name: fb_data["first_name"],
+                 last_name: fb_data["last_name"],
                  fb_id: fb_data["id"],
                  pic_url_small: @graph.get_picture(fb_data["id"],
                                                    width: "50",

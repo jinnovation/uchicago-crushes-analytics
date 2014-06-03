@@ -3,7 +3,12 @@ class User < ActiveRecord::Base
   has_many :crushes
   has_many :posts, through: :crushes
 
-  validates :name, {
+  validates :first_name, {
+    presence: true,
+    allow_blank: false,
+  }
+
+  validates :last_name, {
     presence: true,
     allow_blank: false,
   }
@@ -22,6 +27,10 @@ class User < ActiveRecord::Base
     presence: true,
     allow_blank: false,
   }
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
   # def fb_create!(fb_data)
   #   User.create!(name: fb_data[TAG_NAME_FULL],
