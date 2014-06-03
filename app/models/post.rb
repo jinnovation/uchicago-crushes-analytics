@@ -4,9 +4,7 @@ class Post < ActiveRecord::Base
 
   # TODO: double-check attr_accessors
 
-  # TODO: add facebook timestamp
-  
-  validates :content, {
+  validates :content, :fb_created_time, :fb_id, {
     presence: true,
     allow_blank: false,
   }

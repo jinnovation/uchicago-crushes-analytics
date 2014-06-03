@@ -3,27 +3,7 @@ class User < ActiveRecord::Base
   has_many :crushes
   has_many :posts, through: :crushes
 
-  validates :first_name, {
-    presence: true,
-    allow_blank: false,
-  }
-
-  validates :last_name, {
-    presence: true,
-    allow_blank: false,
-  }
-
-  validates :pic_url_small, {
-    presence: true,
-    allow_blank: false,
-  }
-
-  validates :pic_url_medium, {
-    presence: true,
-    allow_blank: false,
-  }
-
-  validates :pic_url_large, {
+  validates :first_name, :last_name, :pic_url_small, :pic_url_medium, :pic_url_large, {
     presence: true,
     allow_blank: false,
   }
