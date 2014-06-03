@@ -11,6 +11,13 @@ $uchi-blue-dark    : #0F425C;
 
 $font-stack-header: Oswald, Helvetica, sans-serif;
 
+#homepage {
+    [class*="col-"] {
+        position: relative;
+    height: 100%;
+    }   
+}
+
 .jumbotron {
     .input-group {
         width: 100%;
@@ -20,9 +27,14 @@ $font-stack-header: Oswald, Helvetica, sans-serif;
     }
 }
 
+#post-table {
+    height: 50%;
+}
+
 .scrollable {
     overflow: auto;
     height: 80%;
+    position: absolute;
 }
 
 

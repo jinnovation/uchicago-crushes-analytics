@@ -1,4 +1,4 @@
-.scrollable
+#post-table.scrollable
   %table.table.table-striped
 
     - @posts.sort_by {|post| post.fb_created_time}.reverse.each do |post|
