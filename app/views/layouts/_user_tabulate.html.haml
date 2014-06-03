@@ -8,5 +8,5 @@
           = image_tag(user.pic_url_medium, class: "media-object img-rounded img-thumbnail img-responsive pull-left")
           .media-body
             .media-heading
-              %h4= link_to user.full_name, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal"}
+              %h4= link_to user.full_name, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
             = user.posts.length.to_s + " crushes"
