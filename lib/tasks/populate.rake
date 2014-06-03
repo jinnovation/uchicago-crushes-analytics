@@ -71,14 +71,14 @@ namespace :db do
                  last_name: fb_data[TAG_LAST_NAME],
                  fb_id: fb_data[TAG_ID],
                  pic_url_small: @graph.get_picture(fb_data[TAG_ID],
-                                                   width: "50",
-                                                   height: "50"),
+                                                   width: IMG_DIM_S_W,
+                                                   height: IMG_DIM_S_H),
                  pic_url_medium: @graph.get_picture(fb_data[TAG_ID],
-                                                    width: "100",
-                                                    height:"100"),
-                 pic_url_large: @graph.get_picture(fb_data["id"],
-                                                   width: "200",
-                                                   height: "200"),
+                                                    width: IMG_SIM_M_W,
+                                                    height: IMG_SIM_M_H),
+                 pic_url_large: @graph.get_picture(fb_data[TAG_ID],
+                                                   width: IMG_DIM_L_W,
+                                                   height: IMG_DIM_L_H),
                  profile_url: fb_data[TAG_PROFILE_LINK])
   end
 
