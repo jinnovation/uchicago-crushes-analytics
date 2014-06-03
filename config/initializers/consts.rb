@@ -24,3 +24,4 @@ IMG_DIM_M_W = "100"
 
 IMG_DIM_L_H = "200"
 IMG_DIM_L_W = "200"
+POST_TIME_DISP_FMT = "%B %d, %Y %l:%M %p"
