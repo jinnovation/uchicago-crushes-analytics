@@ -1,0 +1,3 @@
+.thumbnail
+  = if not user.nil? then image_tag(user.pic_url_medium) else holder_tag("100x100", "Unknown") end
+  .caption.center= if user.nil? then "" else user.quotient(post).to_s end

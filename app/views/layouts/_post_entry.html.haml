@@ -1,10 +1,7 @@
 - post_user = post.user_highest_score
-- post_pic = if not post_user.nil? then image_tag(post_user.pic_url_medium) else holder_tag("100x100", "Unknown") end
 %td.media
-  .thumbnail.pull-right.media-object.img-responsive
-    = post_pic
-    .caption.center
-      = if post_user.nil? then "" else post_user.quotient(post).to_s end
+  .pull-right.media-object.img-responsive
+    = render "layouts/user_thumbnail", user: post_user, post: post
   .media-body
     .media-heading
       -# TODO: modal contain facebook post
