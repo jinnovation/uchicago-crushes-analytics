@@ -1,16 +1,1 @@
-%h1 All Users
-
-%table.table.table-striped
-  %tr
-    %th
-    %th Name
-    %th Number of crushes
-
-
-  - (@users.sort_by {|user| user.posts.size}).reverse.each do |user|
-    %tr
-      %td= link_to image_tag(user.pic_url), user
-      %td= link_to user.name, user
-      %td= user.posts.length
-
-%br
+= render "layouts/user_tabulate"

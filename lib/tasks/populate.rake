@@ -9,12 +9,8 @@ namespace :db do
                                        "limit" => NUM_SEARCH.to_s
 
     fb_posts_all.each do |fb_post|
-      msg = fb_post["message"]
-      time = DateTime.iso8601 fb_post["created_time"]
-      
-      # TODO: might need check if post already exists in db
-      post_curr = Post.create!(content: msg, fb_created_time: time,
-                               post_url: FB_URL_BASE + fb_post["id"])
+      # TODO: need way to update previously-untagged posts with tags
+      post_curr = post_fb_create! fb_post
 
       if not fb_post[TAG_COMMENTS].nil? # fb post has comments
         fb_post_cmts = fb_post[TAG_COMMENTS][TAG_DATA]
@@ -96,5 +92,11 @@ namespace :db do
     puts "NUMBER OF POSTS WITH COMMENTS = #{posts_with_comments.size}"
 
     return posts_with_comments
+  end
+
+  def post_fb_create!(fb_data)
+    Post.create!({ content: fb_data["message"],
+                   fb_created_time: DateTime.iso8601(fb_data["created_time"]),
+                   post_url: FB_URL_BASE + fb_data["id"] })
   end
 end
