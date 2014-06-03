@@ -37,16 +37,11 @@ namespace :db do
           not cmt[TAG_MSG_TAGS].nil?
         end
 
-        fb_post_cmts_with_user_tags = fb_post_cmts_with_tags.find_all do |cmt|
-          cmt[TAG_MSG_TAGS].each do |tag|
-            tag[TAG_TYPE]==TAG_USER
-          end
-        end
+        fb_post_cmts_with_tags.each do |cmt|
+          next if cmt[TAG_MSG_TAGS].any? { |tag| tag[TAG_TYPE]!=TAG_USER }
 
-        fb_post_cmts_with_user_tags.each do |cmt|
           cmt[TAG_MSG_TAGS].each do |tag|
             tagged_user_id = tag[TAG_ID]
-
 
             if (tagged_user = User.find_by_fb_id(tagged_user_id)).nil?
               # user not yet exist in db
