@@ -16,23 +16,33 @@ describe Post do
 
   it { should be_valid }
 
-  describe "when content is not present" do
-    before { @post.content = "" }
-    it { should_not be_valid }
+  describe "when content is" do
+    describe "nil" do
+      before { @post.content = nil }
+      it { should_not be_valid }
+    end
+
+    describe "not present" do
+      before { @post.content = "" }
+      it { should_not be_valid }      
+    end
   end
 
-  describe "when fb_id is not present" do
-    before { @post.fb_id = "" }
-    it { should_not be_valid }
+  describe "when fb_id is" do
+    describe "nil" do
+      before { @post.fb_id = nil }
+      it { should_not be_valid }
+    end
+
+    describe "not present" do
+      before { @post.fb_id = "" }
+      it { should_not be_valid }
+    end
   end
 
   describe "when fb_created_time is not present" do
     before { @post.fb_created_time = nil }
     it { should_not be_valid }
-  end
-
-  it "should not have a duplicate" do
-    pending
   end
 
 end
