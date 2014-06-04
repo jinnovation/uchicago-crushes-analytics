@@ -8,6 +8,10 @@ class Crush < ActiveRecord::Base
     allow_blank: false,
   }
 
+  validates :user_id, {
+    uniqueness: { scope: :post_id }
+  }
+
   validates :num_tags, {
     numericality: { greater_than: 0 },
   }

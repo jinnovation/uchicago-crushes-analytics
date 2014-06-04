@@ -24,12 +24,26 @@ describe Crush do
     it { should_not be_valid }
   end
 
-  describe "when num_tags == 0" do
-    before { @crush.num_tags = 0 }
-    it { should_not be_valid }
+  describe "when num_tags" do
+    describe "== 0" do      
+      before { @crush.num_tags = 0 }
+      it { should_not be_valid }
+    end
+
+    describe "< 0" do
+      before { @crush.num_tags = -1 }
+      it { should_not be_valid }
+    end
   end
 
-  it "should not have multiple for a single user" do
-    pending
+  describe "when it has the same user_id and post_id as another Crush" do
+    before do
+      @crush_dup_ids = Crush.new(user_id: 1, post_id: 1, num_tags: 5, quotient: 0.2)
+    end
+
+    subject { @crush_dup_ids }
+    
+    it { should_not be_valid }
   end
+  
 end
