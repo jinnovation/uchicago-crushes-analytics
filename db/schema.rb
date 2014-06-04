@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140603201233) do
+ActiveRecord::Schema.define(version: 20140604062848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20140603201233) do
     t.integer  "num_tags"
     t.float    "quotient"
   end
+
+  add_index "crushes", ["user_id", "post_id"], name: "index_crushes_on_user_id_and_post_id", unique: true, using: :btree
 
   create_table "posts", force: true do |t|
     t.text     "content"
