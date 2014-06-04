@@ -5,11 +5,13 @@ describe "Static pages" do
 
   shared_examples_for "all static pages" do
     describe "should have a header" do
-      pending
+      describe "with a navbar" do
+        it { should have_selector "nav" }
+      end
     end
 
     describe "should have a footer" do
-      pending
+      it { should have_selector "footer" }
     end
   end
   
@@ -21,7 +23,19 @@ describe "Static pages" do
     it { should have_content APP_NAME }
 
     describe "dashboard" do
-      pending
+      describe "has an Actions pane" do
+        pending
+      end
+
+      describe "has a Metrics pane" do
+        pending
+      end
+
+      describe "Latest Crush Breakdown pane" do
+        describe "displays the newest Post" do
+          pending
+        end
+      end
     end
 
     describe "user listing" do

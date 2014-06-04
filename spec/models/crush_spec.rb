@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples'
 
 describe Crush do
   before do
@@ -14,26 +15,20 @@ describe Crush do
 
   it { should be_valid }
 
-  describe "when user_id is not present" do
-    before { @crush.user_id = nil }
-    it { should_not be_valid }
+  describe "user_id" do
+    subject { @crush.user_id }    
+    it_behaves_like "table entry"
   end
 
-  describe "when post_id is not present" do
-    before { @crush.post_id = nil }
-    it { should_not be_valid }
+  describe "post_id" do
+    subject { @crush.post_id }
+    it_behaves_like "table entry"
   end
 
-  describe "when num_tags" do
-    describe "== 0" do      
-      before { @crush.num_tags = 0 }
-      it { should_not be_valid }
-    end
-
-    describe "< 0" do
-      before { @crush.num_tags = -1 }
-      it { should_not be_valid }
-    end
+  describe "num_tags" do
+    subject { @crush.num_tags }
+    it_behaves_like "table entry"
+    it_behaves_like "positive integer"
   end
 
   describe "when it has the same user_id and post_id as another Crush" do
