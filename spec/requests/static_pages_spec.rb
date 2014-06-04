@@ -19,5 +19,17 @@ describe "Static pages" do
     it_should_behave_like "all static pages"
     
     it { should have_content APP_NAME }
+
+    describe "dashboard" do
+      pending
+    end
+
+    describe "user listing" do
+      pending
+    end
+
+    describe "crush listing" do
+      pending
+    end
   end
 end

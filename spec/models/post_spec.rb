@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe Post do
   it { should respond_to :content }
-  it { should respond_to :user_id }
-  it { should respond_to :post_url }
+  it { should respond_to :fb_url }
+  it { should respond_to :fb_id }
+  it { should respond_to :fb_created_time }
 
   it "should not have duplicate posts" do
     pending
