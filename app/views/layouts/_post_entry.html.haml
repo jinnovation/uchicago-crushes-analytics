@@ -1,7 +1,6 @@
-- post_user = post.user_highest_score
 %td.media
   .pull-right.media-object.img-responsive
-    = render "layouts/user_thumbnail", user: post_user, post: post
+    = render "layouts/user_thumbnail_caption", user: post.user_highest_score, post: post
   .media-body
     .media-heading
       -# TODO: modal contain facebook post
