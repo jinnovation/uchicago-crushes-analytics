@@ -30,4 +30,9 @@ class User < ActiveRecord::Base
   #                                                  height: "200"),
   #                profile_url: fb_data[TAG_PROFILE_LINK])
   # end
+  # TODO: move this into Crush relation
+  def quotient(post)
+    # TODO: placeholder
+    Random.rand(100).to_f / 100
+  end
 end

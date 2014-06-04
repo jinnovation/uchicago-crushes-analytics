@@ -3,5 +3,8 @@
   %h4#post-info-modal-label.modal-title POST HEADER HERE
 .modal-body
   = @post.content
+  %ul.list-inline
+    - @post.users.each do |user|
+      %li= user.full_name
 .modal-footer
   %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close

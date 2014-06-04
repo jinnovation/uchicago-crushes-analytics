@@ -12,4 +12,9 @@ class Post < ActiveRecord::Base
   def fb_url
     FB_URL_BASE + self.fb_id
   end
+
+  def user_highest_score
+    # FIXME: placeholder definition
+    self.users.first
+  end
 end
