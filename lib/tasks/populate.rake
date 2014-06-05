@@ -3,6 +3,8 @@
 #   - save last pull time
 # - periodically refresh/replace user profile pic URLs
 
+require 'facebook_post'
+
 namespace :db do
 
   desc "Erase database, pull data from Facebook and use to populate database"
