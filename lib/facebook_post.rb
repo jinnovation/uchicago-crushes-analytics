@@ -1,3 +1,3 @@
-class FacebookPost
+module FacebookPost
   
 end
