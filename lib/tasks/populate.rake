@@ -15,55 +15,64 @@ namespace :db do
     puts "NUMBER OF POSTS WITH MESSAGES = #{fb_posts_with_msgs.size}"
 
     fb_posts_with_msgs.each do |fb_post|
-      # TODO: need way to update previously-untagged posts with tags
-      
-      post_curr = post_fb_create! fb_post
+      fb_post_process fb_post
+    end
+  end
 
-      if not fb_post[TAG_COMMENTS].nil? # fb post has comments
-        fb_post_cmts = fb_post[TAG_COMMENTS][TAG_DATA]
+  # TODO: make FacebookPost class, stick all these methods in there
+  def fb_post_has_no_commments(fb_post)
+    fb_post[TAG_COMMENTS].nil?
+  end
 
-        fb_post_cmts_with_tags = fb_post_cmts.find_all do |cmt|
-          not cmt[TAG_MSG_TAGS].nil?
-        end
+  def fb_post_process(fb_post)
+    # TODO: need way to update previously-untagged posts with tags
+    
+    post_curr = post_fb_create! fb_post
 
-        fb_post_cmts_with_tags.each do |cmt|
-          next if cmt[TAG_MSG_TAGS].any? { |tag| tag[TAG_TYPE]!=TAG_USER }
+    if fb_post_has_no_commments fb_post
+      puts "Post: targetless"
+      next
+    end
+    
+    fb_post_cmts_with_tags = fb_post[TAG_COMMENTS][TAG_DATA].find_all do |cmt|
+      not cmt[TAG_MSG_TAGS].nil?
+    end
 
-          cmt[TAG_MSG_TAGS].each do |tag|
-            tagged_user_id = tag[TAG_ID]
+    fb_post_cmts_with_tags.each do |cmt|
+      # TODO: move this into filter cond for fb_post_cmts_with_tags
+      next if cmt[TAG_MSG_TAGS].any? { |tag| tag[TAG_TYPE]!=TAG_USER }
 
-            if (tagged_user = User.find_by_fb_id(tagged_user_id)).nil?
-              # user not yet exist in db
-              puts "User #{tagged_user_id}: NOT FOUND"
-              tagged_user_data = @graph.get_object tagged_user_id
-              
-              tagged_user = user_fb_create! tagged_user_data
-              puts "User #{tagged_user_id}: CREATED"
+      cmt[TAG_MSG_TAGS].each do |tag|
+        tagged_user_id = tag[TAG_ID]
 
-              crush_new = Crush.create!({ user_id: tagged_user.id,
-                                          post_id: post_curr.id,
-                                          num_tags: 1 })
-              puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
-            else
-              puts "User #{tagged_user_id}: FOUND; name #{tagged_user.full_name}"
+        if (tagged_user = User.find_by_fb_id(tagged_user_id)).nil?
+          # user not yet exist in db
+          puts "User #{tagged_user_id}: NOT FOUND"
+          tagged_user_data = @graph.get_object tagged_user_id
+          
+          tagged_user = user_fb_create! tagged_user_data
+          puts "User #{tagged_user_id}: CREATED"
 
-              crush_curr = Crush.where(user_id: tagged_user.id, post_id: post_curr.id)
-              if crush_curr.empty?
-                # no current association between post and user
-                puts "No Crush between user #{tagged_user.id} and post #{post_curr.id}"
-                crush_curr = Crush.create!({ user_id: tagged_user.id,
-                                             post_id: post_curr.id,
-                                             num_tags: 1 })
-              else
-                puts "Found Crush between user #{tagged_user.id} and post #{post_curr.id}"
-                crush_curr.first.num_tags += 1                  
-              end
-            end            
+          crush_new = Crush.create!({ user_id: tagged_user.id,
+                                      post_id: post_curr.id,
+                                      num_tags: 1 })
+          puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
+        else
+          puts "User #{tagged_user_id}: FOUND; name #{tagged_user.full_name}"
+
+          crush_curr = Crush.where(user_id: tagged_user.id, post_id: post_curr.id)
+          if crush_curr.empty?
+            # no current association between post and user
+            puts "No Crush between user #{tagged_user.id} and post #{post_curr.id}"
+            crush_curr = Crush.create!({ user_id: tagged_user.id,
+                                         post_id: post_curr.id,
+                                         num_tags: 1 })
+          else
+            puts "Found Crush between user #{tagged_user.id} and post #{post_curr.id}"
+            crush_curr.first.num_tags += 1                  
           end
-        end
-      else
-        puts "Post: targetless"
-      end      
+        end            
+      end
     end
   end
 
