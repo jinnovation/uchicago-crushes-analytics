@@ -1,4 +1,4 @@
-class CreateCrushes < ActiveRecord::Migration
+class CreateCrushesOld < ActiveRecord::Migration
   def change
     create_table :crushes do |t|
       t.string :content
