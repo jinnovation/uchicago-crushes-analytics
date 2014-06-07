@@ -11,55 +11,64 @@ namespace :db do
   task populate_fb: :environment do
     fb_posts_all = @graph.get_connections PAGE_NAME, "posts",
                                        "limit" => NUM_SEARCH.to_s
-    puts "NUMBER OF POSTS FETCHED = #{fb_posts_all.size}"
+    puts "NUMBER OF POSTS FETCHED = #{fb_posts_all.size}" if verbose == true
 
     fb_posts_with_msgs = fb_posts_all.find_all { |post| not post[FacebookPost::TAG_MSG].nil? }
-    puts "NUMBER OF POSTS WITH MESSAGES = #{fb_posts_with_msgs.size}"
+    puts "NUMBER OF POSTS WITH MESSAGES = #{fb_posts_with_msgs.size}" if verbose == true
 
     fb_posts_with_msgs.each do |fb_post|
       # TODO: need way to update previously-untagged posts with tags
 
       post_curr = post_fb_create! fb_post
 
-      if not fb_post[FacebookPost::TAG_COMMENTS].nil? # fb post has comments
-        fb_post_cmts = fb_post[FacebookPost::TAG_COMMENTS][FacebookPost::TAG_DATA]
+      next if fb_post[FacebookPost::TAG_COMMENTS].nil?
 
-        fb_post_cmts_with_tags = fb_post_cmts.find_all do |cmt|
-          not cmt[FacebookPost::TAG_MSG_TAGS].nil?
-        end
+      fb_post_cmts = fb_post[FacebookPost::TAG_COMMENTS][FacebookPost::TAG_DATA]
 
-        fb_post_cmts_with_tags.each do |cmt|
-          next if cmt[FacebookPost::TAG_MSG_TAGS].any? { |tag| tag[FacebookPost::TAG_TYPE]!=FacebookPost::TAG_USER }
+      fb_post_cmts_with_tags = fb_post_cmts.find_all do |cmt|
+        not cmt[FacebookPost::TAG_MSG_TAGS].nil?
+      end
 
-          cmt[FacebookPost::TAG_MSG_TAGS].each do |tag|
-            tagged_user_id = tag[FacebookPost::TAG_ID]
+      fb_post_cmts_with_tags.each do |cmt|
+        cmt[FacebookPost::TAG_MSG_TAGS].each do |tag|
+          next if tag[FacebookPost::TAG_TYPE] != FacebookPost::TAG_USER
+          
+          tagged_user_id = tag[FacebookPost::TAG_ID]
 
-            if (tagged_user = User.find_by_fb_id(tagged_user_id)).nil?
-              # user not yet exist in db
-              puts "User #{tagged_user_id}: NOT FOUND"
-              tagged_user_data = @graph.get_object tagged_user_id
+          if (tagged_user = User.find_by_fb_id(tagged_user_id)).nil?
+            # user not yet exist in db
+            puts "User #{tagged_user_id}: NOT FOUND" if verbose == true
+            tagged_user_data = @graph.get_object tagged_user_id
 
-              tagged_user = user_fb_create! tagged_user_data
-              puts "User #{tagged_user_id}: CREATED"
+            tagged_user = user_fb_create! tagged_user_data
+            puts "User #{tagged_user_id}: CREATED" if verbose == true
 
-              crush_new = Crush.create!({ user_id: tagged_user.id,
-                                          post_id: post_curr.id,
-                                          num_tags: 1 })
+            crush_new = Crush.create!({ user_id: tagged_user.id,
+                                        post_id: post_curr.id,
+                                        num_tags: 1 })
+            if verbose == true
               puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
-            else
-              puts "User #{tagged_user_id}: FOUND; name #{tagged_user.full_name}"
+            end
+          else
+            if verbose == true
+              puts "User #{tagged_user_id}: FOUND; name #{tagged_user.full_name}"              
+            end
 
-              crush_curr = Crush.where(user_id: tagged_user.id, post_id: post_curr.id)
-              if crush_curr.empty?
-                # no current association between post and user
-                puts "No Crush between user #{tagged_user.id} and post #{post_curr.id}"
-                crush_curr = Crush.create!({ user_id: tagged_user.id,
-                                             post_id: post_curr.id,
-                                             num_tags: 1 })
-              else
-                puts "Found Crush between user #{tagged_user.id} and post #{post_curr.id}"
-                crush_curr.first.num_tags += 1
+            crush_curr = Crush.where(user_id: tagged_user.id, post_id: post_curr.id)
+            if crush_curr.empty?
+              # no current association between post and user
+              if verbose == true
+                puts "No Crush between user #{tagged_user.id} and post #{post_curr.id}"                
               end
+
+              crush_curr = Crush.create!({ user_id: tagged_user.id,
+                                           post_id: post_curr.id,
+                                           num_tags: 1 })
+            else
+              if verbose == true
+                puts "Found Crush between user #{tagged_user.id} and post #{post_curr.id}"                
+              end
+              crush_curr.first.num_tags += 1
             end
           end
         end
@@ -81,15 +90,6 @@ namespace :db do
                                                    width: IMG_DIM_L_W,
                                                    height: IMG_DIM_L_H),
                  profile_url: fb_data[FacebookPost::TAG_PROFILE_LINK])
-  end
-
-  def get_posts_with_comments(posts)
-    puts "NUMBER OF POSTS FETCHED = #{posts.size}"
-
-    posts_with_comments = posts.find_all { |post| not post[FacebookPost::TAG_COMMENTS].nil? }
-    puts "NUMBER OF POSTS WITH COMMENTS = #{posts_with_comments.size}"
-
-    return posts_with_comments
   end
 
   def post_fb_create!(fb_data)
