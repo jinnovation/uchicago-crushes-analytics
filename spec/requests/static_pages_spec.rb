@@ -2,18 +2,6 @@ require 'spec_helper'
 
 describe "Static pages" do
   subject { page }
-
-  shared_examples_for "all static pages" do
-    describe "should have a header" do
-      describe "with a navbar" do
-        it { should have_selector "nav" }
-      end
-    end
-
-    describe "should have a footer" do
-      it { should have_selector "footer" }
-    end
-  end
   
   describe "Home page" do
     before { visit root_path }
@@ -24,7 +12,13 @@ describe "Static pages" do
 
     describe "dashboard" do
       describe "has an Actions pane" do
-        pending
+        describe "with a search bar" do
+          pending
+        end
+
+        describe "with a 'Submit to UChicago Crushes' button" do
+          pending
+        end
       end
 
       describe "has a Metrics pane" do
@@ -32,18 +26,45 @@ describe "Static pages" do
       end
 
       describe "Latest Crush Breakdown pane" do
-        describe "displays the newest Post" do
+        describe "that displays the latest Post" do
           pending
         end
       end
     end
 
-    describe "user listing" do
-      pending
+    describe "user listings" do
+      describe "display users'" do
+        describe "full names" do
+          pending
+        end
+        
+        describe "profile pictures" do
+          pending
+        end
+
+        describe "number of crushes" do
+          pending
+        end
+      end
     end
 
-    describe "crush listing" do
-      pending
+    describe "post listings" do
+      describe "display posts'" do
+        describe "truncated content" do
+          
+        end
+
+        describe "highest-scoring User's" do
+          describe "profile picture" do
+            
+          end
+
+          describe "quotient for that post" do
+            
+          end
+        end
+      end
     end
+    
   end
 end

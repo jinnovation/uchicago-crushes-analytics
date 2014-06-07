@@ -25,6 +25,25 @@ describe Crush do
     it_behaves_like "table entry"
   end
 
+  describe "without user_id" do
+    before { @crush.user_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "without post_id" do
+    before { @crush.post_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "without {user,post}_id" do
+    before do
+      @crush.post_id = nil
+      @crush.user_id = nil
+    end
+
+    it { should_not be_valid }
+  end
+
   describe "num_tags" do
     subject { @crush.num_tags }
     it_behaves_like "table entry"
