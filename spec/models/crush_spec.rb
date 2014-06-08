@@ -48,6 +48,16 @@ describe Crush do
     subject { @crush.num_tags }
     it_behaves_like "table entry"
     it_behaves_like "positive integer"
+
+    describe "when <= 0" do
+      subject { @crush }
+      
+      before { @crush.num_tags = 0 }
+      it { should_not be_valid }
+
+      before { @crush.num_tags = -1 }
+      it { should_not be_valid }
+    end
   end
 
   describe "when it has the same user_id and post_id as another Crush" do
