@@ -5,7 +5,7 @@
 #user-info-modal-body.modal-body
   .row
     .col-lg-4
-      = link_to image_tag(@user.pic_url_large, class: "img-rounded img-thumbnail img-responsive"), @user.profile_url, target: "_blank"
+      = link_to_new_tab image_tag(@user.pic_url_large, class: "img-rounded img-thumbnail img-responsive"), @user.profile_url
     .col-lg-8
       %table.table.table-striped
         - @user.posts.each do |post|
