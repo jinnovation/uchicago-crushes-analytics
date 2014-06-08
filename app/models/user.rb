@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  # TODO: double-check attr_accessors
   has_many :crushes
   has_many :posts, through: :crushes
 
@@ -17,8 +16,7 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  # TODO: move this into Crush relation
-  def quotient(post)
+  def mean_quotient    
     # TODO: placeholder
     Random.rand(100).to_f / 100
   end

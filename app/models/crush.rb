@@ -15,5 +15,10 @@ class Crush < ActiveRecord::Base
   validates :num_tags, {
     numericality: { greater_than: 0 },
   }
+
+  def quotient
+    # TODO: placeholder
+    Random.rand(100).to_f / 100
+  end
   
 end

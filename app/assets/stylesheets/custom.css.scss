@@ -8,13 +8,12 @@ $uchi-blue         : #155F83;
 $uchi-blue-light   : #5B8FA8;
 $uchi-blue-dark    : #0F425C;
 
-
 $font-stack-header: Oswald, Helvetica, sans-serif;
 
 #homepage {
     [class*="col-"] {
         position: relative;
-    height: 100%;
+        height: 100%;
     }   
 }
 

@@ -2,4 +2,4 @@
   - @img = if not user.nil? then image_tag(user.pic_url_medium) else holder_tag("100x100", "Unknown") end
   = link_to @img, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
   .caption.center
-    %p= if user.nil? then "" else user.quotient(post).to_s end
+    %p= if user.nil? then "" else Crush.where(user_id: user.id, post_id: post.id).first.quotient.to_s end
