@@ -5,6 +5,15 @@
 
   Check it out at [[http://uchicago-crushes-analytics.herokuapp.com/]].
 
+** The Stack
+
+   The front-end is built using [[http://haml.info/][Haml]] and [[http://getbootstrap.com/][Bootstrap]] (of course).
+
+   Database information is pulled from the [[https://www.facebook.com/UChicagoCrushes][UChicago Crushes]] Facebook page using
+   the [[https://developers.facebook.com/docs/graph-api][Facebook Graph API]] and, more specifically, [[https://github.com/arsduo/koala/][Koala]].
+
+   Graphical analytics are built using [[https://developers.google.com/chart/][Google Charts]] and the [[https://github.com/winston/google_visualr][GoogleVisualr]] gem.
+
 ** Credit Where It's Due
 
    Much thanks to the (anonymous) creators and editors of [[https://www.facebook.com/UChicagoCrushes][the UChicago Crushes
