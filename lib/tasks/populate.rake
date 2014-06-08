@@ -23,12 +23,9 @@ namespace :db do
     fb_posts_with_msgs.each do |fb_post|
       # TODO: need way to update previously-untagged posts with tags
 
-      # TODO:
-      # if Post.exists?(fb_post):
-      #   post_curr = that post
-      # else:
-      #   the stuff below
-      post_curr = post_fb_create! fb_post
+      post_curr = post_fb_create! fb_post unless post_curr = Post.find_by_fb_id(fb_post[FacebookPost::TAG_ID])
+
+      puts "Current post pre-exist = #{post_curr.new_record?}" if verbose == true
 
       # still want comment-less posts on record, for viewing pleasure
       next if fb_post[FacebookPost::TAG_COMMENTS].nil?
