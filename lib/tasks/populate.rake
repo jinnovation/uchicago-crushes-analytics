@@ -84,18 +84,25 @@ namespace :db do
   end
 
   def user_fb_create!(fb_data)
+    url_small, url_medium, url_large = @graph.batch do |batch_api|
+      batch_api.get_picture(fb_data[FacebookPost::TAG_ID],
+                            width: IMG_DIM_S_W,
+                            height: IMG_DIM_S_H)
+      batch_api.get_picture(fb_data[FacebookPost::TAG_ID],
+                            width: IMG_DIM_M_W,
+                            height: IMG_DIM_M_H)
+      batch_api.get_picture(fb_data[FacebookPost::TAG_ID],
+                            width: IMG_DIM_L_W,
+                            height: IMG_DIM_L_H)
+    end
+
+      
     User.create!(first_name: fb_data[FacebookPost::TAG_FIRST_NAME],
                  last_name: fb_data[FacebookPost::TAG_LAST_NAME],
                  fb_id: fb_data[FacebookPost::TAG_ID],
-                 pic_url_small: @graph.get_picture(fb_data[FacebookPost::TAG_ID],
-                                                   width: IMG_DIM_S_W,
-                                                   height: IMG_DIM_S_H),
-                 pic_url_medium: @graph.get_picture(fb_data[FacebookPost::TAG_ID],
-                                                    width: IMG_DIM_M_W,
-                                                    height: IMG_DIM_M_H),
-                 pic_url_large: @graph.get_picture(fb_data[FacebookPost::TAG_ID],
-                                                   width: IMG_DIM_L_W,
-                                                   height: IMG_DIM_L_H),
+                 pic_url_small:  url_small,
+                 pic_url_medium: url_medium,
+                 pic_url_large:  url_large,
                  profile_url: fb_data[FacebookPost::TAG_PROFILE_LINK])
   end
 
