@@ -1,4 +1,4 @@
-.btn-group.btn-group-sm.btn-group-justified
+#user-table-controls.btn-group.btn-group-sm.btn-group-justified
   .btn-group
     %button.btn.btn-default{"type"=>"button"}Latest
   .btn-group
@@ -9,7 +9,7 @@
       %li= link_to "# Crushes", "#"
       %li= link_to "Mean Quotient", "#"
 
-.scrollable
+#user-table.scrollable
   %table.table.table-hover
     - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
       -# TODO: make entire row a link to view user info: http://goo.gl/p7bnLh

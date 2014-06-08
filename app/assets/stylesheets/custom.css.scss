@@ -9,6 +9,12 @@ $uchi-blue-light   : #5B8FA8;
 $uchi-blue-dark    : #0F425C;
 
 $font-stack-header: Oswald, Helvetica, sans-serif;
+$font-stack-body: Roboto, Arial, sans-serif;
+
+#dashboard {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
 #homepage {
     [class*="col-"] {
@@ -30,6 +36,10 @@ $font-stack-header: Oswald, Helvetica, sans-serif;
     height: 50%;
 }
 
+#user-table-controls {
+    margin-bottom: 10px;
+}
+
 .scrollable {
     overflow: auto;
     height: 80%;
@@ -38,10 +48,10 @@ $font-stack-header: Oswald, Helvetica, sans-serif;
 
 
 a {
-    color: $uchi-gray-light;
-    &:visited { color: $uchi-gray-dark; }
+    color: $uchi-gray-dark;
+    /* &:visited { color: $uchi-gray-dark; } */
 
-    &:hover { color: $uchi-gray-dark; }
+    &:hover { color: $uchi-gray-light; }
 }
 
 html {
@@ -95,9 +105,8 @@ h2 {
 }
 
 p {
-    font: 100% Roboto;
-    font-size: 1.1em;
-    line-height: 1.7em;
+    font: 100% $font-stack-body;
+    margin: 0 0 5px;
 }
 
 /* header */
