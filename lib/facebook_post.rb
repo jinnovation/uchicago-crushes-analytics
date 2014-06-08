@@ -11,4 +11,5 @@ module FacebookPost
   TAG_TIME                 = "created_time"
   TAG_FIRST_NAME           = "first_name"
   TAG_LAST_NAME            = "last_name"
+  TAG_CMT_CREATED_TIME     = "created_time"
 end

@@ -36,6 +36,8 @@ namespace :db do
       end
 
       fb_post_cmts_with_tags.each do |cmt|
+        cmt_create_time = cmt[FacebookPost::TAG_CMT_CREATED_TIME]
+        
         cmt[FacebookPost::TAG_MSG_TAGS].each do |tag|
           next if tag[FacebookPost::TAG_TYPE] != FacebookPost::TAG_USER
           
@@ -58,7 +60,8 @@ namespace :db do
 
             crush_new = Crush.create!({ user_id: tagged_user.id,
                                         post_id: post_curr.id,
-                                        num_tags: 1 })
+                                        num_tags: 1,
+                                        last_tag_time: cmt_create_time })
             if verbose == true
               puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
             end
@@ -76,11 +79,13 @@ namespace :db do
 
               crush_curr = Crush.create!({ user_id: tagged_user.id,
                                            post_id: post_curr.id,
-                                           num_tags: 1 })
+                                           num_tags: 1,
+                                           last_tag_time: cmt_create_time })
             else
               if verbose == true
                 puts "Found Crush between user #{tagged_user.id} and post #{post_curr.id}"                
               end
+              crush_curr.first.update_tag_time cmt_create_time
               crush_curr.first.num_tags += 1
             end
           end

@@ -3,7 +3,8 @@ require 'shared_examples'
 
 describe Crush do
   before do
-    @crush = Crush.new(user_id: 1, post_id: 1, num_tags: 1, quotient: 0.87)
+    @crush = Crush.new(user_id: 1, post_id: 1, num_tags: 1, quotient: 0.87,
+                       last_tag_time: DateTime.now)
   end
 
   subject { @crush }
@@ -12,6 +13,7 @@ describe Crush do
   it { should respond_to :post_id }
   it { should respond_to :num_tags }
   it { should respond_to :quotient }
+  it { should respond_to :last_tag_time }
 
   it { should be_valid }
 
@@ -62,7 +64,8 @@ describe Crush do
 
   describe "when it has the same user_id and post_id as another Crush" do
     before do
-      @crush_dup_ids = Crush.new(user_id: 1, post_id: 1, num_tags: 5, quotient: 0.2)
+      @crush_dup_ids = Crush.new(user_id: 1, post_id: 1, num_tags: 5,
+                                 quotient: 0.2, last_tag_time: DateTime.now)
     end
 
     subject { @crush_dup_ids }
