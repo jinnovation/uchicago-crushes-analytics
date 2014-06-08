@@ -3,15 +3,7 @@ require 'shared_examples'
 
 describe User do
   before do
-    @user = User.new(first_name: "Foo", last_name: "Bar",
-                     profile_url: "https://www.facebook.com/app_scoped_user_id/87587578",
-                     pic_url_small:
-                     "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpf1/t1.0-1/c0.0.50.50/p50x50/1797385_10203997531681550_1410745674697109627_t.jpg",
-                     pic_url_medium:
-                     "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpf1/t1.0-1/c0.0.100.100/p100x100/1797385_10203997531681550_1410745674697109627_a.jpg",
-                     pic_url_large:
-                     "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpf1/t1.0-1/c0.0.200.200/p200x200/1797385_10203997531681550_1410745674697109627_n.jpg",
-                     fb_id: "10204018734971619")
+    @user = FactoryGirl::create(:user)
   end
 
   subject { @user }
