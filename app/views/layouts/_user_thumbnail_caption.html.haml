@@ -1,3 +1,5 @@
 .thumbnail
-  = if not user.nil? then image_tag(user.pic_url_medium) else holder_tag("100x100", "Unknown") end
-  .caption.center= if user.nil? then "" else user.quotient(post).to_s end
+  - @img = if not user.nil? then image_tag(user.pic_url_medium) else holder_tag("100x100", "Unknown") end
+  = link_to @img, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
+  .caption.center
+    %p= if user.nil? then "" else user.quotient(post).to_s end

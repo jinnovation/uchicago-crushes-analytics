@@ -1,10 +1,11 @@
 .modal-header
   %button.close{"aria-hidden" => "true", :'data-dismiss' => "modal", type: "button"} ×
-  %h4#post-info-modal-label.modal-title POST HEADER HERE
+  %h4#post-info-modal-label.modal-title= @post.fb_created_time.strftime(POST_TIME_DISP_FMT)
 .modal-body
   = @post.content
-  %ul.list-inline
-    - @post.users.each do |user|
-      %li= user.full_name
+  .center
+    %ul.list-inline
+      - @post.users.each do |user|
+        %li= render "layouts/user_thumbnail_caption", user: user, post: @post
 .modal-footer
-  %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
+  = link_to_new_tab "View on Facebook", @post.fb_url, { class: "btn btn-primary" }
