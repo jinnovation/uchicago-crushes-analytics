@@ -1,6 +1,5 @@
 #post-table.scrollable
   %table.table.table-hover
-
     - @posts.sort_by {|post| post.fb_created_time}.reverse.each do |post|
       %tr
-        = render "layouts/post_entry", post: post
+        %td= render "layouts/post_entry", post: post
