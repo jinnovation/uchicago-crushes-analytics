@@ -19,8 +19,14 @@ namespace :db do
     fb_posts_with_msgs.each do |fb_post|
       # TODO: need way to update previously-untagged posts with tags
 
+      # TODO:
+      # if Post.exists?(fb_post):
+      #   post_curr = that post
+      # else:
+      #   the stuff below
       post_curr = post_fb_create! fb_post
 
+      # still want comment-less posts on record, for viewing pleasure
       next if fb_post[FacebookPost::TAG_COMMENTS].nil?
 
       fb_post_cmts = fb_post[FacebookPost::TAG_COMMENTS][FacebookPost::TAG_DATA]
@@ -107,8 +113,8 @@ namespace :db do
   end
 
   def post_fb_create!(fb_data)
-    Post.create!({ content: fb_data[FacebookPost::TAG_MSG],
-                   fb_created_time: DateTime.iso8601(fb_data[FacebookPost::TAG_TIME]),
-                   fb_id: fb_data[FacebookPost::TAG_ID] })
+    Post.create!(content: fb_data[FacebookPost::TAG_MSG],
+                 fb_created_time: DateTime.iso8601(fb_data[FacebookPost::TAG_TIME]),
+                 fb_id: fb_data[FacebookPost::TAG_ID])
   end
 end
