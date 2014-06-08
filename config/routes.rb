@@ -3,6 +3,7 @@ Crushes::Application.routes.draw do
   resources :users, only: [:show]
 
   get "static_pages/home"
+  get "/analytics", to: "static_pages#analytics"
 
   root "static_pages#home"
 
