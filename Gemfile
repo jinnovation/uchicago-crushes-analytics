@@ -25,6 +25,8 @@ gem "d3-rails"
 # gem 'therubyracer', platforms: :ruby
 
 gem 'jquery-rails'
+gem 'jquery-mousewheel-rails'
+gem 'jscrollpane-rails'
 
 gem 'turbolinks'
 
