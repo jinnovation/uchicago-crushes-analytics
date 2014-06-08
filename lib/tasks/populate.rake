@@ -13,8 +13,12 @@ namespace :db do
                                        "limit" => NUM_SEARCH.to_s
     puts "NUMBER OF POSTS FETCHED = #{fb_posts_all.size}" if verbose == true
 
-    fb_posts_with_msgs = fb_posts_all.find_all { |post| not post[FacebookPost::TAG_MSG].nil? }
-    puts "NUMBER OF POSTS WITH MESSAGES = #{fb_posts_with_msgs.size}" if verbose == true
+    fb_posts_with_msgs = fb_posts_all.find_all do |post|
+      not post[FacebookPost::TAG_MSG].nil?
+    end
+    
+    puts "NUMBER OF POSTS WITH MESSAGES ="\
+    " #{fb_posts_with_msgs.size}" if verbose == true
 
     fb_posts_with_msgs.each do |fb_post|
       # TODO: need way to update previously-untagged posts with tags
@@ -37,16 +41,16 @@ namespace :db do
 
       fb_post_cmts_with_tags.each do |cmt|
         cmt_create_time = cmt[FacebookPost::TAG_CMT_CREATED_TIME]
-        
+
         cmt[FacebookPost::TAG_MSG_TAGS].each do |tag|
           next if tag[FacebookPost::TAG_TYPE] != FacebookPost::TAG_USER
-          
+
           tagged_user_id = tag[FacebookPost::TAG_ID]
 
           if (tagged_user = User.find_by_fb_id(tagged_user_id)).nil?
             # user not yet exist in db
             puts "User #{tagged_user_id}: NOT FOUND" if verbose == true
-            
+
             begin
               tagged_user_data = @graph.get_object tagged_user_id
             rescue
@@ -62,29 +66,28 @@ namespace :db do
                                         post_id: post_curr.id,
                                         num_tags: 1,
                                         last_tag_time: cmt_create_time })
-            if verbose == true
-              puts "Crush created: user #{crush_new.user_id} and post #{crush_new.post_id}"
-            end
+            
+            puts "Crush created: user #{crush_new.user_id}"\
+            " and post #{crush_new.post_id}" if verbose == true
           else
-            if verbose == true
-              puts "User #{tagged_user_id}: FOUND; name #{tagged_user.full_name}"              
-            end
+            puts "User #{tagged_user_id}: FOUND;"\
+            " name #{tagged_user.full_name}" if verbose == true
 
             crush_curr = Crush.where(user_id: tagged_user.id, post_id: post_curr.id)
             if crush_curr.empty?
               # no current association between post and user
-              if verbose == true
-                puts "No Crush between user #{tagged_user.id} and post #{post_curr.id}"                
-              end
+              puts "No Crush between user #{tagged_user.id}"\
+              " and post #{post_curr.id}" if verbose == true
+
 
               crush_curr = Crush.create!({ user_id: tagged_user.id,
                                            post_id: post_curr.id,
                                            num_tags: 1,
                                            last_tag_time: cmt_create_time })
             else
-              if verbose == true
-                puts "Found Crush between user #{tagged_user.id} and post #{post_curr.id}"                
-              end
+              puts "Found Crush between user #{tagged_user.id}"\
+              " and post #{post_curr.id}" if verbose == true
+
               crush_curr.first.update_tag_time cmt_create_time
               crush_curr.first.num_tags += 1
             end
@@ -107,7 +110,7 @@ namespace :db do
                             height: IMG_DIM_L_H)
     end
 
-      
+
     User.create!(first_name: fb_data[FacebookPost::TAG_FIRST_NAME],
                  last_name: fb_data[FacebookPost::TAG_LAST_NAME],
                  fb_id: fb_data[FacebookPost::TAG_ID],
