@@ -16,8 +16,12 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def mean_quotient    
-    # TODO: placeholder
-    Random.rand(100).to_f / 100
+  def mean_quotient
+    sum = 0.0
+    self.crushes.each do |crush|
+      sum += crush.quotient
+    end
+
+    sum / self.crushes.length
   end
 end
