@@ -16,6 +16,8 @@ GITHUB_PROJECT_NAME  = "uchicago-crushes-analytics"
 GITHUB_URL_AUTHOR    = "https://github.com/" + GITHUB_USERNAME
 GITHUB_URL_PROJECT   = GITHUB_URL_AUTHOR + "/" + GITHUB_PROJECT_NAME
 
+GOOGLE_URL_AJAX_API  = "http://www.google.com/jsapi"
+
 IMG_DIM_S_H          = "50"
 IMG_DIM_S_W          = "50"
 
