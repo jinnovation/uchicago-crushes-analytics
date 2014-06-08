@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(version: 20140604062848) do
   end
 
   create_table "users", force: true do |t|
-    t.integer  "num_crushes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "profile_url"
     t.text     "pic_url_small"
     t.text     "pic_url_medium"
     t.text     "pic_url_large"
