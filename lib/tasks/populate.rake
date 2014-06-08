@@ -38,7 +38,14 @@ namespace :db do
           if (tagged_user = User.find_by_fb_id(tagged_user_id)).nil?
             # user not yet exist in db
             puts "User #{tagged_user_id}: NOT FOUND" if verbose == true
-            tagged_user_data = @graph.get_object tagged_user_id
+            
+            begin
+              tagged_user_data = @graph.get_object tagged_user_id
+            rescue
+              # FIXME: why the hell?
+              puts "@graph.get_object tagged_user_id => EXCEPTION"
+              next
+            end
 
             tagged_user = user_fb_create! tagged_user_data
             puts "User #{tagged_user_id}: CREATED" if verbose == true
