@@ -9,7 +9,7 @@
       %li= link_to "# Crushes", "#"
       %li= link_to "Mean Quotient", "#"
 
-#user-table.scrollable
+#user-table.scrollable.content-area
   %table.table.table-hover
     - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
       -# TODO: make entire row a link to view user info: http://goo.gl/p7bnLh
