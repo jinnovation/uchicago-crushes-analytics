@@ -26,10 +26,7 @@ describe Crush do
   it { should be_valid }
 
   describe :user_id do
-    it_behaves_like "table entry"
-  end
-
-  describe :post_id do
+    subject { @crush.user_id }
     it_behaves_like "table entry"
   end
 
@@ -38,24 +35,28 @@ describe Crush do
     it { should_not be_valid }
   end
 
+  describe :post_id do
+    subject { @crush.post_id }
+    it_behaves_like "table entry"
+  end
+  
   describe "without post_id" do
     before { @crush.post_id = nil }
     it { should_not be_valid }
   end
 
-  describe "without {user,post}_id" do
-    before do
-      @crush.post_id = nil
-      @crush.user_id = nil
-    end
-
-    it { should_not be_valid }
+  describe :last_tag_time do
+    subject { @crush.last_tag_time }
+    it_behaves_like "table entry"
   end
 
+  # TODO: call quotients_calc
+  its(:quotient) { should be <= 1.0 }
+  its(:quotient) { should be >= 0.0 }
+  
   describe :num_tags do
-    it_behaves_like "table entry"
-
     subject { @crush.num_tags }
+    it_behaves_like "table entry"
     it_behaves_like "positive integer"
 
     describe "when <= 0" do

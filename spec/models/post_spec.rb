@@ -20,14 +20,17 @@ describe Post do
   it { should be_valid }
 
   describe :content do
+    subject { @post.content }
     it_behaves_like "table entry"
   end
 
   describe :fb_id do
+    subject { @post.fb_id }
     it_behaves_like "table entry"
   end
 
   describe :fb_created_time do
+    subject { @post.fb_created_time }
     it_behaves_like "table entry"
   end
 

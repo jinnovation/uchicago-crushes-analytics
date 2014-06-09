@@ -21,46 +21,52 @@ describe User do
   it { should be_valid }
 
   describe :first_name do
+    subject { @user.first_name }
     it_behaves_like "table entry"
   end
 
   describe :last_name do
+    subject { @user.last_name }
     it_behaves_like "table entry"
   end
 
   describe :profile_url do
+    subject { @user.profile_url }
     it_behaves_like "table entry"
+  end
 
-    describe "that's a duplicate" do
-      before { @user.profile_url = @user1.profile_url }
-      it { should_not be_valid }      
-    end
+  describe "with duplicate profile_url" do
+    before { @user.profile_url = @user1.profile_url }
+    it { should_not be_valid }      
   end
 
   describe :pic_url_small do
+    subject { @user.pic_url_small }
     it_behaves_like "table entry"
+  end
 
-    describe "that's a duplicate" do
-      before { @user.pic_url_small = @user1.pic_url_small }
-      it { should_not be_valid }
-    end
+  describe "with duplicate pic_url_small" do
+    before { @user.pic_url_small = @user1.pic_url_small }
+    it { should_not be_valid }
   end
 
   describe :pic_url_medium do
+    subject { @user.pic_url_medium }
     it_behaves_like "table entry"
+  end
 
-    describe "that's a duplicate" do
-      before { @user.pic_url_medium = @user1.pic_url_medium }
-      it { should_not be_valid }
-    end
+  describe "with duplicate pic_url_medium" do
+    before { @user.pic_url_medium = @user1.pic_url_medium }
+    it { should_not be_valid }
   end
 
   describe :pic_url_large do
+    subject { @user.pic_url_large }
     it_behaves_like "table entry"
+  end
 
-    describe "that's a duplicate" do
-      before { @user.pic_url_large = @user1.pic_url_large }
-      it { should_not be_valid }
-    end
-  end  
+  describe "with duplicate pic_url_large" do
+    before { @user.pic_url_large = @user1.pic_url_large }
+    it { should_not be_valid }
+  end
 end
