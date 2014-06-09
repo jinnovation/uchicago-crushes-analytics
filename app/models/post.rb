@@ -80,8 +80,7 @@ class Post < ActiveRecord::Base
         primary_quotient_val_base = (crush_curr.num_tags.to_f / primary_base_total_tags.to_f).round 2
         primary_quotient_val_mod = 1.0 # TODO
 
-        crush_curr.quotient = primary_quotient_val_base * primary_quotient_val_mod
-        crush_curr.save!
+        crush_curr.update_attributes(quotient: primary_quotient_val_base * primary_quotient_val_mod)
         puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
         " => #{crush_curr.quotient}"
       end
@@ -94,8 +93,7 @@ class Post < ActiveRecord::Base
 
         quotient_old = crush_curr.quotient
 
-        crush_curr.quotient = other_quotient_val
-        crush_curr.save!
+        crush_curr.update_attributes(quotient: other_quotient_val)
         puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
         " => #{crush_curr.quotient}"
       end
@@ -113,8 +111,7 @@ class Post < ActiveRecord::Base
         quotient_val_base = (crush_curr.num_tags.to_f / other_base_total_tags.to_f).round 2
         quotient_val_mod = 1.0  # TODO
 
-        crush_curr.quotient = quotient_val_base * quotient_val_mod
-        crush_curr.save!
+        crush_curr.update_attributes(quotient: quotient_val_base * quotient_val_mod)
         puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
         " => #{crush_curr.quotient}"
       end
