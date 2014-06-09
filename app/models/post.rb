@@ -26,7 +26,9 @@ class Post < ActiveRecord::Base
   end
 
   def quotients_calc
-    # FIXME: what if post contains subset of {first,last,full} name
+    # FIXME: THIS IS ALL HIDEOUS
+    
+    # FIXME: what if post contains substring of {first,last,full} name
     # FIXME: account for multiple {first,last,full} name in Post.contents
     users_mentioned_full = self.users.find_all do |user|
       self.content.include?(user.full_name) ||
@@ -64,15 +66,18 @@ class Post < ActiveRecord::Base
       not primary_user_base.include?(user)
     end
 
-    # FIXME: weight quotient assignment by num_tags
     if primary_user_base.any?
-      puts "EVEN DISTRIB PRIMARY_USER_BASE"
-      primary_quotient_val_base = (Crush::MAX_QUOTIENT_VAL / primary_user_base.length).round 2
+      puts "DISTRIB PRIMARY_USER_BASE"
+
+      primary_base_total_tags = primary_user_base.inject(0) do |sum,user|
+        sum += Crush.find_by_user_id_and_post_id(user.id, self.id).num_tags
+      end
+
       primary_user_base.each do |user|
         crush_curr = Crush.find_by_user_id_and_post_id(user.id, self.id)
 
         quotient_old = crush_curr.quotient
-
+        primary_quotient_val_base = (crush_curr.num_tags.to_f / primary_base_total_tags.to_f).round 2
         primary_quotient_val_mod = 1.0 # TODO
 
         crush_curr.quotient = primary_quotient_val_base * primary_quotient_val_mod
@@ -95,16 +100,17 @@ class Post < ActiveRecord::Base
         " => #{crush_curr.quotient}"
       end
     else
-      # FIXME: weight quotient assignment by num_tags
-      puts "EVEN DISTRIB TO EVERY_OTHER_USER"
+      puts "DISTRIB TO EVERY_OTHER_USER"
 
-      quotient_val_base = (Crush::MAX_QUOTIENT_VAL / every_other_user.length).round 2
+      other_base_total_tags = every_other_user.inject(0) do |sum,user|
+        sum += Crush.find_by_user_id_and_post_id(user.id, self.id).num_tags
+      end
 
       every_other_user.each do |user|
         crush_curr = Crush.find_by_user_id_and_post_id(user.id, self.id)
 
         quotient_old = crush_curr.quotient
-
+        quotient_val_base = (crush_curr.num_tags.to_f / other_base_total_tags.to_f).round 2
         quotient_val_mod = 1.0  # TODO
 
         crush_curr.quotient = quotient_val_base * quotient_val_mod
