@@ -4,6 +4,7 @@
 .modal-body
   = @post.content
   .center
+    -# TODO: make this a horizontal scrollable
     %ul.list-inline
       - @post.users.sort_by {|user| Crush.find_by_user_id_and_post_id(user.id,@post.id).quotient}.reverse.each do |user|
         %li= render "layouts/user_thumbnail_caption", user: user, post: @post
