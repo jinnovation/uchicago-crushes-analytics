@@ -18,6 +18,7 @@ class Crush < ActiveRecord::Base
 
   def init
     self.quotient = 0.0
+    self.num_tags = 0
   end
 
   def quotient_calc
