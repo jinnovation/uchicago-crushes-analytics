@@ -25,6 +25,30 @@ class Post < ActiveRecord::Base
   end
 
   def quotients_calc
+    # TODO:
+    # if post contains a full name:
+    #   primary_user_base = users that match full name
+    # else if post contains a first name:
+    #   primary_user_base = users that match first name
+    # else if post contains a last name:
+    #   primary_user_base = users that match last name
+    # else
+    #   primary_user_base = []
+    # end
+    #
+    # if not primary_user_base.empty?
+    #   primary_user_base.each do |user|
+    #     Crush.find().quotient = 1.0 / primary_user_base.length
+    #   end
+    #   
+    #   every_other_user.each do |user|
+    #     Crush.find().quotient = 0.0
+    #   end
+    # else
+    #   every_other_user.each do |user|
+    #     Crush.find().quotient = 1.0 / every_other_user.length
+    #   end
+    # end
     
   end
 end
