@@ -9,7 +9,7 @@ CRUSHES_URL          = "https://www.facebook.com/UChicagoCrushes"
 CRUSHES_SUBMIT_URL   =
   "http://enigmatic-taiga-3279.herokuapp.com/moderators/pages/9/new/"
 
-NUM_SEARCH           = 100
+NUM_SEARCH           = 250
 
 GITHUB_USERNAME      = "jinnovation"
 GITHUB_PROJECT_NAME  = "uchicago-crushes-analytics"
