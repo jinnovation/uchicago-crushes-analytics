@@ -20,8 +20,9 @@ class Post < ActiveRecord::Base
   end
 
   def user_highest_score
-    # FIXME: placeholder definition
-    self.users.first
+    crush_highest = self.crushes.sort_by {|crush| crush.quotient}.reverse.first
+
+    if crush_highest.nil? then nil else crush_highest.user end
   end
 
   def quotients_calc
