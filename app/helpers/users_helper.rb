@@ -16,11 +16,10 @@ module UsersHelper
     end
   end
 
-  def user_quotient(user)
+  def user_quotient(user, post)
     if user.nil?
       ""
     else
-      Crush.find_by_user_id_and_post_id(user.id, post.id).quotient.to_s
-    end
+      Crush.find_by_user_id_and_post_id(user.id, post.id).quotient.to_s end
   end
 end

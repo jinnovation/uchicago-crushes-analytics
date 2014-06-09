@@ -1,6 +1,6 @@
-.thumbnail
+#user-best.thumbnail
   - @img = user_pic user
   = link_to @img, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
   .caption.center
     %h4= user_name user
-    %h5= user_quotient user
+    %h5= user_quotient user, post
