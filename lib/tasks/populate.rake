@@ -7,6 +7,13 @@ namespace :db do
 
   require 'facebook_post'
 
+  # Koala's next_page method seems to have a bug involving the version prefix in
+  # next_page_params.base; this "fixes" that
+  def my_next_page(pull)
+    base, args = pull.next_page_params
+    base.slice! "v2.0/"
+    @graph.get_page([base, args])
+  end
   desc "Erase database, pull data from Facebook and use to populate database"
   task populate_fb: :environment do
     fb_posts_all = @graph.get_connections PAGE_NAME, "posts",
