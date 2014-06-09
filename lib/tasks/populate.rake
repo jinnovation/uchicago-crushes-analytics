@@ -62,6 +62,7 @@ namespace :db do
             crush_new = Crush.create!({ user_id: tagged_user.id,
                                         post_id: post_curr.id,
                                         num_tags: 1,
+                                        quotient: 0.0,
                                         last_tag_time: cmt_create_time })
             
             puts "Crush created: user #{crush_new.user_id}"\
@@ -76,10 +77,10 @@ namespace :db do
               puts "No Crush between user #{tagged_user.id}"\
               " and post #{post_curr.id}" if verbose == true
 
-
               crush_curr = Crush.create!({ user_id: tagged_user.id,
                                            post_id: post_curr.id,
                                            num_tags: 1,
+                                           quotient: 0.0,
                                            last_tag_time: cmt_create_time })
             else
               puts "Found Crush between user #{tagged_user.id}"\
