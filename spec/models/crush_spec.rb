@@ -147,11 +147,66 @@ describe Crush do
   end
 
   context "contains a User.first_name" do
-    pending
+    before do 
+      @post = FactoryGirl.create :post,
+        content: @user.first_name + " " + Faker::Lorem.paragraph(4)
+
+      @post.quotients_calc
+
+      @crush.reload
+      @crush1.reload
+    end
+
+    context "that only belongs to a single tagged user" do
+      it "should have the right Crush.quotients" do
+        expect(@crush.quotient).to eq 1.0
+        expect(@crush1.quotient).to eq 0.0
+      end
+    end
+
+    context "that belongs to both users" do
+      pending
+    end
   end
 
   context "contains a User.last_name" do
-    pending
+    before do
+      @post = FactoryGirl.create :post,
+        content: @user.last_name + " " + Faker::Lorem.paragraph(4)
+
+      @post.quotients_calc
+
+      @crush.reload
+      @crush1.reload
+    end
+
+    context "that only belongs to a single tagged user" do
+      it "should have the right Crush.quotients" do
+        expect(@crush.quotient).to eq 1.0
+        expect(@crush1.quotient).to eq 0.0
+      end
+    end
+
+    context "that belongs to both users" do
+      pending
+    end
+    
+  end
+
+  context "contains no name whatsoever" do
+    before do
+      @post = FactoryGirl.create :post, content: Faker::Lorem.paragraph(4)
+
+      @post.quotients_calc
+
+      @crush.reload
+      @crush1.reload
+    end
+
+    it "should have the right Crush.quotients" do
+      expect(@crush.quotient).to eq 0.4
+      expect(@crush1.quotient).to eq 0.6
+    end
   end
 
 end
