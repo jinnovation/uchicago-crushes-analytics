@@ -3,11 +3,14 @@ require 'shared_examples'
 
 describe Crush do
   before do
-    @user1 = FactoryGirl.create :user
-    @user2 = FactoryGirl.create :user
+    @user   = FactoryGirl.create :user
+    @user1  = FactoryGirl.create :user
 
-    @post1 = FactoryGirl.create :post
-    @crush = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post1.id
+    @post   = FactoryGirl.create :post
+    @post1  = FactoryGirl.create :post
+
+    @crush  = FactoryGirl.create :crush, user_id: @user.id, post_id: @post.id
+    @crush1 = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post1.id
   end
 
   subject { @crush }
@@ -66,14 +69,11 @@ describe Crush do
     end
   end
 
-  describe "when it has the same user_id and post_id as another Crush" do
+  describe "with duplicate user_id and post_id" do
     before do
-      @crush_dup_ids = Crush.new(user_id: 1, post_id: 1, num_tags: 5,
-                                 quotient: 0.2, last_tag_time: DateTime.now)
+      @crush.user_id = @crush1.user_id
+      @crush.post_id = @crush1.post_id
     end
-
-    subject { @crush_dup_ids }
-    
     it { should_not be_valid }
   end
   
