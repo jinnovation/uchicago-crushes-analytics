@@ -2,10 +2,7 @@ require 'spec_helper'
 require 'shared_examples'
 
 describe Post do
-  
-  before do
-    @post = FactoryGirl::create(:post)
-  end
+  before { @post = FactoryGirl.create :post }
 
   subject { @post }
 
@@ -22,26 +19,23 @@ describe Post do
 
   it { should be_valid }
 
-  describe "content" do
-    subject { @post.content }
+  describe :content do
     it_behaves_like "table entry"
   end
 
-  describe "fb_id" do
-    subject { @post.fb_id }
+  describe :fb_id do
     it_behaves_like "table entry"
   end
 
-  describe "fb_created_time" do
-    subject { @post.fb_created_time }
+  describe :fb_created_time do
     it_behaves_like "table entry"
   end
 
-  describe "user_highest_score" do
+  describe :user_highest_score do
     pending
   end
 
-  describe "total_tag_count" do
+  describe :total_tag_count do
     pending
   end
 

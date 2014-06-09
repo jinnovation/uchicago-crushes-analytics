@@ -3,7 +3,8 @@ require 'shared_examples'
 
 describe User do
   before do
-    @user = FactoryGirl::create(:user)
+    @user  = FactoryGirl.create :user
+    @user1 = FactoryGirl.create :user
   end
 
   subject { @user }
@@ -19,33 +20,32 @@ describe User do
 
   it { should be_valid }
 
-  describe "first_name" do
-    subject { @user.first_name }
+  describe :first_name do
     it_behaves_like "table entry"
   end
 
-  describe "last_name" do
-    subject { @user.last_name }
+  describe :last_name do
     it_behaves_like "table entry"
   end
 
-  describe "profile_url" do
-    subject { @user.profile_url }
+  describe :profile_url do
     it_behaves_like "table entry"
   end
 
-  describe "pic_url_small" do
-    subject { @user.pic_url_small }
+  describe "when profile url is a duplicate" do
+    before { @user.profile_url = @user1.profile_url }
+    it { should_not be_valid }    
+  end
+
+  describe :pic_url_small do
     it_behaves_like "table entry"
   end
 
-  describe "pic_url_medium" do
-    subject { @user.pic_url_medium }
+  describe :pic_url_medium do
     it_behaves_like "table entry"
   end
 
-  describe "pic_url_large" do
-    subject { @user.pic_url_large }
+  describe :pic_url_large do
     it_behaves_like "table entry"
-  end
+  end  
 end

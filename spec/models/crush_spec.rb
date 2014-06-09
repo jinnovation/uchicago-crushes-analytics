@@ -3,8 +3,11 @@ require 'shared_examples'
 
 describe Crush do
   before do
-    @crush = Crush.new(user_id: 1, post_id: 1, num_tags: 1, quotient: 0.87,
-                       last_tag_time: DateTime.now)
+    @user1 = FactoryGirl.create :user
+    @user2 = FactoryGirl.create :user
+
+    @post1 = FactoryGirl.create :post
+    @crush = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post1.id
   end
 
   subject { @crush }
@@ -19,13 +22,11 @@ describe Crush do
 
   it { should be_valid }
 
-  describe "user_id" do
-    subject { @crush.user_id }    
+  describe :user_id do
     it_behaves_like "table entry"
   end
 
-  describe "post_id" do
-    subject { @crush.post_id }
+  describe :post_id do
     it_behaves_like "table entry"
   end
 
@@ -48,9 +49,10 @@ describe Crush do
     it { should_not be_valid }
   end
 
-  describe "num_tags" do
-    subject { @crush.num_tags }
+  describe :num_tags do
     it_behaves_like "table entry"
+
+    subject { @crush.num_tags }
     it_behaves_like "positive integer"
 
     describe "when <= 0" do
