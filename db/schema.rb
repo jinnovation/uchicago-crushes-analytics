@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20140608041858) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "num_tags"
-    t.datetime "last_tag_time"
     t.float    "quotient"
+    t.datetime "last_tag_time"
   end
 
   add_index "crushes", ["user_id", "post_id"], name: "index_crushes_on_user_id_and_post_id", unique: true, using: :btree

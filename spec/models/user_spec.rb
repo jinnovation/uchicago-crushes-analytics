@@ -18,6 +18,8 @@ describe User do
   it { should respond_to :pic_url_large }
   it { should respond_to :fb_id }
 
+  it { should respond_to :posts }
+
   it { should be_valid }
 
   describe :first_name do

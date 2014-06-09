@@ -6,11 +6,14 @@ describe Crush do
     @user   = FactoryGirl.create :user
     @user1  = FactoryGirl.create :user
 
-    @post   = FactoryGirl.create :post
-    @post1  = FactoryGirl.create :post
+    @post   = FactoryGirl.create :post, content: @user.full_name + Faker::Lorem.paragraph(4)
 
-    @crush  = FactoryGirl.create :crush, user_id: @user.id, post_id: @post.id
-    @crush1 = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post1.id
+    @crush  = FactoryGirl.create :crush, user_id: @user.id,  post_id: @post.id,
+    num_tags: 4
+    @crush1 = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post.id,
+    num_tags: 6
+
+    @post.quotients_calc
   end
 
   subject { @crush }
@@ -21,9 +24,12 @@ describe Crush do
   it { should respond_to :quotient }
   it { should respond_to :last_tag_time }
 
-  it { should respond_to :quotient_calc }
+  it { should respond_to :user }
+  it { should respond_to :post }
 
   it { should be_valid }
+  
+  its(:quotient) { should eq 1.0 }
 
   describe :user_id do
     subject { @crush.user_id }
@@ -50,7 +56,6 @@ describe Crush do
     it_behaves_like "table entry"
   end
 
-  # TODO: call quotients_calc
   its(:quotient) { should be <= 1.0 }
   its(:quotient) { should be >= 0.0 }
   

@@ -2,7 +2,20 @@ require 'spec_helper'
 require 'shared_examples'
 
 describe Post do
-  before { @post = FactoryGirl.create :post }
+  before do
+    @user   = FactoryGirl.create :user
+    @user1  = FactoryGirl.create :user
+
+    @post   = FactoryGirl.create :post, content: @user.full_name +
+      Faker::Lorem.paragraph(4)
+
+    @crush  = FactoryGirl.create :crush, user_id: @user.id,  post_id: @post.id,
+    num_tags: 4
+    @crush1 = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post.id,
+    num_tags: 6
+
+    @post.quotients_calc
+  end
 
   subject { @post }
 
@@ -11,6 +24,7 @@ describe Post do
   it { should respond_to :fb_created_time }
 
   it { should respond_to :crushes }
+  it { should respond_to :users }
 
   it { should respond_to :fb_url }
   it { should respond_to :user_highest_score }
@@ -35,11 +49,23 @@ describe Post do
   end
 
   describe :user_highest_score do
-    pending
+    it "should not be nil" do
+      expect(@post.user_highest_score).not_to be_nil
+    end
+
+    it "should return the right user" do
+      expect(@post.user_highest_score).to eq @user
+    end
   end
 
   describe :total_tag_count do
-    pending
+    it "should not be nil" do
+      expect(@post.total_tag_count).not_to be_nil
+    end
+
+    it "should return the right value" do
+      expect(@post.total_tag_count).to eq @crush.num_tags+@crush1.num_tags
+    end
   end
 
 end
