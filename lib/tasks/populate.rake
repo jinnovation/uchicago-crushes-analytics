@@ -14,6 +14,18 @@ namespace :db do
     base.slice! "v2.0/"
     @graph.get_page([base, args])
   end
+
+  task pull_fb: :environment do
+    pull = @graph.get_connections PAGE_NAME, "posts",
+      "limit" => NUM_SEARCH.to_s
+
+    total = pull.length
+
+    while (pull_next = my_next_page(pull))!=[]
+      puts total += pull_next.length
+    end
+  end
+
   desc "Erase database, pull data from Facebook and use to populate database"
   task populate_fb: :environment do
     fb_posts_all = @graph.get_connections PAGE_NAME, "posts",
