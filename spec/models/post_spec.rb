@@ -10,9 +10,9 @@ describe Post do
       Faker::Lorem.paragraph(4)
 
     @crush  = FactoryGirl.create :crush, user_id: @user.id,  post_id: @post.id,
-    num_tags: 4
+      num_tags: 4
     @crush1 = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post.id,
-    num_tags: 6
+      num_tags: 6
 
     @post.quotients_calc
   end

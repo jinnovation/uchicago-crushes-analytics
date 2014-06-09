@@ -6,12 +6,13 @@ describe Crush do
     @user   = FactoryGirl.create :user
     @user1  = FactoryGirl.create :user
 
-    @post   = FactoryGirl.create :post, content: @user.full_name + " " + Faker::Lorem.paragraph(4)
+    @post   = FactoryGirl.create :post,
+      content: @user.full_name + " " + Faker::Lorem.paragraph(4)
 
     @crush  = FactoryGirl.create :crush, user_id: @user.id,  post_id: @post.id,
-    num_tags: 4
+      num_tags: 4
     @crush1 = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post.id,
-    num_tags: 6
+      num_tags: 6
 
     @post.quotients_calc
 
@@ -20,8 +21,6 @@ describe Crush do
   end
 
   context "in general" do
-
-
     it "should have the requisite attributes" do
       expect(@crush).to respond_to :user_id
       expect(@crush).to respond_to :post_id
@@ -73,33 +72,28 @@ describe Crush do
       it_behaves_like "table entry"
       it_behaves_like "positive integer"
 
-      describe "when <= 0" do
-        subject { @crush }
+      it "should be >0" do
+        expect(@crush.num_tags).to be > 0
+      end
 
+      describe "when == 0" do
         before { @crush.num_tags = 0 }
-        it { should_not be_valid }
 
+        it "should make Crush invalid" do
+          expect(@crush).not_to be_valid
+        end
+      end
+
+      describe "when < 0" do
         before { @crush.num_tags = -1 }
-        it { should_not be_valid }
+        it "should make Crush invalid" do
+          expect(@crush).not_to be_valid
+        end
       end
     end
   end
 
   context "in reference to Users and Posts" do
-    before do
-
-      @post   = FactoryGirl.create :post, content: @user.full_name + " " + Faker::Lorem.paragraph(4)
-
-      @crush  = FactoryGirl.create :crush, user_id: @user.id,  post_id: @post.id,
-      num_tags: 4
-      @crush1 = FactoryGirl.create :crush, user_id: @user1.id, post_id: @post.id,
-      num_tags: 6
-
-      @post.quotients_calc
-
-      @crush.reload
-      @crush1.reload
-    end
 
     it "should reference the correct post" do
       expect(@crush.post).to eq @post
@@ -113,8 +107,8 @@ describe Crush do
       subject { @crush }
       it { should_not be_valid }
     end
-  end
 
+  end
 
   context "contains a User.full_name" do
     context "that only belongs to a single tagged user" do
@@ -127,12 +121,16 @@ describe Crush do
     context "that belongs to both tagged users" do
       before do
         @user_clone  = FactoryGirl.create :user, first_name: @user.first_name,
-        last_name: @user.last_name
+          last_name: @user.last_name
 
-        @post   = FactoryGirl.create :post, content: @user.full_name + " " + Faker::Lorem.paragraph(4)
+        @post   = FactoryGirl.create :post,
+          content: @user.full_name + " " + Faker::Lorem.paragraph(4)
 
-        @crush  = FactoryGirl.create :crush, user_id: @user.id,  post_id: @post.id, num_tags: 4
-        @crush1 = FactoryGirl.create :crush, user_id: @user_clone.id, post_id: @post.id, num_tags: 6
+        @crush  = FactoryGirl.create :crush, user_id: @user.id,
+          post_id: @post.id, num_tags: 4
+
+        @crush1 = FactoryGirl.create :crush, user_id: @user_clone.id,
+          post_id: @post.id, num_tags: 6
 
         @post.quotients_calc
 
