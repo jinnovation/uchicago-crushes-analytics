@@ -13,7 +13,7 @@ class Post < ActiveRecord::Base
     end
   end
 
-  # TODO: validate that sum of all crush quotients == 1.0
+  # TODO: validate that 1.0 - (sum of all crush quotients) < 0.2 (or other val)
 
   def fb_url
     FB_URL_BASE + self.fb_id
@@ -25,30 +25,55 @@ class Post < ActiveRecord::Base
   end
 
   def quotients_calc
-    # TODO:
-    # if post contains a full name:
-    #   primary_user_base = users that match full name
-    # else if post contains a first name:
-    #   primary_user_base = users that match first name
-    # else if post contains a last name:
-    #   primary_user_base = users that match last name
-    # else
-    #   primary_user_base = []
-    # end
-    #
-    # if not primary_user_base.empty?
-    #   primary_user_base.each do |user|
-    #     Crush.find().quotient = 1.0 / primary_user_base.length
-    #   end
-    #   
-    #   every_other_user.each do |user|
-    #     Crush.find().quotient = 0.0
-    #   end
-    # else
-    #   every_other_user.each do |user|
-    #     Crush.find().quotient = 1.0 / every_other_user.length
-    #   end
-    # end
+    # FIXME: what if post contains subset of {first,last,full} name
     
+    users_mentioned_full = self.users.find_all do |user|
+      self.content.include? user.full_name
+    end
+
+    users_mentioned_first = self.users.find_all do |user|
+      self.content.include? user.first_name
+    end
+
+    users_mentioned_last = self.users.find_all do |user|
+      self.content.include? user.last_name
+    end
+    
+    # FIXME: got to be a cleaner way to do this
+    post_contains_full_name = users_mentioned_full.any?
+    post_contains_first_name = users_mentioned_first.any?
+    post_contains_last_name = users_mentioned_last.any?
+
+    if    post_contains_full_name
+      primary_user_base = users_mentioned_full
+    elsif post_contains_first_name
+      primary_user_base = users_mentioned_first
+    elsif post_contains_last_name
+      primary_user_base = users_mentioned_last
+    else
+      primary_user_base = []
+    end
+
+    every_other_user = self.users.select do |user|
+      not primary_user_base.include?(user)
+    end
+
+    if not primary_user_base.nil?
+      primary_user_base.each do |user|
+        crush_curr = Crush.find_by_user_id_and_post_id(user.id, self.id)
+
+        crush_curr.quotient = (Crush.MAX_QUOTIENT_VAL / primary_user_base.length).round 2
+      end
+
+      every_other_user.each do |user|
+        Crush.find_by_user_id_and_post_id(user.id, self.id).quotient = 0.0
+      end
+    else
+      every_other_user.each do |user|
+        Crush.find_by_user_id_and_post_id(user.id, self.id).quotient =
+          Crush.MAX_QUOTIENT_VAL / every_other_user.length
+      end
+    end
   end
+  
 end
