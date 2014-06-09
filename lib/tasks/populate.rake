@@ -5,24 +5,34 @@
 
 namespace :db do
 
+  # TODO: task to update user info (pics etc)
   require 'facebook_post'
 
-  # Koala's next_page method seems to have a bug involving the version prefix in
-  # next_page_params.base; this "fixes" that
   def my_next_page(pull)
+    # Koala's next_page method seems to have a bug involving the version prefix in
+    # next_page_params.base; this "fixes" that
+
     base, args = pull.next_page_params
-    base.slice! "v2.0/"
+    base.slice! "v2.0/"         # FIXME: unsustainable
     @graph.get_page([base, args])
   end
 
   task pull_fb: :environment do
+    total = 0
     pull = @graph.get_connections PAGE_NAME, "posts",
       "limit" => NUM_SEARCH.to_s
 
-    total = pull.length
+    puts total += pull.length until (pull = my_next_page(pull)).empty?    
+  end
 
-    while (pull_next = my_next_page(pull))!=[]
-      puts total += pull_next.length
+  desc "Pull *all* posts from UChicago Crushes, populate database"
+  task populate_fb_total: :environment do
+    total = 0
+    
+    until (pull_curr = @graph.get_connections PAGE_NAME, "posts",
+                                       "limit" => NUM_SEARCH.to_s).empty?
+      process_batch(pull_curr)
+      puts "populate_fb_total :: processed #{total += pull_curr.length} posts"
     end
   end
 
