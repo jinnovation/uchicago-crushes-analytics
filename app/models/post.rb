@@ -29,17 +29,22 @@ class Post < ActiveRecord::Base
     # FIXME: what if post contains subset of {first,last,full} name
     # FIXME: account for multiple {first,last,full} name in Post.contents
     users_mentioned_full = self.users.find_all do |user|
-      self.content.include? user.full_name
+      self.content.include?(user.full_name) ||
+        self.content.include?(user.first_name.downcase + user.last_name) ||
+        self.content.include?(user.first_name + user.last_name.downcase) ||
+        self.content.include?(user.full_name.downcase)
     end
 
     users_mentioned_first = self.users.find_all do |user|
-      self.content.include? user.first_name
+      self.content.include?(user.first_name) ||
+        self.content.include?(user.first_name.downcase)
     end
 
     users_mentioned_last = self.users.find_all do |user|
-      self.content.include? user.last_name
+      self.content.include?(user.last_name) ||
+        self.content.include?(user.last_name.downcase)
     end
-    
+
     # FIXME: got to be a cleaner way to do this
     post_contains_full_name = users_mentioned_full.any?
     post_contains_first_name = users_mentioned_first.any?
@@ -83,14 +88,13 @@ class Post < ActiveRecord::Base
         crush_curr = Crush.find_by_user_id_and_post_id(user.id, self.id)
 
         quotient_old = crush_curr.quotient
-        
+
         crush_curr.quotient = other_quotient_val
         crush_curr.save!
         puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
         " => #{crush_curr.quotient}"
       end
     else
-
       # FIXME: weight quotient assignment by num_tags
       puts "EVEN DISTRIB TO EVERY_OTHER_USER"
 
@@ -102,7 +106,7 @@ class Post < ActiveRecord::Base
         quotient_old = crush_curr.quotient
 
         quotient_val_mod = 1.0  # TODO
-        
+
         crush_curr.quotient = quotient_val_base * quotient_val_mod
         crush_curr.save!
         puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
@@ -110,5 +114,5 @@ class Post < ActiveRecord::Base
       end
     end
   end
-  
+
 end
