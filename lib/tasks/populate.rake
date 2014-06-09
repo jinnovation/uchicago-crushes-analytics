@@ -32,12 +32,16 @@ namespace :db do
                                        "limit" => NUM_SEARCH.to_s
     puts "NUMBER OF POSTS FETCHED = #{fb_posts_all.size}" if verbose == true
 
-    fb_posts_with_msgs = fb_posts_all.find_all do |post|
+    process_batch(fb_posts_all)
+  end
+
+  def process_batch(fb_posts)
+    fb_posts_with_msgs = fb_posts.find_all do |post|
       not post[FacebookPost::TAG_MSG].nil?
     end
-    
+
     puts "NUMBER OF POSTS WITH MESSAGES ="\
-    " #{fb_posts_with_msgs.size}" if verbose == true
+      " #{fb_posts_with_msgs.size}" if verbose == true
 
     fb_posts_with_msgs.each do |fb_post|
       # TODO: need way to update previously-untagged posts with tags
@@ -79,31 +83,31 @@ namespace :db do
             puts "User #{tagged_user_id}: CREATED" if verbose == true
 
             crush_new = Crush.create!({ user_id: tagged_user.id,
-                                        post_id: post_curr.id,
-                                        num_tags: 1,
-                                        quotient: 0.0,
-                                        last_tag_time: cmt_create_time })
-            
+                                       post_id: post_curr.id,
+                                       num_tags: 1,
+                                       quotient: 0.0,
+                                       last_tag_time: cmt_create_time })
+
             puts "Crush created: user #{crush_new.user_id}"\
-            " and post #{crush_new.post_id}" if verbose == true
+              " and post #{crush_new.post_id}" if verbose == true
           else
             puts "User #{tagged_user_id}: FOUND;"\
-            " name #{tagged_user.full_name}" if verbose == true
+              " name #{tagged_user.full_name}" if verbose == true
 
             crush_curr = Crush.where(user_id: tagged_user.id, post_id: post_curr.id)
             if crush_curr.empty?
               # no current association between post and user
               puts "No Crush between user #{tagged_user.id}"\
-              " and post #{post_curr.id}" if verbose == true
+                " and post #{post_curr.id}" if verbose == true
 
               crush_curr = Crush.create!({ user_id: tagged_user.id,
-                                           post_id: post_curr.id,
-                                           num_tags: 1,
-                                           quotient: 0.0,
-                                           last_tag_time: cmt_create_time })
+                                          post_id: post_curr.id,
+                                          num_tags: 1,
+                                          quotient: 0.0,
+                                          last_tag_time: cmt_create_time })
             else
               puts "Found Crush between user #{tagged_user.id}"\
-              " and post #{post_curr.id}" if verbose == true
+                " and post #{post_curr.id}" if verbose == true
 
               crush_curr.first.update_tag_time cmt_create_time
               crush_curr.first.num_tags += 1
@@ -111,7 +115,7 @@ namespace :db do
           end
         end
       end
-    
+
       post_curr.quotients_calc
     end
   end
