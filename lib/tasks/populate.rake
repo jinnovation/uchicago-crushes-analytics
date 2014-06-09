@@ -91,6 +91,8 @@ namespace :db do
           end
         end
       end
+    
+      post_curr.quotients_calc
     end
   end
 

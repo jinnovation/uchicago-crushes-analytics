@@ -15,6 +15,8 @@ describe Crush do
   it { should respond_to :quotient }
   it { should respond_to :last_tag_time }
 
+  it { should respond_to :quotient_calc }
+
   it { should be_valid }
 
   describe "user_id" do

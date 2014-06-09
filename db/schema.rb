@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140608202317) do
+ActiveRecord::Schema.define(version: 20140608041858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20140608202317) do
     t.datetime "updated_at"
     t.integer  "num_tags"
     t.datetime "last_tag_time"
+    t.float    "quotient"
   end
 
   add_index "crushes", ["user_id", "post_id"], name: "index_crushes_on_user_id_and_post_id", unique: true, using: :btree

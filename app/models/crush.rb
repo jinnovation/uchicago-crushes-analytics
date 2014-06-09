@@ -16,7 +16,11 @@ class Crush < ActiveRecord::Base
     numericality: { greater_than: 0 },
   }
 
-  def quotient
+  def init
+    self.quotient = 0.0
+  end
+
+  def quotient_calc
     # TODO: work-in-progress
     # CONSIDERATIONS:
     # - post body contains only a last name

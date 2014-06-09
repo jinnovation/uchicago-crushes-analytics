@@ -18,6 +18,7 @@ describe Post do
   it { should respond_to :fb_url }
   it { should respond_to :user_highest_score }
   it { should respond_to :total_tag_count }
+  it { should respond_to :quotients_calc }
 
   it { should be_valid }
 

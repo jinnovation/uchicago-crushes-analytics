@@ -23,4 +23,8 @@ class Post < ActiveRecord::Base
     # FIXME: placeholder definition
     self.users.first
   end
+
+  def quotients_calc
+    
+  end
 end
