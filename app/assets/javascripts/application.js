@@ -19,3 +19,4 @@
 //= require bootstrap/carousel
 //= require bootstrap/transition
 //= require bootstrap/dropdown
+//= require jasny-bootstrap
