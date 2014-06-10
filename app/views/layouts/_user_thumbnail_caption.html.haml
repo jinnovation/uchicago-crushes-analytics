@@ -2,5 +2,5 @@
   - @img = user_pic user
   = link_to @img, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
   .caption.center
-    %h4= user_name user
+    %h4= if user.nil? then "" else simple_format("#{user.first_name}\n#{user.last_name}") end
     %h5= user_quotient user, post
