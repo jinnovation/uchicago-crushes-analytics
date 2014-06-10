@@ -54,6 +54,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    d3-rails (3.4.4)
+      railties (>= 3.1)
     diff-lcs (1.2.5)
     dotenv (0.7.0)
     erubis (2.7.0)
@@ -71,7 +73,6 @@ GEM
     foreman (0.66.0)
       dotenv (~> 0.7.0)
       thor (~> 0.19.1)
-    google_visualr (2.1.9)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -194,10 +195,10 @@ DEPENDENCIES
   brakeman
   capybara
   coffee-rails (~> 4.0.0)
+  d3-rails
   factory_girl_rails
   faker
   foreman
-  google_visualr (~> 2.1.0)
   haml-rails
   holder_rails
   i18n (= 0.6.9)
