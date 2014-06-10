@@ -10,15 +10,14 @@
       %li= link_to "Mean Quotient", "#"
 
 #user-table.scrollable
-  %table.table.table-hover
+  %table.table.table-hover.rowlink{ "data-link"=>"row" }
     - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
       -# TODO: make entire row a link to view user info: http://goo.gl/p7bnLh
       %tr
-        %td= (i+1).to_s
+        %td= link_to (i+1).to_s, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
         %td.media
           = image_tag(user.pic_url_medium, class: "media-object img-rounded img-thumbnail img-responsive pull-left")
           .media-body
             .media-heading
-              -# TODO: pull below out into partial
-              %h4= link_to user.full_name, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
+              %h4= user.full_name                
             = pluralize user.posts.length, "crush"
