@@ -6,6 +6,8 @@ gem 'i18n', '0.6.9'
 
 gem "koala", "~> 1.10.0rc"
 
+gem "brakeman"
+
 gem 'haml-rails'
 gem 'sass-rails', '~> 4.0.0'
 
