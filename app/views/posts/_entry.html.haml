@@ -1,6 +1,6 @@
 .media
   .pull-right.media-object.img-responsive
-    = render "users/thumbnail_caption", user: post.user_highest_score, post: post
+    = render "users/thumbnail_caption", user: post.user_with_highest_score, post: post
   .media-body
     .media-heading
       -# TODO: modal contain facebook post

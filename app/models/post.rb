@@ -19,45 +19,52 @@ class Post < ActiveRecord::Base
     FB_URL_BASE + self.fb_id
   end
 
-  def user_highest_score
+  def user_with_highest_score
     crush_highest = self.crushes.sort_by {|crush| crush.quotient}.reverse.first
 
     if crush_highest.nil? then nil else crush_highest.user end
   end
 
+  def is_user_mentioned_name_full(user)    
+    self.content.downcase.include? user.full_name.split.map(&:downcase).join(' ')
+  end
+
+  def is_user_mentioned_name_first(user)
+    self.content.downcase.include? user.first_name.downcase
+  end
+
+  def is_user_mentioned_name_last(user)
+    self.content.downcase.include? user.last_name.downcase
+  end
+
+  def users_mentioned_by_name_full
+    self.users.find_all do |user|
+      is_user_mentioned_name_full user
+    end
+  end
+
+  def users_mentioned_by_name_first
+    self.users.find_all do |user|
+      is_user_mentioned_name_first user
+    end    
+  end
+
+  def users_mentioned_by_name_last
+    self.users.find_all do |user|
+      is_user_mentioned_name_last user
+    end
+  end
+
   def quotients_calc
-    # FIXME: THIS IS ALL HIDEOUS
-    
     # FIXME: what if post contains substring of {first,last,full} name
     # FIXME: account for multiple {first,last,full} name in Post.contents
-    users_mentioned_full = self.users.find_all do |user|
-      self.content.include?(user.full_name) ||
-        self.content.include?(user.first_name.downcase + user.last_name) ||
-        self.content.include?(user.first_name + user.last_name.downcase) ||
-        self.content.include?(user.full_name.downcase)
-    end
 
-    users_mentioned_first = self.users.find_all do |user|
-      self.content.include?(user.first_name) ||
-        self.content.include?(user.first_name.downcase)
-    end
-
-    users_mentioned_last = self.users.find_all do |user|
-      self.content.include?(user.last_name) ||
-        self.content.include?(user.last_name.downcase)
-    end
-
-    # FIXME: got to be a cleaner way to do this
-    post_contains_full_name = users_mentioned_full.any?
-    post_contains_first_name = users_mentioned_first.any?
-    post_contains_last_name = users_mentioned_last.any?
-
-    if    post_contains_full_name
-      primary_user_base = users_mentioned_full
-    elsif post_contains_first_name
-      primary_user_base = users_mentioned_first
-    elsif post_contains_last_name
-      primary_user_base = users_mentioned_last
+    if users_mentioned_by_name_full.any?
+      primary_user_base = users_mentioned_by_name_full
+    elsif users_mentioned_by_name_first.any?
+      primary_user_base = users_mentioned_by_name_first
+    elsif users_mentioned_by_name_last.any?
+      primary_user_base = users_mentioned_by_name_last
     else
       primary_user_base = []
     end
@@ -78,9 +85,8 @@ class Post < ActiveRecord::Base
 
         quotient_old = crush_curr.quotient
         primary_quotient_val_base = (crush_curr.num_tags.to_f / primary_base_total_tags.to_f).round 2
-        primary_quotient_val_mod = 1.0 # TODO
 
-        crush_curr.update_attributes(quotient: primary_quotient_val_base * primary_quotient_val_mod)
+        crush_curr.update_attributes quotient: primary_quotient_val_base
         puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
         " => #{crush_curr.quotient}"
       end
@@ -109,9 +115,8 @@ class Post < ActiveRecord::Base
 
         quotient_old = crush_curr.quotient
         quotient_val_base = (crush_curr.num_tags.to_f / other_base_total_tags.to_f).round 2
-        quotient_val_mod = 1.0  # TODO
 
-        crush_curr.update_attributes(quotient: quotient_val_base * quotient_val_mod)
+        crush_curr.update_attributes quotient: quotient_val_base
         puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
         " => #{crush_curr.quotient}"
       end

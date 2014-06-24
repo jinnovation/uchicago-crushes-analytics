@@ -27,7 +27,7 @@ describe Post do
   it { should respond_to :users }
 
   it { should respond_to :fb_url }
-  it { should respond_to :user_highest_score }
+  it { should respond_to :user_with_highest_score }
   it { should respond_to :total_tag_count }
   it { should respond_to :quotients_calc }
 
@@ -48,13 +48,13 @@ describe Post do
     it_behaves_like "table entry"
   end
 
-  describe :user_highest_score do
+  describe :user_with_highest_score do
     it "should not be nil" do
-      expect(@post.user_highest_score).not_to be_nil
+      expect(@post.user_with_highest_score).not_to be_nil
     end
 
     it "should return the right user" do
-      expect(@post.user_highest_score).to eq @user
+      expect(@post.user_with_highest_score).to eq @user
     end
   end
 
