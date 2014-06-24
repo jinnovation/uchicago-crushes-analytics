@@ -2,4 +2,4 @@
   %table.table.table-hover
     - @posts.sort_by {|post| post.fb_created_time}.reverse.each do |post|
       %tr
-        %td= render "layouts/post_entry", post: post
+        %td= render "posts/entry", post: post

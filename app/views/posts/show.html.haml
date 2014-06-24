@@ -7,6 +7,6 @@
     -# TODO: make this a horizontal scrollable
     %ul.list-inline
       - @post.users.sort_by {|user| Crush.find_by_user_id_and_post_id(user.id,@post.id).quotient}.reverse.each do |user|
-        %li= render "layouts/user_thumbnail_caption", user: user, post: @post
+        %li= render "users/thumbnail_caption", user: user, post: @post
 .modal-footer
   = link_to_new_tab "View on Facebook", @post.fb_url, { class: "btn btn-primary" }
