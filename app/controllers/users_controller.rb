@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show]
 
   # GET /users
   # GET /users.json
@@ -14,23 +14,6 @@ class UsersController < ApplicationController
     @disable_footer = true
     @disable_css    = true
     @disable_csrf   = true
-  end
-
-  # GET /users/new
-  def new
-    raise_404
-  end
-
-  # POST /users
-  # POST /users.json
-  def create
-    raise_404
-  end
-
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    raise_404
   end
 
   private
