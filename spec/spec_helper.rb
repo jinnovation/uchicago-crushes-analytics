@@ -46,3 +46,9 @@ RSpec.configure do |config|
 
   config.include Strings
 end
+
+RSpec::Matchers.define :be_capitalized do
+  match do |actual|
+    actual.capitalize == actual
+  end
+end

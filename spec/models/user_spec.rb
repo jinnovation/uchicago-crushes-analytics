@@ -25,11 +25,14 @@ describe User do
   describe :first_name do
     subject { @user.first_name }
     it_behaves_like "table entry"
+    it { should be_capitalized }
   end
 
   describe :last_name do
     subject { @user.last_name }
     it_behaves_like "table entry"
+
+    it { should be_capitalized }
   end
 
   describe :profile_url do
