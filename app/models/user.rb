@@ -24,4 +24,13 @@ class User < ActiveRecord::Base
 
     sum / self.crushes.length
   end
+
+  def search(query)
+    if query
+      # TODO: "name" should be something else
+      find :all, conditions: ['name LIKE ?', "%#{query}%"] 
+    else
+      find :all      
+    end
+  end
 end
