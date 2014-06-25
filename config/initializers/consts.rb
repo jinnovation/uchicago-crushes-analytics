@@ -1,7 +1,7 @@
-APP_NAME = "UChiCrushes"
-APP_AUTHOR = "Jonathan Jin"
+APP_NAME             = "UChiCrushes"
+APP_AUTHOR           = "Jonathan Jin"
 
-PAGE_NAME = "UChicagoCrushes"
+PAGE_NAME            = "UChicagoCrushes"
 CRUSHES_NAME_DISPLAY = "UChicago Crushes"
 CRUSHES_URL          = "https://www.facebook.com/UChicagoCrushes"
 
@@ -13,8 +13,9 @@ NUM_SEARCH           = 250
 
 GITHUB_USERNAME      = "jinnovation"
 GITHUB_PROJECT_NAME  = "uchicago-crushes-analytics"
-GITHUB_URL_AUTHOR    = "https://github.com/" + GITHUB_USERNAME
-GITHUB_URL_PROJECT   = GITHUB_URL_AUTHOR + "/" + GITHUB_PROJECT_NAME
+GITHUB_URL_BASE      = "https://github.com/"
+GITHUB_URL_AUTHOR    = GITHUB_URL_BASE + GITHUB_USERNAME + "/"
+GITHUB_URL_PROJECT   = GITHUB_URL_AUTHOR + GITHUB_PROJECT_NAME + "/"
 
 GOOGLE_URL_AJAX_API  = "http://www.google.com/jsapi"
 
