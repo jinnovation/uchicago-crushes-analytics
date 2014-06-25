@@ -37,9 +37,30 @@ describe User do
     it_behaves_like "table entry"
   end
 
-  describe "with duplicate profile_url" do
-    before { @user.profile_url = @user1.profile_url }
-    it { should_not be_valid }      
+  describe "with duplicate" do
+    describe "profile_url" do
+      before { @user.profile_url = @user1.profile_url }
+      it { should_not be_valid }      
+    end
+    
+    describe "first name" do
+      before { @user.first_name = @user1.first_name }
+      it { should be_valid }
+    end
+
+    describe "last name" do
+      before { @user.last_name = @user1.last_name }
+      it { should be_valid }
+    end
+
+    describe "full name" do
+      before do
+        @user.first_name = @user1.first_name
+        @user.last_name = @user1.last_name
+      end
+
+      it { should be_valid }
+    end
   end
 
   describe :pic_url_small do
