@@ -24,13 +24,18 @@ class User < ActiveRecord::Base
 
     sum / self.crushes.length
   end
-
   def search(query)
-    if query
-      # TODO: "name" should be something else
-      find :all, conditions: ['name LIKE ?', "%#{query}%"] 
+    # TODO: account for: {first, last, full} name
+    # - run search for each case
+    # - each append to return
+    if query.present?
+      # TODO: "name" should prob be something else
+      find :all, conditions: ['name LIKE ?', "%#{query}%"]
     else
-      find :all      
+      find :all
     end
+
+    # TODO: order by match quality
+    # TODO: write match-quality determination algorithm
   end
 end
