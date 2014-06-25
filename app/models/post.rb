@@ -25,33 +25,33 @@ class Post < ActiveRecord::Base
     if crush_highest.nil? then nil else crush_highest.user end
   end
 
-  def is_user_mentioned_name_full(user)    
+  def user_mentioned_name_full?(user)    
     self.content.downcase.include? user.full_name.split.map(&:downcase).join(' ')
   end
 
-  def is_user_mentioned_name_first(user)
+  def user_mentioned_name_first?(user)
     self.content.downcase.include? user.first_name.downcase
   end
 
-  def is_user_mentioned_name_last(user)
+  def user_mentioned_name_last?(user)
     self.content.downcase.include? user.last_name.downcase
   end
 
   def users_mentioned_by_name_full
     self.users.find_all do |user|
-      is_user_mentioned_name_full user
+      user_mentioned_name_full? user
     end
   end
 
   def users_mentioned_by_name_first
     self.users.find_all do |user|
-      is_user_mentioned_name_first user
+      user_mentioned_name_first? user
     end    
   end
 
   def users_mentioned_by_name_last
     self.users.find_all do |user|
-      is_user_mentioned_name_last user
+      user_mentioned_name_last? user
     end
   end
 
