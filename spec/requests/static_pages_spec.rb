@@ -17,7 +17,7 @@ describe "Static pages" do
         end
 
         describe "with a 'Submit to UChicago Crushes' button" do
-          pending
+          # it { should have_selector "button", text: Strings::CRUSH_SUBMIT }
         end
       end
 
