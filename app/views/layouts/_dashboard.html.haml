@@ -13,9 +13,9 @@
           .row
             .col-lg-6
               .input-group
-                <input type="text" class="form-control" placeholder="Search for someone"/>
+                = text_field_tag "search", nil, class: "form-control", placeholder: "Search for someone"
             .col-lg-6
-              = link_to_new_tab "Submit a crush", CRUSHES_SUBMIT_URL, { class: "btn btn-primary" }
+              = link_to_new_tab "Submit a crush", CRUSHES_SUBMIT_URL, class: "btn btn-primary"
     .item
       = holder_tag "900x250", "Metrics"
     .item
