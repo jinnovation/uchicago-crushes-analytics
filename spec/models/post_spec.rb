@@ -15,6 +15,9 @@ describe Post do
       num_tags: 6
 
     @post.quotients_calc
+
+    @crush.reload
+    @crush1.reload
   end
 
   subject { @post }

@@ -195,7 +195,7 @@ describe Crush do
 
   context "contains no name whatsoever" do
     before do
-      @post = FactoryGirl.create :post, content: Faker::Lorem.paragraph(4)
+      @post.update content: Faker::Lorem.paragraph(4)
 
       @post.quotients_calc
 
