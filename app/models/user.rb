@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  has_many :crushes
   has_many :posts, through: :crushes
 
   before_save do

@@ -13,7 +13,7 @@
           .row
             .col-lg-6
               .input-group
-                = text_field_tag "search", nil, class: "form-control", placeholder: "Search for someone"
+                = text_field_tag("search", nil, class: "form-control", placeholder: Strings::USER_SEARCH_PLACEHOLDER)
             .col-lg-6
               = link_to_new_tab Strings::CRUSH_SUBMIT, CRUSHES_SUBMIT_URL, class: "btn btn-primary"
     .item
