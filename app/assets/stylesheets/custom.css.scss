@@ -1,26 +1,5 @@
 @import "bootstrap";
-
-$uchi-maroon       : #800000;
-
-$uchi-gray-light   : #D6D6CE;
-$uchi-gray-dark    : #767676;
-
-$uchi-blue         : #155F83;
-$uchi-blue-light   : #5B8FA8;
-$uchi-blue-dark    : #0F425C;
-
-$uchi-green        : #8A9045;
-$uchi-green-light  : #ADB17D;
-$uchi-green-dark   : #616530;
-
-$uchi-yellow       : #FFA319;
-$uchi-yellow-light : #FFB547;
-$uchi-yellow-dark  : #CC8214;
-
-$uchi-red          : #8F3931;
-$uchi-red-light    : #B1746F;
-$uchi-red-dark     : #642822;
-
+@import "uchicago-colors";
 $font-stack-header: Oswald, Helvetica, sans-serif;
 $font-stack-body: Roboto, Arial, sans-serif;
 
@@ -77,7 +56,6 @@ $font-stack-body: Roboto, Arial, sans-serif;
 
 a {
     color: $uchi-gray-dark;
-    /* &:visited { color: $uchi-gray-dark; } */
 
     &:hover { color: $uchi-gray-light; }
 }
@@ -90,7 +68,6 @@ body {
     padding-top: 60px;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: $uchi-gray-light;
 }
 
 section {
@@ -105,7 +82,7 @@ textarea {
     text-align: center;
 
     h1 {
-	margin-bottom: 10px;
+	    margin-bottom: 10px;
     }
 }
 
@@ -152,17 +129,13 @@ p {
     line-height: 1;
 
     &:hover {
-	color: $gray-light;
-	text-decoration: none;	
+	    color: $gray-light;
+	    text-decoration: none;	
     }
 }
 
 .navbar {
     background-color: $uchi-blue;
-
-    a {
-        color: $uchi-gray-light;
-    }
 }
 
 
@@ -178,24 +151,24 @@ footer {
         margin-top: 10px;
     }
     a {
-	color: #555;
+	    color: #555;
 
-	&:hover {
-	    color: #222;
-	}
+	    &:hover {
+	        color: #222;
+	    }
     }
 
     small {
-	float: left;
+	    float: left;
     }
 
     ul {
-	float: right;
-	list-style: none;
+	    float: right;
+	    list-style: none;
 
-	li {
-	    float: left;
-	    margin-left: 10px;
-	}
+	    li {
+	        float: left;
+	        margin-left: 10px;
+	    }
     }
 }
