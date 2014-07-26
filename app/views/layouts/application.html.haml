@@ -8,7 +8,7 @@
     = csrf_meta_tags unless @disable_csrf
     
   = render "layouts/homepage_info"
-  
   = render 'layouts/header' unless @disable_header
-  = yield
-  = render 'layouts/footer' unless @disable_footer
+
+  %body
+    = yield

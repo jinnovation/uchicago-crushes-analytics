@@ -57,7 +57,7 @@ class Post < ActiveRecord::Base
 
   def quotients_set_all(users, val)
       users.each do |user|
-        crush_curr = Crush.find_by_user_id_and_post_id(user.id, self.id)
+        crush_curr = Crush.find_by_user_id_and_post_id user.id, self.id
 
         quotient_old = crush_curr.quotient
 

@@ -1,0 +1,26 @@
+.sidebar{ role: "navigation" }
+  .sidebar-nav.navbar-collapse
+    %ul.nav
+      %li
+        %a{href: "#"}
+          = fa_icon "dashboard"
+          Dashboard
+      %li
+        %a{href: "#"}
+          = fa_icon "users"
+          Users
+      %li
+        %a{href: "#"}
+          = fa_icon "quote-right"
+          Posts
+      %li
+        %a{href: "#"}
+          = fa_icon "code"
+          Analytics
+    #sidebar-footer
+      .center
+        %p Last updated: when-the-hell-ever
+        .text-center.text-muted
+          %p!= "This application is not affiliated with the \"official\" #{link_to_new_tab CRUSHES_NAME_DISPLAY, CRUSHES_URL} page"
+          %p!= "Created by: #{link_to_new_tab APP_AUTHOR, GITHUB_URL_AUTHOR}"
+          %p= link_to_new_tab "View this project on GitHub", GITHUB_URL_PROJECT

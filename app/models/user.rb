@@ -2,6 +2,11 @@ class User < ActiveRecord::Base
   has_many :crushes
   has_many :posts, through: :crushes
 
+  before_save do
+    first_name.capitalize!
+    last_name.capitalize!
+  end
+
   validates :first_name, :last_name, :pic_url_small, :pic_url_medium,
   :pic_url_large, :profile_url, {
     presence: true,
