@@ -1,31 +1,32 @@
 - require 'strings'
-#dashboard.carousel.slide{ "data-ride"=>"carousel" }
-  %ol.carousel-indicators
-    %li.active{"data-target"=>"#dashboard", "data-slide-to"=>"0"}
-    %li{"data-target"=>"#dashboard", "data-slide-to"=>"1"}
-    %li{"data-target"=>"#dashboard", "data-slide-to"=>"2"}
-    %li{"data-target"=>"#dashboard", "data-slide-to"=>"3"}
-        
-  .carousel-inner
-    .item.active
-      = holder_tag "900x250", "Actions Dashboard"
-      .container
-        .carousel-caption
-          .row
-            .col-lg-6
-              .input-group
-                = text_field_tag("search", nil, class: "form-control", placeholder: Strings::USER_SEARCH_PLACEHOLDER)
-            .col-lg-6
-              = link_to_new_tab Strings::CRUSH_SUBMIT, CRUSHES_SUBMIT_URL, class: "btn btn-primary"
-    .item
-      = holder_tag "900x250", "Metrics"
-    .item
-      = holder_tag "900x250", "Latest Crush Breakdown"
-    .item
-      = holder_tag "900x250", "Your Info"
+.panel.panel-default
+  #dashboard.carousel.slide{ "data-ride"=>"carousel" }
+    %ol.carousel-indicators
+      %li.active{"data-target"=>"#dashboard", "data-slide-to"=>"0"}
+      %li{"data-target"=>"#dashboard", "data-slide-to"=>"1"}
+      %li{"data-target"=>"#dashboard", "data-slide-to"=>"2"}
+      %li{"data-target"=>"#dashboard", "data-slide-to"=>"3"}
 
-  %a.left.carousel-control{"href"=>"#dashboard", "data-slide"=>"prev"}
-    %span.glyphicon.glyphicon-chevron-left
-  %a.right.carousel-control{"href"=>"#dashboard", "data-slide"=>"next"}
-    %span.glyphicon.glyphicon-chevron-right
+    .carousel-inner
+      .item.active
+        = holder_tag "900x250", "Actions Dashboard"
+        .container
+          .carousel-caption
+            .row
+              .col-lg-6
+                .input-group
+                  = text_field_tag("search", nil, class: "form-control", placeholder: Strings::USER_SEARCH_PLACEHOLDER)
+              .col-lg-6
+                = link_to_new_tab Strings::CRUSH_SUBMIT, CRUSHES_SUBMIT_URL, class: "btn btn-primary"
+      .item
+        = holder_tag "900x250", "Metrics"
+      .item
+        = holder_tag "900x250", "Latest Crush Breakdown"
+      .item
+        = holder_tag "900x250", "Your Info"
+
+    %a.left.carousel-control{"href"=>"#dashboard", "data-slide"=>"prev"}
+      %span.glyphicon.glyphicon-chevron-left
+    %a.right.carousel-control{"href"=>"#dashboard", "data-slide"=>"next"}
+      %span.glyphicon.glyphicon-chevron-right
 

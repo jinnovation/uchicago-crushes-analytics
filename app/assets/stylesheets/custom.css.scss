@@ -6,6 +6,7 @@ $font-stack-body: Roboto, Arial, sans-serif;
 
 .navbar {
     min-height: $navbar-min-height;
+    background-color: $uchi-blue;
 }
 #dashboard {
     height: 50%;
@@ -53,7 +54,6 @@ $font-stack-body: Roboto, Arial, sans-serif;
 }
 .scrollable {
     overflow: auto;
-    height: 100%;
 }
 
 
@@ -119,8 +119,6 @@ p {
     margin-right: 10px;
     font-size: 2.4em;
     color: $uchi-gray-light;
-    /* text-transform: uppercase; */
-    letter-spacing: -1px;
     padding-top: 9px;
     font-weight: bold;
     line-height: 1;
@@ -130,12 +128,6 @@ p {
 	    text-decoration: none;	
     }
 }
-
-.navbar {
-    background-color: $uchi-blue;
-}
-
-
 
 /* footer */
 
@@ -179,3 +171,6 @@ footer {
     padding-top: 60px;
 }
 
+#post-table {
+    height: 50%;
+}
