@@ -5,4 +5,4 @@
     .media-heading
       -# TODO: modal contain facebook post
       %h4= post.fb_created_time.strftime POST_TIME_DISP_FMT
-    = link_to post.content, post, {'data-toggle': "modal", 'data-target': "#homepage-info-modal"}
+    = link_to post.content, post, { "data-toggle" => "modal", "data-target" => "#homepage-info-modal" }
