@@ -1,8 +1,12 @@
-@import "bootstrap";
 @import "uchicago-colors";
+@import "constants";
+
 $font-stack-header: Oswald, Helvetica, sans-serif;
 $font-stack-body: Roboto, Arial, sans-serif;
 
+.navbar {
+    min-height: $navbar-min-height;
+}
 #dashboard {
     height: 50%;
     margin-bottom: 10px;
@@ -37,7 +41,6 @@ $font-stack-body: Roboto, Arial, sans-serif;
 }
 
 #post-table {
-    height: 50%;
 }
 
 #user-table-controls {
@@ -62,12 +65,6 @@ a {
 
 html {
     overflow-y: scroll;
-}
-
-body {
-    padding-top: 60px;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 section {
@@ -106,7 +103,7 @@ h2 {
     margin-bottom: 10px;
     text-align: center;
     font-weight: normal;
-    color: $gray-light;
+    color: $uchi-gray-light;
 }
 
 p {
@@ -129,7 +126,7 @@ p {
     line-height: 1;
 
     &:hover {
-	    color: $gray-light;
+	    color: $uchi-gray-light;
 	    text-decoration: none;	
     }
 }
@@ -145,7 +142,7 @@ p {
 footer {
     margin-top: 10px;
     border-top: 1px solid #eaeaea;
-    color: $gray-light;
+    color: $uchi-gray-light;
 
     .container {
         margin-top: 10px;
@@ -173,9 +170,12 @@ footer {
     }
 }
 
-#page-wrapper {
+#homepage {
     border-left: 0px;
+    margin-left: $sidebar-width;
 
     height: 100vh;
+    padding: 0;
+    padding-top: 60px;
 }
 

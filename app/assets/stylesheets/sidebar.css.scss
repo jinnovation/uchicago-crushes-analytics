@@ -1,11 +1,12 @@
 @import "uchicago-colors";
+@import "constants";
 
 body, html {
     height: 100%;
 }
 
 .sidebar {
-    width: 260px;
+    width: $sidebar-width;
     height: 100vh;
     background-color: $uchi-gray-light;
 
