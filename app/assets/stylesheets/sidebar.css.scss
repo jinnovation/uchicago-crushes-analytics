@@ -1,0 +1,10 @@
+@import "uchicago-colors";
+
+.sidebar {
+    width: 270px;
+    background-color: $uchi-gray-light;
+
+    a {
+        color: $uchi-gray-dark;
+    }
+}
