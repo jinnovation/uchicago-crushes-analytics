@@ -12,7 +12,6 @@
   = render 'layouts/header' unless @disable_header
 
   %body
-    #wrapper
-      #page-wrapper
-        = yield
-    -# = render 'layouts/footer' unless @disable_footer
+    #page-wrapper
+      = yield
+  -# = render 'layouts/footer' unless @disable_footer
