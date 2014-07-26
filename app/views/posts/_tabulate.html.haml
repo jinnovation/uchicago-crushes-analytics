@@ -4,5 +4,6 @@
   #post-table.scrollable
     %table.table.table-hover.table-striped
       - @posts.sort_by {|post| post.fb_created_time}.reverse.each do |post|
-        %tr
-          %td= render "posts/entry", post: post
+        %tr.row-link{ href: post_path(post) }
+          %td
+            = render "posts/entry", post: post

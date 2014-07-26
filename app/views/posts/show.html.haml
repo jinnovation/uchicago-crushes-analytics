@@ -1,5 +1,4 @@
-.modal-header
-  %button.close{"aria-hidden" => "true", :'data-dismiss' => "modal", type: "button"} ×
+-# .modal-header
   %h4#post-info-modal-label.modal-title= @post.fb_created_time.strftime(POST_TIME_DISP_FMT)
 .modal-body
   = @post.content
