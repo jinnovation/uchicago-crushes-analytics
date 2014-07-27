@@ -11,4 +11,5 @@
   = render 'layouts/header' unless @disable_header
 
   %body
-    = yield
+    .content-wrapper
+      = yield

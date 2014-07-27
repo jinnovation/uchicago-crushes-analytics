@@ -9,7 +9,7 @@ $font-stack-body: Roboto, Arial, sans-serif;
     background-color: $uchi-blue;
 }
 #dashboard {
-    height: 50%;
+    height: 30%;
     margin-bottom: 10px;
 }
 
@@ -29,7 +29,7 @@ $font-stack-body: Roboto, Arial, sans-serif;
 }
 
 #user-best {
-    background-color: $uchi-blue-light
+    background-color: $uchi-blue-light;
 }
 
 .jumbotron {
@@ -41,17 +41,17 @@ $font-stack-body: Roboto, Arial, sans-serif;
     }
 }
 
-#post-table {
+#user-panel {
+    margin-bottom: 0;
+    height: 92vh;
+    overflow: hidden;
+
+    #user-table {
+        height: 100%;
+        display: block;
+    }
 }
 
-#user-table-controls {
-    margin-bottom: 10px;
-}
-
-
-#user-table {
-    height: 95%;
-}
 .scrollable {
     overflow: auto;
 }
@@ -162,13 +162,16 @@ footer {
     }
 }
 
-#homepage {
+.content-wrapper {
     border-left: 0px;
     margin-left: $sidebar-width;
 
-    height: 100vh;
     padding: 0;
     padding-top: 60px;
+}
+
+.container {
+    padding-left: 0px;
 }
 
 #post-table {

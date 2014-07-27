@@ -10,10 +10,6 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @disable_header = true
-    @disable_footer = true
-    @disable_css    = true
-    @disble_csrf    = true
   end
 
   private

@@ -1,15 +1,3 @@
-.modal-header
-  %button.close{ "data-dismiss" => "modal", type: "button" } ×
-  %h4#user-info-modal-label.modal-title
+.container
+  .page-header
     = @user.full_name
-#user-info-modal-body.modal-body
-  .row
-    .col-lg-4
-      = link_to_new_tab image_tag(@user.pic_url_large, class: "img-rounded img-thumbnail img-responsive"), @user.profile_url
-    .col-lg-8
-      %table.table.table-striped
-        - @user.posts.each do |post|
-          %tr           
-            %td
-              %h4= post.fb_created_time.strftime(POST_TIME_DISP_FMT)
-              %p= post.content

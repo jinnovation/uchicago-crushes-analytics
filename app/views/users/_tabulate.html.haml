@@ -1,9 +1,9 @@
-.panel.panel-default
+.panel.panel-default#user-panel
   .panel-heading
     "Top" Users
   .scrollable#user-table
     %table.table.table-hover.table-striped
-      - (@top_users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
+      - @top_users.each_with_index do |user, i|
         -# TODO: make entire row a link to view user info: http://goo.gl/p7bnLh
         %tr.modal-link{ href: user_path(user) }
           %td= (i+1).to_s

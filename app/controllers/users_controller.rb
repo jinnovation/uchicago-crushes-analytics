@@ -7,10 +7,6 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    @disable_header = true
-    @disable_footer = true
-    @disable_css    = true
-    @disable_csrf   = true
 
     set_user
   end
