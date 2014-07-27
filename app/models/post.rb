@@ -98,11 +98,7 @@ class Post < ActiveRecord::Base
     users.each do |user|
       crush_curr = Crush.find_by_user_id_and_post_id user.id, self.id
 
-      quotient_old = crush_curr.quotient
-
       crush_curr.update_attributes quotient: val
-      puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
-        " => #{crush_curr.quotient}"
     end    
   end
 
@@ -114,12 +110,9 @@ class Post < ActiveRecord::Base
     users.each do |user|
       crush_curr = Crush.find_by_user_id_and_post_id(user.id, self.id)
 
-      quotient_old = crush_curr.quotient
       quotient_new = (crush_curr.num_tags.to_f / users_tags_total.to_f).round 2
 
       crush_curr.update_attributes quotient: quotient_new
-      puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
-        " => #{crush_curr.quotient}"
     end
   end
 
@@ -142,15 +135,10 @@ class Post < ActiveRecord::Base
     end
 
     if primary_user_base.any?
-      puts "DISTRIB PRIMARY_USER_BASE"
-
       quotients_calc_from_num_tags primary_user_base
 
-      puts "EVERY_OTHER_USER.QUOTIENT = #{0.0}"
       quotients_set_all every_other_user, 0.0
     else
-      puts "DISTRIB TO EVERY_OTHER_USER"
-
       quotients_calc_from_num_tags every_other_user      
     end
   end
