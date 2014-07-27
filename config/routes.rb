@@ -1,6 +1,6 @@
 Crushes::Application.routes.draw do
-  resources :posts, only: [:show]
-  resources :users, only: [:show]
+  resources :posts, only: [:show, :index]
+  resources :users, only: [:show, :index]
 
   get "/dashboard", to: "static_pages#dashboard", as: :dashboard
   get "/analytics", to: "static_pages#analytics"

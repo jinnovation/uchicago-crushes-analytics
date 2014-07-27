@@ -1,12 +1,12 @@
-.sidebar{ role: "navigation" }
+.sidebar#sidebar{ role: "navigation" }
   .sidebar-nav.navbar-collapse
     %ul.nav
       %li
-        %a{href: "#"}
+        %a{href: dashboard_path}
           = fa_icon "dashboard"
           Dashboard
       %li
-        %a{href: "#"}
+        %a{href: users_path}
           = fa_icon "users"
           Users
       %li
