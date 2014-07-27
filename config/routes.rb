@@ -2,10 +2,10 @@ Crushes::Application.routes.draw do
   resources :posts, only: [:show]
   resources :users, only: [:show]
 
-  get "static_pages/home"
+  get "/dashboard", to: "static_pages#dashboard", as: :dashboard
   get "/analytics", to: "static_pages#analytics"
 
-  root "static_pages#home"
+  root "static_pages#dashboard"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
