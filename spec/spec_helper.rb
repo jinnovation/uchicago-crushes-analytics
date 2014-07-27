@@ -7,6 +7,7 @@ require 'rspec/autorun'
 
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'capybara/poltergeist'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -23,10 +24,6 @@ RSpec.configure do |config|
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -48,4 +45,15 @@ RSpec::Matchers.define :be_capitalized do
   match do |actual|
     actual.capitalize == actual
   end
+end
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new app, js_errors: false,
+    phantomjs_options: ['--load-images=no', '--ignore-ssl-errors=yes']
+end
+
+Capybara.configure do |config|
+  config.default_selector  = :css
+  config.javascript_driver = :poltergeist
+  Capybara.default_wait_time = 10
 end
