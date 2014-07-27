@@ -28,9 +28,9 @@ describe User do
     it { should be_capitalized }
 
     it "is not unique" do
-      expect {
-        @user.first_name = @user1.first_name
-      }.not_to change { @user.valid? }.to false
+      @user.first_name = @user1.first_name
+
+      expect(@user).to be_valid
     end
   end
 
@@ -41,18 +41,19 @@ describe User do
     it { should be_capitalized }
 
     it "is not unique" do
-      expect {
-        @user.last_name = @user1.last_name
-      }.not_to change { @user.valid? }.to false
+
+      @user.last_name = @user1.last_name
+
+      expect(@user).to be_valid
     end
   end
 
   describe :full_name do
     it "is not unique" do
-      expect {
-        @user.first_name = @user1.first_name
-        @user.last_name  = @user1.last_name
-      }.not_to change { @user.valid? }.to false
+      @user.first_name = @user1.first_name
+      @user.last_name = @user1.last_name
+
+      expect(@user).to be_valid
     end
   end
 

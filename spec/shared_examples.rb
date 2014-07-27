@@ -15,15 +15,5 @@ shared_examples_for "all static pages" do
     pending
   end
 
-  it { should have_selector "footer" }
-  describe "footer" do
-    it "should cite UChicago Crushes" do
-      pending
-    end
-    
-    it "should display creator info" do
-      pending
-    end
-  end
   
 end
