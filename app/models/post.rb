@@ -22,6 +22,8 @@ class Post < ActiveRecord::Base
      allow_blank: false,
     }
 
+  validate :crush_quotient_sum_valid?
+
   def self.latest(count=1)
     posts_sorted_time = self.all.sort_by(&:fb_created_time).reverse
 
@@ -29,6 +31,14 @@ class Post < ActiveRecord::Base
       posts_sorted_time.first
     else
       posts_sorted_time.first count
+    end
+  end
+
+  def crush_quotient_sum_valid?
+    return if self.crushes.count == 0
+
+    if (1.0 - self.crushes.map(&:quotient).sum).abs >= 0.05
+      errors.add :posts, "Post.crushes.quotient.sum must ~= 1.0"
     end
   end
 
