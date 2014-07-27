@@ -38,6 +38,10 @@ group :development, :test do
   gem "rspec-rails"
   gem 'capybara'
   gem 'factory_girl_rails'
+
+  gem 'pry', '~> 0.9.7.4'
+  gem 'pry-nav'
+  gem 'launch'
 end
 
 gem 'holder_rails'
