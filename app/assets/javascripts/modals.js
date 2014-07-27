@@ -11,8 +11,16 @@ function BSModal(selector) {
         $(this.selector + " .modal-title").text(value);
     }
 
+    this.clearTitle = function () {
+        this.setTitle("");
+    }
+
     this.setBody = function (value) {
         $(this.selector + " .modal-body").text(value);
+    }
+
+    this.clearBody = function () {
+        this.setBody("");
     }
 
     this.show = function() {
@@ -25,5 +33,9 @@ function BSModal(selector) {
 
     this.toggle = function () {
         this.modal("toggle");
+    }
+
+    this.isShown = function () {
+        return $(this.selector).hasClass("in");
     }
 }

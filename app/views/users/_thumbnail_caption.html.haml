@@ -1,6 +1,6 @@
 .thumbnail
-  - @img = user_pic user
-  = link_to @img, user, { "data-toggle"=>"modal", "data-target"=>"#homepage-info-modal" }
-  .caption.center
-    %h4= if user.nil? then "" else simple_format("#{user.first_name}\n#{user.last_name}") end
-    %h5= user_quotient user, post
+  .modal-link{ href: (user_path(user) unless user.nil?) }
+    = user_pic user
+    .caption.center
+      %h4= if user.nil? then "" else simple_format("#{user.first_name}\n#{user.last_name}") end
+      %h5= user_quotient user, post
