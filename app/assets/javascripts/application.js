@@ -20,4 +20,4 @@
 //= require bootstrap/transition
 //= require bootstrap/dropdown
 //= require modals
-//= require row-link
+//= require modal-link

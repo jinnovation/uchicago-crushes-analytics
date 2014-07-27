@@ -1,11 +1,36 @@
 class Post < ActiveRecord::Base
+  TIME_DISP_FMT   = "%B %d, %Y %l:%M %p"
+
   has_many :crushes
   has_many :users, through: :crushes
 
-  validates :content, :fb_created_time, :fb_id, {
-    presence: true,
-    allow_blank: false,
-  }
+  validates :content, 
+    {
+     presence: true,
+     allow_blank: false,
+    }
+
+  validates :fb_created_time,
+    {
+     presence: true,
+     allow_blank: false,
+    }
+
+  validates :fb_id,
+    {
+     presence: true,
+     allow_blank: false,
+    }
+
+  def self.latest(count=1)
+    posts_sorted_time = self.all.sort_by(&:fb_created_time).reverse
+
+    if count == 1
+      posts_sorted_time.first
+    else
+      posts_sorted_time.first count
+    end
+  end
 
   def total_tag_count
     self.crushes.inject(0) do |sum,crush|
@@ -17,6 +42,10 @@ class Post < ActiveRecord::Base
 
   def fb_url
     FB_URL_BASE + self.fb_id
+  end
+
+  def time_display
+    self.fb_created_time.strftime TIME_DISP_FMT
   end
 
   def user_with_highest_score
@@ -56,15 +85,15 @@ class Post < ActiveRecord::Base
   end
 
   def quotients_set_all(users, val)
-      users.each do |user|
-        crush_curr = Crush.find_by_user_id_and_post_id user.id, self.id
+    users.each do |user|
+      crush_curr = Crush.find_by_user_id_and_post_id user.id, self.id
 
-        quotient_old = crush_curr.quotient
+      quotient_old = crush_curr.quotient
 
-        crush_curr.update_attributes quotient: val
-        puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
+      crush_curr.update_attributes quotient: val
+      puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
         " => #{crush_curr.quotient}"
-      end    
+    end    
   end
 
   def quotients_calc_from_num_tags(users)
@@ -80,7 +109,7 @@ class Post < ActiveRecord::Base
 
       crush_curr.update_attributes quotient: quotient_new
       puts "Crush(#{user.full_name}, #{self.id}).quotient: #{quotient_old}"\
-      " => #{crush_curr.quotient}"
+        " => #{crush_curr.quotient}"
     end
   end
 

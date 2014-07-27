@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
     @users = User.all
-    @posts = Post.all
+    @posts_latest = Post.latest 25
   end
 
   def analytics

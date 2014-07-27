@@ -4,7 +4,7 @@
   .media-body
     -# TODO: modal contain facebook post
     %blockquote.pull-right
-      %p
+      %p.post-content
         = post.content
-      %small
-        = post.fb_created_time.strftime POST_TIME_DISP_FMT
+      %small.post-time
+        = post.time_display
