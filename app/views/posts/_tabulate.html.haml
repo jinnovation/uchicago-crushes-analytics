@@ -1,9 +1,5 @@
-.panel.panel-default
-  .panel-heading
-    Latest Posts
-  #post-table.scrollable
-    %table.table.table-hover.table-striped
-      - @posts_latest.each do |post|
-        %tr.modal-link{ href: post_path(post) }
-          %td
-            = render "posts/entry", post: post
+%table.table.table-hover.table-striped
+  - posts.each do |post|
+    %tr.modal-link{ href: post_path(post) }
+      %td
+        = render "posts/entry", post: post

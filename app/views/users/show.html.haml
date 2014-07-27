@@ -1,3 +1,15 @@
+.page-header
+  %h1= @user.full_name
 .container
-  .page-header
-    = @user.full_name
+  .row
+    .col-md-3
+      .panel.panel-default
+        .panel-heading
+          Profile
+        .panel-body
+          .thumbnail= user_pic @user
+    .col-md-9
+      .panel.panel-default
+        .panel-heading
+          Crushes About This User
+        = render "posts/tabulate", posts: @user.posts

@@ -7,7 +7,7 @@
     = javascript_include_tag GOOGLE_URL_AJAX_API, "data-turbolinks-track" => true unless @disable_js
     = csrf_meta_tags unless @disable_csrf
     
-  = render "layouts/homepage_info"
+  = render "layouts/homepage_modal"
   = render 'layouts/header' unless @disable_header
 
   %body
