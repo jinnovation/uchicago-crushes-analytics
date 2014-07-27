@@ -41,7 +41,7 @@ group :development, :test do
 
   gem 'pry', '~> 0.9.7.4'
   gem 'pry-nav'
-  gem 'launch'
+  gem 'launchy'
 end
 
 gem 'holder_rails'
