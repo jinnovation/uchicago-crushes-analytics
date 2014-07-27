@@ -17,6 +17,20 @@ class User < ActiveRecord::Base
     uniqueness: { case_sensitive: false },
   }
 
+  def self.select_most_crushes(count=1)
+    users_sorted = self.all.sort_by(&:num_crushes).reverse
+
+    if count==1
+      users_sorted.first
+    else
+      users_sorted.first count
+    end
+  end
+
+  def num_crushes
+    self.crushes.count
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end

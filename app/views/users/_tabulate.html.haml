@@ -1,9 +1,9 @@
 .panel.panel-default
   .panel-heading
     "Top" Users
-  #user-table.scrollable
+  .scrollable#user-table
     %table.table.table-hover.table-striped
-      - (@users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
+      - (@top_users.sort_by {|user| user.posts.size}).reverse.each_with_index do |user, i|
         -# TODO: make entire row a link to view user info: http://goo.gl/p7bnLh
         %tr.modal-link{ href: user_path(user) }
           %td= (i+1).to_s
@@ -13,5 +13,6 @@
               .media-body
                 .media-heading
                   -# TODO: pull below out into partial
-                  %h4= user.full_name
+                  %h4.user-name
+                    = user.full_name
                 = pluralize user.posts.length, "crush"
