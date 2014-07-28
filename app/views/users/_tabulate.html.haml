@@ -1,5 +1,5 @@
 %table.table.table-hover.table-striped
-  - @top_users.each_with_index do |user, i|
+  - users.each_with_index do |user, i|
     -# TODO: make entire row a link to view user info: http://goo.gl/p7bnLh
     %tr.modal-link{ href: user_path(user) }
       %td= (i+1).to_s
