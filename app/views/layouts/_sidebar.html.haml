@@ -2,19 +2,19 @@
   .sidebar-nav.navbar-collapse
     %ul.nav
       %li
-        %a{href: dashboard_path}
+        %a#sidebar-dashboard-link{href: dashboard_path}
           = fa_icon "dashboard"
           Dashboard
       %li
-        %a{href: users_path}
+        %a#sidebar-users-link{href: users_path}
           = fa_icon "users"
           Users
       %li
-        %a{href: "#"}
+        %a#sidebar-posts-link{href: posts_path}
           = fa_icon "quote-right"
           Posts
       %li
-        %a{href: "#"}
+        %a#sidebar-analytics-link{href: "#"}
           = fa_icon "code"
           Analytics
           %span.label.label-default Coming Soon!
