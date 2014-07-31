@@ -1,5 +1,6 @@
 .page-header
   %h1= @user.full_name
+  %h2= pluralize(@user.num_crushes, "crush")
 .container
   .row
     .col-md-3
@@ -9,7 +10,9 @@
         .panel-body
           .thumbnail= user_pic @user
     .col-md-9
-      .panel.panel-default
+      .panel.panel-default#user-crushes-panel
         .panel-heading
           Crushes About This User
-        = render "posts/tabulate", posts: @user.posts
+        - if @user.posts.any?
+          #user-crushes-table
+            = render "posts/tabulate", posts: @user.posts
