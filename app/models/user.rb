@@ -43,4 +43,8 @@ class User < ActiveRecord::Base
 
     sum / self.crushes.length
   end
+
+  def latest_post
+    self.posts.sort_by(&:fb_created_time).reverse.first
+  end
 end

@@ -100,4 +100,19 @@ describe User do
       }.to change { @user.valid? }.to false
     end
   end
+
+  describe :latest_post do
+    it "is an instance method" do
+      expect(@user).to respond_to :latest_post
+    end
+
+    it "returns the latest post by Datetime" do
+      latest_crush = create :crush, user: @user
+      latest_post = latest_crush.post
+
+      expect(@user.latest_post).to eq latest_post
+
+      latest_post.destroy
+    end
+  end
 end
