@@ -8,6 +8,7 @@ $font-stack-body: Roboto, Arial, sans-serif;
     min-height: $navbar-min-height;
     background-color: $uchi-blue;
 }
+
 #dashboard {
     height: 30%;
     margin-bottom: 10px;
@@ -129,39 +130,6 @@ p {
     }
 }
 
-/* footer */
-
-footer {
-    margin-top: 10px;
-    border-top: 1px solid #eaeaea;
-    color: $uchi-gray-light;
-
-    .container {
-        margin-top: 10px;
-    }
-    a {
-	    color: #555;
-
-	    &:hover {
-	        color: #222;
-	    }
-    }
-
-    small {
-	    float: left;
-    }
-
-    ul {
-	    float: right;
-	    list-style: none;
-
-	    li {
-	        float: left;
-	        margin-left: 10px;
-	    }
-    }
-}
-
 .content-wrapper {
     border-left: 0px;
     margin-left: $sidebar-width;
@@ -180,4 +148,9 @@ footer {
 
 .modal-link {
     cursor: pointer;
+
+}
+
+#sidebar-footer {
+    font-size: 12px;
 }

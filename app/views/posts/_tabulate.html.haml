@@ -1,5 +1,6 @@
 %table.table.table-hover.table-striped
-  - posts.each do |post|
-    %tr.modal-link{ href: post_path(post) }
-      %td
-        = render "posts/entry", post: post
+  %tbody
+    - posts.each do |post|
+      %tr.modal-link{ href: post_path(post) }
+        %td
+          = render "posts/entry", post: post

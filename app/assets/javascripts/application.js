@@ -21,3 +21,4 @@
 //= require bootstrap/dropdown
 //= require modals
 //= require modal-link
+//= require holder

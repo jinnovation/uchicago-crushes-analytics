@@ -8,25 +8,35 @@ describe User do
   end
 
   subject { @user }
-
-  it { should respond_to :first_name }
-  it { should respond_to :last_name }
-  it { should respond_to :full_name }
-  it { should respond_to :profile_url }
-  it { should respond_to :pic_url_small }
-  it { should respond_to :pic_url_medium }
-  it { should respond_to :pic_url_large }
-  it { should respond_to :fb_id }
-
   it { should respond_to :posts }
 
-  it { should be_valid }
+  describe :fb_id do
+    it "is an instance method" do
+      expect(@user).to respond_to :fb_id
+    end
+  end
+
+  describe :posts_of_highest_quotient do
+    it "is an instance method" do
+      expect(@user).to respond_to :posts_of_highest_quotient
+    end
+
+    it "returns Posts for which User has highest quotient"
+  end
 
   describe :first_name do
-    subject { @user.first_name }
-    it_behaves_like "table entry"
-    it { should be_capitalized }
+    it "is an instance method" do
+      expect(@user).to respond_to :first_name
+    end
 
+    it_behaves_like "table entry" do
+      subject { @user.first_name }
+    end
+
+    it "is capitalized" do
+      expect(@user.first_name).to be_capitalized
+    end
+    
     it "is not unique" do
       @user.first_name = @user1.first_name
 
@@ -35,13 +45,19 @@ describe User do
   end
 
   describe :last_name do
-    subject { @user.last_name }
-    it_behaves_like "table entry"
-
-    it { should be_capitalized }
+    it "is an instance method" do
+      expect(@user).to respond_to :last_name
+    end
+    
+    it_behaves_like "table entry" do
+      subject { @user.last_name }
+    end
+    
+    it "is capitalized" do
+      expect(@user.last_name).to be_capitalized
+    end
 
     it "is not unique" do
-
       @user.last_name = @user1.last_name
 
       expect(@user).to be_valid
@@ -49,6 +65,10 @@ describe User do
   end
 
   describe :full_name do
+    it "is an instance method" do
+      expect(@user).to respond_to :full_name
+    end
+
     it "is not unique" do
       @user.first_name = @user1.first_name
       @user.last_name = @user1.last_name
@@ -58,8 +78,13 @@ describe User do
   end
 
   describe :profile_url do
-    subject { @user.profile_url }
-    it_behaves_like "table entry"
+    it "is an instance method" do
+      expect(@user).to respond_to :profile_url
+    end
+    
+    it_behaves_like "table entry" do
+      subject { @user.profile_url }
+    end
 
     it "is not a duplicate" do
       expect {
@@ -69,8 +94,13 @@ describe User do
   end
 
   describe :pic_url_small do
-    subject { @user.pic_url_small }
-    it_behaves_like "table entry"
+    it "is an instance method" do
+      expect(@user).to respond_to :pic_url_small
+    end
+    
+    it_behaves_like "table entry" do
+      subject { @user.pic_url_small }
+    end
 
     it "is unique" do
       expect {
@@ -80,8 +110,13 @@ describe User do
   end
 
   describe :pic_url_medium do
-    subject { @user.pic_url_medium }
-    it_behaves_like "table entry"
+    it "is an instance method" do
+      expect(@user).to respond_to :pic_url_medium
+    end
+    
+    it_behaves_like "table entry" do
+      subject { @user.pic_url_medium }
+    end
 
     it "is unique" do
       expect {
@@ -91,8 +126,13 @@ describe User do
   end
 
   describe :pic_url_large do
-    subject { @user.pic_url_large }
-    it_behaves_like "table entry"
+    it "is an instance method" do
+      expect(@user).to respond_to :pic_url_large
+    end
+    
+    it_behaves_like "table entry" do
+      subject { @user.pic_url_large }
+    end
 
     it "is unique" do
       expect {
@@ -108,7 +148,7 @@ describe User do
 
     it "returns the latest post by Datetime" do
       latest_crush = create :crush, user: @user
-      latest_post = latest_crush.post
+      latest_post  = latest_crush.post
 
       expect(@user.latest_post).to eq latest_post
 
